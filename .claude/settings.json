@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(npx wrangler secret:*)",
+      "Bash(wrangler secret:*)",
+      "PowerShell(npx wrangler secret:*)",
+      "PowerShell(wrangler secret:*)"
+    ]
+  }
+}

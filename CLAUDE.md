@@ -25,6 +25,7 @@ Il committente non scrive codice: spiega in italiano semplice cosa gli chiedi di
 
 ## Regole vincolanti
 - **Segreti**: la chiave Google sta solo in `.dev.vars` (locale) e come secret Wrangler (remoto). Mai nel codice, nei log, nei commit o nelle risposte. `.dev.vars` deve essere in `.gitignore`.
+- **File e secret**: per creare o modificare file usa sempre gli strumenti di modifica file, mai comandi shell (echo, heredoc, Set-Content). Non eseguire mai `wrangler secret`: lo fa solo il committente.
 - **Costi Google**: ogni ricerca reale costa. Chiedi conferma prima di ogni chiamata reale a Google; nei test usa dati finti (mock).
 - **Password**: PBKDF2-SHA256 Web Crypto, 100.000 iterazioni. Niente bcrypt/argon2.
 - Ogni endpoint `/api/*` (tranne login e `/api/health`) richiede sessione valida; `/api/health` è pubblico ma risponde solo ok/errore, senza dettagli; gli endpoint admin controllano il ruolo lato server.
