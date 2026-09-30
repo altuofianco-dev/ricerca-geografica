@@ -17,7 +17,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S6c — Visibilità delle ricerche per ruolo | completata e verificata dal committente | 30/09/2026 |
 | S6d — Restyling "Al tuo fianco" | completata e pubblicata (deploy ok) | 30/09/2026 |
 | S6e — Correzioni prima della S7 | completata e pubblicata (migrazione e deploy ok) | 30/09/2026 |
-| S6f — Categorie modificabili dall'admin | completata (migrazione 0003 da applicare in produzione prima del deploy) | 30/09/2026 |
+| S6f — Categorie modificabili dall'admin | completata e pubblicata (migrazione 0003 e deploy ok, verificata dal committente) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
