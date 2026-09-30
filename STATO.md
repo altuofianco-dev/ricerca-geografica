@@ -11,8 +11,8 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S2 — Autenticazione e utenti | completata e verificata dal committente | 30/09/2026 |
 | S3 — Motore di ricerca Google | completata | 30/09/2026 |
 | S4 — Nuova ricerca e risultati | completata e verificata dal committente | 30/09/2026 |
-| S5 — Elenco ricerche e dettaglio | completata (in attesa di prova reale di "Recupera dettagli") | 30/09/2026 |
-| S6 — Dashboard e rifinitura | da fare | |
+| S5 — Elenco ricerche e dettaglio | completata e verificata dal committente | 30/09/2026 |
+| S6 — Dashboard e rifinitura | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
@@ -22,17 +22,16 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
 ## Ultima sessione
-- Sessione: S5 — Elenco ricerche e dettaglio
+- Sessione: S6 — Dashboard e rifinitura
 - Cosa è stato fatto:
-  - Backend `src/worker/storico.ts`: `GET /api/ricerche` (filtri `dal`/`al` come giorni di Europe/Rome, `operatore`, `pagina`; 25 righe, più recenti prima), `GET /api/operatori` (tutti gli utenti, anche disattivati, solo id/nome/attivo, per il filtro), `GET /api/ricerche/:id` (parametri + risultati salvati), `POST /api/ricerche/:id/dettagli` (Place Details con `displayName,formattedAddress,types,nationalPhoneNumber,websiteUri`; il Place ID deve appartenere alla ricerca; salva solo se `SALVA_DATI_ESTESI="true"`, altrimenti mostra soltanto). Tutti con sessione.
-  - Interfaccia: voce "Elenco ricerche" nella barra; `ElencoRicerche.tsx` (filtri data e operatore con "(disattivato)", paginazione), `DettaglioRicerca.tsx` (parametri, risultati, "Recupera dettagli" per riga, CSV). Il pulsante "Recupera dettagli" si disabilita durante la richiesta (un solo recupero alla volta) per evitare doppie chiamate a pagamento.
-  - CSV: la funzione di S4 è stata resa condivisa (`csvRisultati` e `etichette` in `src/client/csv.ts`), usata sia da "Nuova ricerca" sia dal dettaglio: nessun codice duplicato.
-  - `inizioGiornoRomaDa(AAAA-MM-GG)` in `ricerche.ts` (riusa la logica di `inizioGiornoRoma`).
-  - 86 test Vitest (13 nuovi, Google sempre finto): passano; `npm run build` e controllo tipi ok. Nessuna chiamata reale a Google, interfaccia non provata nel browser.
+  - Backend `src/worker/dashboard.ts`: `GET /api/dashboard?periodo=30giorni|anno|tutto` (con sessione). Conta tutte le ricerche, anche in errore, come l'elenco; operatori disattivati inclusi; totali ricavati dalle stesse righe per operatore. Periodi sui giorni di Europe/Rome: "30 giorni" = oggi + 29 giorni precedenti, "anno" = dal 1° gennaio.
+  - Interfaccia: pagina `Dashboard.tsx` (selettore periodo, 3 riquadri, tabella per operatore con "(disattivato)"); media con una cifra decimale e virgola, "—" senza ricerche. Voce "Dashboard" nella barra; "Nuova ricerca" resta la pagina iniziale (la pagina "Ciao, ..." e le frasi su sezioni future non erano più presenti nel codice).
+  - Errori in italiano: `messaggioErrore` in `api.ts` traduce errori di rete ("Failed to fetch") e risposte senza messaggio; usato in tutte le pagine. Componenti condivisi `Caricamento`/`Errore` (`Stati.tsx`).
+  - 99 test Vitest (13 nuovi, Google sempre finto): passano; controllo tipi e `npm run build` ok. Interfaccia non provata nel browser (serve un login locale).
 - Azioni richieste al committente:
   1. `npm run deploy`.
-  2. Provare online dal dettaglio di una ricerca "Recupera dettagli" su un risultato (costa: SKU Enterprise): devono comparire telefono e sito. Controllare anche i filtri per data e operatore e il CSV dal dettaglio.
-- Scelte (confermate): con `SALVA_DATI_ESTESI="false"` "Recupera dettagli" mostra i dati senza salvarli; il filtro "al" include l'intero giorno indicato. Nel dettaglio, se i dati estesi non sono salvati, nome e indirizzo restano vuoti finché non si usa "Recupera dettagli".
+  2. Online: confrontare i numeri della Dashboard con l'Elenco ricerche (stesso periodo: il "Ricerche trovate" dell'elenco deve coincidere), controllare le voci del menu e provare a spegnere la rete per vedere il messaggio d'errore.
+- Nota: se una ricerca salvata ha `error_message` con dettagli tecnici di rete di Google, viene mostrato così com'è nel dettaglio (testi già in italiano tranne l'eventuale errore di rete grezzo).
 
 ## Sessione precedente
 - Sessione: S4 — Nuova ricerca e risultati (verificata dal committente)

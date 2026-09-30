@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { api, formattaData } from './api';
+import { api, formattaData, messaggioErrore } from './api';
+import { Caricamento, Errore } from './Stati';
 import { csvRisultati, etichette, scaricaCsv, type LuogoCsv } from './csv';
 
 interface LuogoSalvato extends LuogoCsv {
@@ -32,7 +33,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
   const [erroreRiga, setErroreRiga] = useState<{ placeId: string; testo: string } | null>(null);
 
   useEffect(() => {
-    api<Dettaglio>(`/api/ricerche/${id}`).then(setD).catch((e: Error) => setErrore(e.message));
+    api<Dettaglio>(`/api/ricerche/${id}`).then(setD).catch((e) => setErrore(messaggioErrore(e)));
   }, [id]);
 
   async function recupera(placeId: string) {
@@ -45,7 +46,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
         corrente ? { ...corrente, risultati: corrente.risultati.map((l) => (l.placeId === placeId ? r : l)) } : corrente,
       );
     } catch (e) {
-      setErroreRiga({ placeId, testo: (e as Error).message });
+      setErroreRiga({ placeId, testo: messaggioErrore(e) });
     } finally {
       setInCorso(null);
     }
@@ -56,8 +57,8 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
       <div className="azioni">
         <button type="button" onClick={onIndietro}>← Elenco ricerche</button>
       </div>
-      {errore && <p className="errore">{errore}</p>}
-      {!d && !errore && <p>Caricamento…</p>}
+      {errore && <Errore testo={errore} />}
+      {!d && !errore && <Caricamento />}
       {d && (
         <>
           <h1>Ricerca del {formattaData(d.created_at)}</h1>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import tipiIt from '../data/place-types.it.json';
-import { api } from './api';
+import { api, messaggioErrore } from './api';
 import { csvRisultati, etichette, scaricaCsv } from './csv';
 
 const TIPI = tipiIt as { type: string; label: string }[];
@@ -64,7 +64,7 @@ export default function NuovaRicerca() {
           setSuggerimenti(r.suggerimenti);
           setErroreIndirizzo('');
         })
-        .catch((e: Error) => !annullata && setErroreIndirizzo(e.message));
+        .catch((e) => !annullata && setErroreIndirizzo(messaggioErrore(e)));
     }, 300);
     return () => {
       annullata = true;
@@ -82,7 +82,7 @@ export default function NuovaRicerca() {
       );
       setScelto({ placeId: s.placeId, testo: s.testo, ...c });
     } catch (e) {
-      setErroreIndirizzo((e as Error).message);
+      setErroreIndirizzo(messaggioErrore(e));
     } finally {
       sessione.current = nuovaSessione(); // il token vale per una sola sessione di digitazione
     }
@@ -116,7 +116,7 @@ export default function NuovaRicerca() {
       });
       setEsito({ ...r, contatti });
     } catch (err) {
-      setErrore((err as Error).message);
+      setErrore(messaggioErrore(err));
     } finally {
       setInCorso(false);
     }

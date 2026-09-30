@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { api, formattaData } from './api';
+import { api, formattaData, messaggioErrore } from './api';
+import { Caricamento, Errore } from './Stati';
 
 interface Riga {
   id: number;
@@ -51,7 +52,7 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
         setDati(r);
         setErrore('');
       })
-      .catch((e: Error) => !annullata && setErrore(e.message));
+      .catch((e) => !annullata && setErrore(messaggioErrore(e)));
     return () => {
       annullata = true;
     };
@@ -90,8 +91,8 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
         </label>
       </div>
 
-      {errore && <p className="errore">{errore}</p>}
-      {!dati && !errore && <p>Caricamento…</p>}
+      {errore && <Errore testo={errore} />}
+      {!dati && !errore && <Caricamento />}
 
       {dati && (
         <section>

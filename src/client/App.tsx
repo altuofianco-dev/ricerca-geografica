@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { api, impostaSessioneScaduta, type Utente } from './api';
+import Dashboard from './Dashboard';
 import DettaglioRicerca from './DettaglioRicerca';
 import ElencoRicerche from './ElencoRicerche';
 import Login from './Login';
+import { Caricamento } from './Stati';
 import NuovaRicerca from './NuovaRicerca';
 import Utenti from './Utenti';
 
-type Pagina = 'home' | 'elenco' | 'utenti';
+type Pagina = 'home' | 'elenco' | 'dashboard' | 'utenti';
 
 export default function App() {
   const [utente, setUtente] = useState<Utente | null>(null);
@@ -34,7 +36,7 @@ export default function App() {
     setAperta(null);
   }
 
-  if (caricamento) return <main><p>Caricamento…</p></main>;
+  if (caricamento) return <main><Caricamento /></main>;
   if (!utente) return <Login onAccesso={setUtente} />;
 
   return (
@@ -44,6 +46,7 @@ export default function App() {
         <nav>
           <button type="button" className={pagina === 'home' ? 'attiva' : ''} onClick={() => vai('home')}>Nuova ricerca</button>
           <button type="button" className={pagina === 'elenco' ? 'attiva' : ''} onClick={() => vai('elenco')}>Elenco ricerche</button>
+          <button type="button" className={pagina === 'dashboard' ? 'attiva' : ''} onClick={() => vai('dashboard')}>Dashboard</button>
           {utente.role === 'admin' && (
             <button type="button" className={pagina === 'utenti' ? 'attiva' : ''} onClick={() => vai('utenti')}>Utenti</button>
           )}
@@ -55,6 +58,8 @@ export default function App() {
       <main>
         {pagina === 'utenti' && utente.role === 'admin' ? (
           <Utenti io={utente} />
+        ) : pagina === 'dashboard' ? (
+          <Dashboard />
         ) : pagina === 'elenco' ? (
           aperta === null ? (
             <ElencoRicerche onApri={setAperta} />

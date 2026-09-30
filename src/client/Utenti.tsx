@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { api, formattaData, type Utente, type UtenteElenco } from './api';
+import { api, formattaData, messaggioErrore, type Utente, type UtenteElenco } from './api';
 
 const PASSWORD_MIN = 10;
 
@@ -15,7 +15,7 @@ export default function Utenti({ io }: { io: Utente }) {
     try {
       setElenco(await api<UtenteElenco[]>('/api/utenti'));
     } catch (e) {
-      setErrore((e as Error).message);
+      setErrore(messaggioErrore(e));
     }
   }, []);
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function Utenti({ io }: { io: Utente }) {
       await carica();
       return true;
     } catch (e) {
-      setErrore((e as Error).message);
+      setErrore(messaggioErrore(e));
       return false;
     }
   }

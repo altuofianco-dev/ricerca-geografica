@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api, type Utente } from './api';
+import { api, messaggioErrore, type Utente } from './api';
 
 export default function Login({ onAccesso }: { onAccesso: (u: Utente) => void }) {
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export default function Login({ onAccesso }: { onAccesso: (u: Utente) => void })
     try {
       onAccesso(await api<Utente>('/api/login', { email, password }));
     } catch (err) {
-      setErrore((err as Error).message);
+      setErrore(messaggioErrore(err));
       setInvio(false);
     }
   }

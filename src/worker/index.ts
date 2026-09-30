@@ -4,6 +4,7 @@ import { utenti } from './utenti';
 import { luoghi } from './luoghi';
 import { ricerche } from './ricerche';
 import { storico } from './storico';
+import { dashboard } from './dashboard';
 
 export type { Env } from './auth';
 
@@ -33,6 +34,7 @@ app.route('/', utenti);
 app.route('/', luoghi);
 app.route('/', ricerche);
 app.route('/', storico);
+app.route('/', dashboard);
 
 app.all('/api/*', (c) => c.json({ errore: 'Risorsa non trovata' }, 404));
 
