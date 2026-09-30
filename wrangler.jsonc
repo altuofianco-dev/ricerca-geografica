@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ricerca-geografica",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-09-01",
+  "observability": { "enabled": true },
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ricerca-geografica",
+      "database_id": "22dae8d7-4325-4a7b-bdbe-ce622f6f1893",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "MAX_RICERCHE_GIORNO": "30",
+    "SALVA_DATI_ESTESI": "true"
+  }
+}
