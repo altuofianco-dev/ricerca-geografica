@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { DatabaseSync } from 'node:sqlite';
 import { inizioPeriodo } from '../src/worker/dashboard';
-import { ErroreApi, formattaMedia, messaggioErrore } from '../src/client/api';
+import { ErroreApi, formattaMedia, messaggioErrore, testoErroreRicerca } from '../src/client/api';
 import { aggiungiUtente, chiama, creaDb, login } from './helpers';
 
 function aggiungiRicerca(sql: DatabaseSync, userId: number, creata: string, risultati: number, stato = 'completata') {
@@ -105,6 +105,16 @@ describe('inizioPeriodo (giorni di Europe/Rome)', () => {
 });
 
 describe('messaggi lato interfaccia', () => {
+  it('testo errore ricerca: solo messaggi previsti, altrimenti generico', () => {
+    const ok = '3 chiamate su 10 non riuscite: problema di connessione con Google';
+    expect(testoErroreRicerca(ok)).toBe(ok);
+    const http = '1 chiamata su 10 non riuscita: Google ha risposto con errore HTTP 500; problema di connessione con Google';
+    expect(testoErroreRicerca(http)).toBe(http);
+    expect(testoErroreRicerca('Salvataggio dei risultati non riuscito')).toBe('Salvataggio dei risultati non riuscito');
+    for (const vecchio of ['Chiamata 4: Google ha risposto con errore 500', 'Chiamata 2: fetch failed', 'TypeError: x'])
+      expect(testoErroreRicerca(vecchio)).toMatch(/problema durante la ricerca/);
+  });
+
   it('media con una cifra decimale e virgola, "—" se assente', () => {
     expect(formattaMedia(4.5)).toBe('4,5');
     expect(formattaMedia(3)).toBe('3,0');

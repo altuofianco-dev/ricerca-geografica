@@ -4,6 +4,7 @@ import tipiIt from '../data/place-types.it.json';
 import {
   creaChiamaNearby,
   eseguiRicerca,
+  riassuntoErrori,
   validaParametri,
   type ChiamaNearby,
   type EsitoRicerca,
@@ -121,7 +122,7 @@ ricerche.post('/api/ricerche', async (c) => {
   }
 
   const tutteFallite = esito.errori.length >= esito.chiamate;
-  const messaggioErrore = esito.errori.length ? esito.errori.join('; ').slice(0, 1000) : null;
+  const messaggioErrore = esito.errori.length ? riassuntoErrori(esito.codiciErrore, esito.chiamate) : null;
   if (tutteFallite) return chiudiInErrore(c.env.DB, id, messaggioErrore ?? 'Tutte le chiamate a Google sono fallite', c, esito);
 
   try {

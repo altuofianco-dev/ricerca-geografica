@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api, formattaData, messaggioErrore } from './api';
+import { api, formattaData, messaggioErrore, testoErroreRicerca } from './api';
 import { Caricamento, Errore } from './Stati';
 import { csvRisultati, etichette, scaricaCsv, type LuogoCsv } from './csv';
 
@@ -71,7 +71,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
             <dt>Stato</dt><dd>{d.status === 'completata' ? 'Completata' : d.status === 'errore' ? 'Errore' : 'In corso'}</dd>
             <dt>Chiamate Google</dt><dd>{d.api_calls ?? 0} (sature: {d.saturated_calls ?? 0})</dd>
           </dl>
-          {d.error_message && <p className="avviso">{d.error_message}</p>}
+          {d.error_message && <p className="avviso">{testoErroreRicerca(d.error_message)}</p>}
           {(d.saturated_calls ?? 0) > 0 && (
             <p className="avviso">Alcune zone hanno raggiunto il limite di 20 risultati: l’elenco potrebbe essere incompleto</p>
           )}

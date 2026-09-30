@@ -31,7 +31,7 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Azioni richieste al committente:
   1. `npm run deploy`.
   2. Online: confrontare i numeri della Dashboard con l'Elenco ricerche (stesso periodo: il "Ricerche trovate" dell'elenco deve coincidere), controllare le voci del menu e provare a spegnere la rete per vedere il messaggio d'errore.
-- Nota: se una ricerca salvata ha `error_message` con dettagli tecnici di rete di Google, viene mostrato così com'è nel dettaglio (testi già in italiano tranne l'eventuale errore di rete grezzo).
+- Messaggi salvati con le ricerche (`error_message`): il Worker salva solo testi in italiano, es. "3 chiamate su 10 non riuscite: problema di connessione con Google" oppure "... Google ha risposto con errore HTTP 500" (`riassuntoErrori` e `ErroreGoogle` in `ricerca.ts`); mai il testo tecnico grezzo. Anche l'elenco `errori` mostrato in "Nuova ricerca" è ora ripulito. Per le ricerche già salvate, il dettaglio (`testoErroreRicerca` in `api.ts`) mostra il messaggio solo se è tra quelli previsti, altrimenti "Si è verificato un problema durante la ricerca. I risultati potrebbero essere incompleti." Test: 101 in tutto, passano.
 
 ## Sessione precedente
 - Sessione: S4 — Nuova ricerca e risultati (verificata dal committente)

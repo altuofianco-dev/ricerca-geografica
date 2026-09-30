@@ -104,7 +104,7 @@ describe('POST /api/ricerche', () => {
     expect(dati.errori).toHaveLength(1);
     const s = sql.prepare('SELECT status, error_message FROM searches WHERE id = ?').get(dati.id) as Record<string, string>;
     expect(s.status).toBe('completata');
-    expect(s.error_message).toContain('errore 500');
+    expect(s.error_message).toBe('1 chiamata su 10 non riuscita: Google ha risposto con errore HTTP 500');
   });
 
   it('tutte le chiamate fallite: stato errore, mai in_corso, nessuna chiave nei messaggi', async () => {
@@ -117,6 +117,19 @@ describe('POST /api/ricerche', () => {
     expect(await res.text()).not.toContain('chiave-finta-test');
     const s = sql.prepare('SELECT status FROM searches').get() as { status: string };
     expect(s.status).toBe('errore');
+  });
+
+  it('problema di rete: messaggio salvato in italiano, mai il testo tecnico grezzo', async () => {
+    const { db, sql, cookie } = await conSessione();
+    let n = 0;
+    finto(async () => {
+      if (n++ < 3) throw new TypeError('fetch failed: ECONNRESET');
+      return [luogo('P1')];
+    });
+    const dati = (await (await chiama(db, '/api/ricerche', { body: corpo(), cookie })).json()) as { id: number; errori: string[] };
+    const s = sql.prepare('SELECT error_message FROM searches WHERE id = ?').get(dati.id) as Record<string, string>;
+    expect(s.error_message).toBe('3 chiamate su 10 non riuscite: problema di connessione con Google');
+    expect(JSON.stringify(dati.errori)).not.toMatch(/fetch|ECONN/);
   });
 
   it('limite giornaliero: la ricerca oltre il massimo è rifiutata', async () => {

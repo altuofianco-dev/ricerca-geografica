@@ -78,3 +78,13 @@ export function formattaData(iso: string): string {
     .format(new Date(iso))
     .replace(',', '');
 }
+
+const MSG_RICERCA_GENERICO = 'Si è verificato un problema durante la ricerca. I risultati potrebbero essere incompleti.';
+const MSG_RICERCA_PREVISTI = ['Ricerca interrotta da un errore imprevisto', 'Salvataggio dei risultati non riuscito', 'Tutte le chiamate a Google sono fallite'];
+
+/** Messaggio salvato con la ricerca: mostrato solo se è tra quelli previsti (italiano), altrimenti un testo generico. */
+export function testoErroreRicerca(messaggio: string): string {
+  if (MSG_RICERCA_PREVISTI.includes(messaggio)) return messaggio;
+  if (/^\d+ chiamat[ae] su \d+ non riuscit[ae]: (problema di connessione con Google|Google ha risposto con errore HTTP \d{3})(; (problema di connessione con Google|Google ha risposto con errore HTTP \d{3}))*$/.test(messaggio)) return messaggio;
+  return MSG_RICERCA_GENERICO;
+}

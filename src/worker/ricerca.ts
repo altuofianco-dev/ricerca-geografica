@@ -178,12 +178,38 @@ export interface EsitoRicerca {
   chiamate: number;
   chiamateSature: number;
   errori: string[];
+  /** Per ogni chiamata fallita: stato HTTP di Google, o null se il problema è di connessione. */
+  codiciErrore: (number | null)[];
+}
+
+/** Errore di Google con lo stato HTTP; il testo non contiene mai dettagli tecnici della rete. */
+export class ErroreGoogle extends Error {
+  constructor(public stato: number) {
+    super(`Google ha risposto con errore ${stato}`);
+  }
+}
+
+function statoDa(e: unknown): number | null {
+  if (e instanceof ErroreGoogle) return e.stato;
+  const m = e instanceof Error ? /^Google ha risposto con errore (\d{3})$/.exec(e.message) : null;
+  return m ? Number(m[1]) : null;
+}
+
+const CAUSA_RETE = 'problema di connessione con Google';
+
+/** Riassunto in italiano delle chiamate fallite, da salvare in error_message (mai testi grezzi). */
+export function riassuntoErrori(codici: (number | null)[], chiamate: number): string {
+  const n = codici.length;
+  const cause = [...new Set(codici)].map((c) => (c === null ? CAUSA_RETE : `Google ha risposto con errore HTTP ${c}`));
+  const quante = n === 1 ? `1 chiamata su ${chiamate} non riuscita` : `${n} chiamate su ${chiamate} non riuscite`;
+  return `${quante}: ${cause.join('; ')}`;
 }
 
 export async function eseguiRicerca(p: ParametriRicerca, chiama: ChiamaNearby): Promise<EsitoRicerca> {
   const cerchi = cerchiRicerca({ lat: p.lat, lng: p.lng }, p.raggioKm);
   const campi = campiRichiesti(p.conContatti);
   const errori: string[] = [];
+  const codiciErrore: (number | null)[] = [];
   let sature = 0;
 
   const esiti = await eseguiConLimite(
@@ -193,14 +219,16 @@ export async function eseguiRicerca(p: ParametriRicerca, chiama: ChiamaNearby): 
         if (eSatura(lista.length)) sature++;
         return lista;
       } catch (e) {
-        errori.push(`Chiamata ${i + 1}: ${e instanceof Error ? e.message : 'errore sconosciuto'}`);
+        const stato = statoDa(e);
+        codiciErrore.push(stato);
+        errori.push(`Chiamata ${i + 1}: ${stato === null ? CAUSA_RETE : `errore HTTP ${stato}`}`);
         return [] as LuogoGoogle[];
       }
     }),
   );
 
   const { luoghi, conteggi } = elaboraRisultati(esiti, { lat: p.lat, lng: p.lng }, p.raggioKm);
-  return { luoghi, conteggi, chiamate: cerchi.length, chiamateSature: sature, errori };
+  return { luoghi, conteggi, chiamate: cerchi.length, chiamateSature: sature, errori, codiciErrore };
 }
 
 /**
@@ -214,7 +242,7 @@ export function creaChiamaNearby(apiKey: string, fetchFn: typeof fetch = fetch):
       headers: { 'Content-Type': 'application/json', 'X-Goog-Api-Key': apiKey, 'X-Goog-FieldMask': campi },
       body: JSON.stringify(corpo),
     });
-    if (!res.ok) throw new Error(`Google ha risposto con errore ${res.status}`);
+    if (!res.ok) throw new ErroreGoogle(res.status);
     const dati = (await res.json()) as { places?: LuogoGoogle[] };
     return dati.places ?? [];
   };
