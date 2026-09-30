@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api, formattaData, messaggioErrore } from './api';
-import { Caricamento, Errore } from './Stati';
+import { Caricamento, Errore, EtichettaStato } from './Stati';
 
 interface Riga {
   id: number;
@@ -118,7 +118,9 @@ export default function ElencoRicerche({ onApri, admin }: { onApri: (id: number)
                     {admin && <td>{r.operatore}</td>}
                     <td>{r.address_text}</td>
                     <td>{decimale(r.radius_km)}</td>
-                    <td>{r.status === 'errore' ? 'Errore' : r.status === 'in_corso' ? 'In corso' : (r.result_count ?? 0)}</td>
+                    <td>
+                      {r.status === 'completata' ? (r.result_count ?? 0) : <EtichettaStato stato={r.status} />}
+                    </td>
                     <td>
                       <button type="button" onClick={() => onApri(r.id)}>Apri</button>
                     </td>

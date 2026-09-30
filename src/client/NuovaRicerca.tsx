@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api, messaggioErrore } from './api';
 import { csvRisultati, etichette, scaricaCsv } from './csv';
 import SelettoreCategorie from './SelettoreCategorie';
+import { SitoWeb } from './Stati';
 
 interface Suggerimento {
   placeId: string;
@@ -206,14 +207,8 @@ export default function NuovaRicerca() {
                     <td>{l.indirizzo}</td>
                     <td>{etichette(l.tipi)}</td>
                     <td>{l.telefono ?? ''}</td>
-                    <td>
-                      {l.sito && /^https?:\/\//i.test(l.sito) ? (
-                        <a href={l.sito} target="_blank" rel="noopener noreferrer">{l.sito}</a>
-                      ) : (
-                        ''
-                      )}
-                    </td>
-                    <td>{l.placeId}</td>
+                    <td><SitoWeb url={l.sito} /></td>
+                    <td className="placeid">{l.placeId}</td>
                   </tr>
                 ))}
               </tbody>

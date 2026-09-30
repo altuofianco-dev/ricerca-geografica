@@ -65,7 +65,7 @@ export default function Utenti({ io }: { io: Utente }) {
 
   return (
     <>
-      <h2>Gestione utenti</h2>
+      <h1>Gestione utenti</h1>
       {messaggio && <p className="ok" role="status">{messaggio}</p>}
       {errore && <p className="errore" role="alert">{errore}</p>}
 

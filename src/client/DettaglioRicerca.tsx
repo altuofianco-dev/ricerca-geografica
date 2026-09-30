@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api, formattaData, messaggioErrore, testoErroreRicerca } from './api';
-import { Caricamento, Errore } from './Stati';
+import { Caricamento, Errore, EtichettaStato, SitoWeb } from './Stati';
 import { csvRisultati, etichette, scaricaCsv, type LuogoCsv } from './csv';
 
 interface LuogoSalvato extends LuogoCsv {
@@ -68,7 +68,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
             <dt>Raggio</dt><dd>{decimale(d.radius_km)} km</dd>
             <dt>Categorie</dt><dd>{etichette(d.categorie) || '—'}</dd>
             <dt>Telefono e sito web</dt><dd>{d.include_contacts ? 'Inclusi' : 'Non inclusi'}</dd>
-            <dt>Stato</dt><dd>{d.status === 'completata' ? 'Completata' : d.status === 'errore' ? 'Errore' : 'In corso'}</dd>
+            <dt>Stato</dt><dd><EtichettaStato stato={d.status} /></dd>
             <dt>Chiamate Google</dt><dd>{d.api_calls ?? 0} (sature: {d.saturated_calls ?? 0})</dd>
           </dl>
           {d.error_message && <p className="avviso">{testoErroreRicerca(d.error_message)}</p>}
@@ -102,17 +102,11 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
                     <td>{l.indirizzo ?? ''}</td>
                     <td>{etichette(l.tipi)}</td>
                     <td>{l.telefono ?? ''}</td>
+                    <td><SitoWeb url={l.sito} /></td>
+                    <td className="placeid">{l.placeId}</td>
                     <td>
-                      {l.sito && /^https?:\/\//i.test(l.sito) ? (
-                        <a href={l.sito} target="_blank" rel="noopener noreferrer">{l.sito}</a>
-                      ) : (
-                        ''
-                      )}
-                    </td>
-                    <td>{l.placeId}</td>
-                    <td>
-                      <button type="button" disabled={inCorso !== null} onClick={() => void recupera(l.placeId)}>
-                        {inCorso === l.placeId ? 'Recupero…' : 'Recupera dettagli'}
+                      <button type="button" className="piccolo" disabled={inCorso !== null} onClick={() => void recupera(l.placeId)}>
+                        {inCorso === l.placeId ? 'Recupero…' : l.telefono && l.sito ? 'Aggiorna' : 'Recupera dettagli'}
                       </button>
                       {erroreRiga?.placeId === l.placeId && <p className="errore">{erroreRiga.testo}</p>}
                     </td>

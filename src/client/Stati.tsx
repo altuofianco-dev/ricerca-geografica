@@ -5,3 +5,28 @@ export const Caricamento = ({ testo = 'Caricamento…' }: { testo?: string }) =>
 export const Errore = ({ testo }: { testo: string }) => (
   <p className="errore" role="alert">{testo}</p>
 );
+
+// Etichetta colorata dello stato di una ricerca (verde completata, rosso errore, grigio in corso).
+export function EtichettaStato({ stato }: { stato: string }) {
+  const [classe, testo] =
+    stato === 'completata' ? ['ok', 'Completata'] : stato === 'errore' ? ['ko', 'Errore'] : ['attesa', 'In corso'];
+  return <span className={`stato ${classe}`}>{testo}</span>;
+}
+
+// Sito web: mostra solo il dominio, il link resta completo. Solo http/https.
+export function dominio(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./i, '');
+  } catch {
+    return url;
+  }
+}
+
+export function SitoWeb({ url }: { url: string | null | undefined }) {
+  if (!url || !/^https?:\/\//i.test(url)) return null;
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" title={url}>
+      {dominio(url)}
+    </a>
+  );
+}

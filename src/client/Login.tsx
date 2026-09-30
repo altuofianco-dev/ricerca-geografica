@@ -21,7 +21,10 @@ export default function Login({ onAccesso }: { onAccesso: (u: Utente) => void })
 
   return (
     <main className="stretta">
-      <h1>Ricerca geografica</h1>
+      <div className="login-logo">
+        <img src="/logo-altuofianco.svg" alt="" width="48" height="54" />
+        <h1>Ricerca geografica</h1>
+      </div>
       <form className="scheda" onSubmit={invia}>
         <h2>Accedi</h2>
         <label>

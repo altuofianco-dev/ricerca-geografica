@@ -15,6 +15,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S6 — Dashboard e rifinitura | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S6b — Selettore ad albero delle categorie | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S6c — Visibilità delle ricerche per ruolo | completata e verificata dal committente | 30/09/2026 |
+| S6d — Restyling "Al tuo fianco" | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
@@ -23,7 +24,19 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Produzione: https://ricerca-geografica.altuofianco-dev.workers.dev
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
-## Ultima sessione (S6c)
+## Ultima sessione (S6d)
+- Sessione: S6d — Restyling con l'identità "Al tuo fianco" (correzione prima della S7). Solo interfaccia: nessuna modifica al backend, nessuna nuova dipendenza.
+- Cosa è stato fatto:
+  - Logo copiato così com'è (metadati inclusi) in `public/logo-altuofianco.svg`; usato come favicon (`index.html`), nella barra laterale e nel Login.
+  - `style.css` riscritto con variabili CSS centralizzate (palette #0A4D57, #0F6B71, #067DA0, #7C949A; grigi-azzurri chiari per sfondo e righe alternate; verde/rosso solo per gli stati).
+  - Barra laterale fissa (logo, nome, voci con icone SVG in `Icone.tsx`, in fondo nome, ruolo ed "Esci"); sotto i 900 px restano solo le icone. Contenuto a tutta larghezza, sezioni in riquadri bianchi.
+  - Tabelle: righe alternate, hover, righe compatte, intestazione fissa in cima alla finestra (la pagina scorre normalmente, niente riquadro con scroll interno). Lo scroll orizzontale interno c'è solo sotto i 720 px (lì l'intestazione non resta fissa: limite del browser). Place ID piccolo e grigio; sito abbreviato al dominio (link completo, `SitoWeb` in `Stati.tsx`).
+  - Dettaglio ricerca: "Recupera dettagli" piccolo, "Aggiorna" se telefono e sito ci sono già; stato come etichetta colorata (`EtichettaStato`, usata anche nell'elenco per errore/in corso).
+  - Utenti: titolo pagina ora h1 come le altre pagine.
+- Controlli: tipi, 127 test e `npm run build` ok. Aspetto non verificato nel browser (pannello anteprima non visibile in questa sessione).
+- Azioni richieste al committente: `npm run dev` e guardare login, menu (anche a finestra stretta), tabelle con intestazione fissa, dettaglio ricerca, selettore categorie; poi `npm run deploy`.
+
+## Sessione precedente (S6c)
 - Sessione: S6c — Visibilità delle ricerche per ruolo (correzione prima della S7)
 - Regola: l'admin vede tutte le ricerche, l'operatore solo le proprie (controllo lato server). SPEC §2, §7, §8 aggiornate.
 - Cosa è stato fatto:

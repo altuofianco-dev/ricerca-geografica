@@ -1,51 +1,173 @@
+:root {
+  /* Identità "Al tuo fianco" */
+  --laterale: #0a4d57;
+  --laterale-attiva: #0f6b71;
+  --primario: #067da0;
+  --primario-scuro: #056783;
+  --dettaglio: #7c949a;
+  --sfondo: #eef3f5;
+  --riga-alt: #f3f7f8;
+  --riga-hover: #e1edf0;
+  --primario-tenue: #e3f2f7;
+  --testo: #1b2a2e;
+  --testo-tenue: #4f6368;
+  --bordo: #cfdadd;
+  --bianco: #fff;
+  /* Verde e rosso solo per gli stati */
+  --verde: #1a7f37;
+  --verde-tenue: #dcf3e2;
+  --rosso: #b42318;
+  --rosso-tenue: #fde4e1;
+  --avviso-sfondo: #fff8c5;
+  --avviso-bordo: #d4a72c;
+  --larghezza-laterale: 15rem;
+}
+* {
+  box-sizing: border-box;
+}
 body {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   margin: 0;
-  background: #f6f7f9;
-  color: #1f2328;
+  background: var(--sfondo);
+  color: var(--testo);
+  line-height: 1.4;
+}
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+}
+h2 {
+  font-size: 1.1rem;
+}
+a {
+  color: var(--primario);
+}
+
+/* Struttura: barra laterale fissa + contenuto a tutta larghezza */
+.app {
+  min-height: 100vh;
 }
 main {
-  max-width: 1100px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin-left: var(--larghezza-laterale);
+  padding: 1.5rem 1.75rem;
 }
 main.stretta {
-  max-width: 400px;
-  margin-top: 4rem;
+  max-width: 420px;
+  margin: 4rem auto;
+  padding: 0 1rem;
 }
-.barra {
+.login-logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 1rem;
-  background: #fff;
-  border-bottom: 1px solid #d0d7de;
+  margin-bottom: 1rem;
 }
-.barra nav {
+.login-logo h1 {
+  margin: 0;
+}
+.laterale {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--larghezza-laterale);
   display: flex;
-  gap: 0.25rem;
+  flex-direction: column;
+  background: var(--laterale);
+  color: #fff;
+  padding: 1rem 0.75rem;
+  gap: 1rem;
+  z-index: 10;
 }
-.barra .spazio {
+.marchio {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.25rem 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+.marchio img {
+  flex: none;
+}
+.marchio strong {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.laterale nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   flex: 1;
 }
-.barra .attiva {
-  background: #ddf4ff;
-  border-color: #54aeff;
+.laterale button {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  padding: 0.6rem 0.7rem;
+}
+.laterale button:hover:not(:disabled),
+.laterale button.attiva {
+  background: var(--laterale-attiva);
+}
+.laterale button.attiva {
+  font-weight: 600;
+}
+.laterale .icona {
+  flex: none;
+}
+.laterale nav .icona {
+  color: #b7cdd1;
+}
+.laterale nav .attiva .icona {
+  color: #fff;
+}
+.utente {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 0.75rem;
+}
+.dati-utente {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.4rem;
+  overflow-wrap: anywhere;
+}
+.dati-utente span {
+  font-size: 0.85rem;
+  color: #c9dadd;
+}
+
+/* Riquadri bianchi */
+.scheda,
+main > section,
+main > div > section {
+  background: var(--bianco);
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
 }
 .scheda {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  background: #fff;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 1rem;
-  margin: 1rem 0;
 }
 .scheda h2,
-.scheda h3 {
+.scheda h3,
+section > h2 {
   margin: 0;
 }
+section > h2 {
+  margin-bottom: 0.5rem;
+}
+
+/* Campi e pulsanti */
 label {
   display: flex;
   flex-direction: column;
@@ -55,26 +177,53 @@ label {
 input,
 select {
   font: inherit;
-  padding: 0.45rem;
-  border: 1px solid #d0d7de;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--dettaglio);
   border-radius: 6px;
+  background: var(--bianco);
+  color: var(--testo);
+}
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--primario);
+}
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primario);
+  outline-offset: 1px;
 }
 button {
   font: inherit;
   padding: 0.45rem 0.9rem;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--dettaglio);
   border-radius: 6px;
-  background: #f6f8fa;
+  background: var(--bianco);
+  color: var(--testo);
   cursor: pointer;
 }
+button:hover:not(:disabled) {
+  background: var(--primario-tenue);
+  border-color: var(--primario);
+}
 button[type='submit'] {
-  background: #1f6feb;
-  border-color: #1f6feb;
+  background: var(--primario);
+  border-color: var(--primario);
   color: #fff;
 }
+button[type='submit']:hover:not(:disabled) {
+  background: var(--primario-scuro);
+  border-color: var(--primario-scuro);
+}
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: default;
+}
+button.piccolo {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 .riga,
 .azioni {
@@ -82,43 +231,83 @@ button:disabled {
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Tabelle: compatte, righe alternate, intestazione fissa in cima alla finestra */
 table {
   width: 100%;
-  border-collapse: collapse;
-  background: #fff;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bianco);
 }
 th,
 td {
   text-align: left;
-  padding: 0.5rem;
-  border-bottom: 1px solid #d0d7de;
-  font-size: 0.9rem;
+  padding: 0.3rem 0.55rem;
+  border-bottom: 1px solid var(--bordo);
+  font-size: 0.875rem;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #dfe9ec;
+  font-weight: 600;
+  border-bottom: 2px solid var(--dettaglio);
+}
+tbody tr:nth-child(even) td {
+  background: var(--riga-alt);
+}
+tbody tr:hover td {
+  background: var(--riga-hover);
 }
 tr.disattivo td {
-  color: #6e7781;
+  color: var(--testo-tenue);
 }
+.placeid {
+  font-size: 0.72rem;
+  color: var(--testo-tenue);
+  font-family: ui-monospace, Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+/* Niente riquadro con scroll interno: la pagina scorre e l'intestazione resta fissa.
+   Lo scorrimento orizzontale interno c'è solo su schermi stretti. */
+@media (max-width: 720px) {
+  .scorri {
+    overflow-x: auto;
+  }
+  .scorri th {
+    position: static;
+  }
+}
+
 .suggerimenti {
   list-style: none;
   margin: 0;
   padding: 0;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--dettaglio);
   border-radius: 6px;
+  overflow: hidden;
 }
 .suggerimenti button {
   width: 100%;
   text-align: left;
   border: 0;
   border-radius: 0;
-  background: #fff;
+  background: var(--bianco);
 }
 .suggerimenti button:hover:not(:disabled) {
-  background: #ddf4ff;
+  background: var(--primario-tenue);
 }
 .chip {
   padding: 0.2rem 0.6rem;
-  background: #ddf4ff;
-  border-color: #54aeff;
+  background: var(--primario-tenue);
+  border-color: var(--primario);
+  color: var(--primario-scuro);
 }
+
+/* Selettore categorie */
 .categorie {
   display: flex;
   flex-direction: column;
@@ -138,8 +327,9 @@ tr.disattivo td {
 .albero {
   max-height: 22rem;
   overflow-y: auto;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--dettaglio);
   border-radius: 6px;
+  background: var(--bianco);
   padding: 0.25rem 0.5rem;
 }
 .macro {
@@ -147,10 +337,15 @@ tr.disattivo td {
   align-items: center;
   gap: 0.25rem;
   font-weight: 600;
+  border-radius: 4px;
+}
+.macro:hover {
+  background: var(--riga-alt);
 }
 .freccia {
   border: 0;
   background: transparent;
+  color: var(--primario);
   width: 2rem;
   padding: 0.2rem;
 }
@@ -160,30 +355,54 @@ tr.disattivo td {
 .aiuto {
   display: block;
   margin-left: 1.5rem;
-  color: #57606a;
+  color: var(--testo-tenue);
 }
 .casella {
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
 }
+
+/* Messaggi e stati */
 .avviso {
-  background: #fff8c5;
-  border: 1px solid #d4a72c;
+  background: var(--avviso-sfondo);
+  border: 1px solid var(--avviso-bordo);
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
 }
-.scorri {
-  overflow-x: auto;
-}
 .errore {
-  color: #cf222e;
+  color: var(--rosso);
   margin: 0.5rem 0;
 }
 .caricamento {
-  color: #57606a;
+  color: var(--testo-tenue);
   margin: 0.5rem 0;
 }
+.ok {
+  color: var(--verde);
+  margin: 0.5rem 0;
+}
+.stato {
+  display: inline-block;
+  padding: 0.05rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.stato.ok {
+  margin: 0;
+  background: var(--verde-tenue);
+  color: var(--verde);
+}
+.stato.ko {
+  background: var(--rosso-tenue);
+  color: var(--rosso);
+}
+.stato.attesa {
+  background: #e6ebec;
+  color: var(--testo-tenue);
+}
+
 .riquadri {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
@@ -193,10 +412,7 @@ tr.disattivo td {
   font-size: 2rem;
   font-weight: 600;
   margin: 0;
-}
-.ok {
-  color: #1a7f37;
-  margin: 0.5rem 0;
+  color: var(--primario);
 }
 .filtri {
   flex-direction: row;
@@ -217,4 +433,31 @@ tr.disattivo td {
 }
 .parametri dd {
   margin: 0;
+}
+
+/* Schermi stretti: la barra laterale si riduce alle sole icone */
+@media (max-width: 900px) {
+  :root {
+    --larghezza-laterale: 4rem;
+  }
+  .laterale {
+    padding: 0.75rem 0.5rem;
+    align-items: center;
+  }
+  .marchio {
+    padding: 0.25rem 0 0.75rem;
+    justify-content: center;
+  }
+  .marchio strong,
+  .laterale button span,
+  .dati-utente {
+    display: none;
+  }
+  .laterale button {
+    justify-content: center;
+    padding: 0.6rem;
+  }
+  main {
+    padding: 1rem;
+  }
 }
