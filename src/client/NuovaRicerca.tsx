@@ -36,7 +36,7 @@ export default function NuovaRicerca() {
   const sessione = useRef(nuovaSessione());
   const [raggio, setRaggio] = useState('1');
   const [categorie, setCategorie] = useState<string[]>([]);
-  const [contatti, setContatti] = useState(false);
+  const [contatti, setContatti] = useState(true);
   const [inCorso, setInCorso] = useState(false);
   const [errore, setErrore] = useState('');
   const [esito, setEsito] = useState<Esito | null>(null);

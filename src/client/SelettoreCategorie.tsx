@@ -111,7 +111,7 @@ export default function SelettoreCategorie(p: {
                 >
                   {aperta ? '▼' : '▶'}
                 </button>
-                <label className="casella">
+                <label className="casella" title={troppe ? TESTO_LIMITE : undefined}>
                   <CasellaMacro
                     stato={stato}
                     disabled={disabled || troppe}
@@ -121,7 +121,6 @@ export default function SelettoreCategorie(p: {
                   {g.nome} <small>({completo.tipi.length})</small>
                 </label>
               </div>
-              {troppe && <small className="errore">{TESTO_LIMITE}</small>}
               {aperta && (
                 <ul className="tipi">
                   {g.tipi.map((t) => (

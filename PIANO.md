@@ -27,7 +27,7 @@ Regole per risparmiare utilizzo:
 | Tema | Scelta |
 |---|---|
 | Hosting e database | Cloudflare Workers + D1, piano gratuito |
-| Telefono e sito | Opzionali per ricerca (casella), default disattivati |
+| Telefono e sito | Opzionali per ricerca (casella), default attivati (scelta del committente; l'utente può toglierli) |
 | Griglia | 3×3 vera, raggio R·√2/3, filtro finale entro R |
 | Password | Impostate solo dall'admin; nessun recupero né cambio da parte dell'utente |
 | Dati salvati | Dati completi (`SALVA_DATI_ESTESI=true`); la verifica dei termini Google resta a carico del committente |
