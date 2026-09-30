@@ -28,7 +28,8 @@ function aggiungiRisultato(sql: DatabaseSync, searchId: number, placeId: string,
 
 async function conSessione() {
   const { db, sql } = creaDb();
-  const idA = await aggiungiUtente(sql, { email: 'a@example.com', password: 'password-lunga-1', name: 'Anna' });
+  // Anna è admin: vede tutte le ricerche (i test sulla visibilità dell'operatore sono in fondo).
+  const idA = await aggiungiUtente(sql, { email: 'a@example.com', password: 'password-lunga-1', name: 'Anna', role: 'admin' });
   const { cookie } = await login(db, 'a@example.com', 'password-lunga-1');
   return { db, sql, cookie, idA };
 }
@@ -184,6 +185,81 @@ describe('POST /api/ricerche/:id/dettagli', () => {
     expect(res.status).toBe(502);
     expect(JSON.stringify(await res.json())).not.toContain('403');
     expect((sql.prepare('SELECT phone FROM search_results').get() as { phone: string | null }).phone).toBeNull();
+  });
+});
+
+describe('visibilità per ruolo (S6c)', () => {
+  async function scenarioRuoli() {
+    const s = await conSessione(); // idA = Anna, admin
+    const idB = await aggiungiUtente(s.sql, { email: 'b@example.com', password: 'password-lunga-2', name: 'Bruno' });
+    const idC = await aggiungiUtente(s.sql, { email: 'c@example.com', password: 'password-lunga-3', name: 'Carla' });
+    const rAdmin = aggiungiRicerca(s.sql, s.idA, '2026-09-01T10:00:00.000Z');
+    const rB = aggiungiRicerca(s.sql, idB, '2026-09-02T10:00:00.000Z');
+    const rC = aggiungiRicerca(s.sql, idC, '2026-09-03T10:00:00.000Z');
+    aggiungiRisultato(s.sql, rC, 'PC');
+    const cookieB = (await login(s.db, 'b@example.com', 'password-lunga-2')).cookie;
+    const mock = vi.fn(async () => ({ nome: 'X', indirizzo: null, tipi: [], telefono: null, sito: null }));
+    fabbricaDettagli.crea = () => mock;
+    const rete = vi.fn();
+    vi.stubGlobal('fetch', rete);
+    return { ...s, idB, idC, rAdmin, rB, rC, cookieB, mock, rete };
+  }
+
+  it('l’operatore vede solo le proprie ricerche e ignora il parametro "operatore"', async () => {
+    const { db, cookieB, idA, idC, rB } = await scenarioRuoli();
+    const ids = async (q = '') => (await json<Elenco>(await chiama(db, `/api/ricerche${q}`, { cookie: cookieB }))).righe.map((r) => r.id);
+    expect(await ids()).toEqual([rB]);
+    expect(await ids(`?operatore=${idC}`)).toEqual([rB]);
+    expect(await ids(`?operatore=${idA}`)).toEqual([rB]);
+    expect(await ids('?operatore=abc')).toEqual([rB]);
+    const e = await json<Elenco>(await chiama(db, '/api/ricerche', { cookie: cookieB }));
+    expect(e.totale).toBe(1);
+  });
+
+  it('l’admin vede tutte le ricerche e può filtrare per operatore', async () => {
+    const { db, cookie, idB, rAdmin, rB, rC } = await scenarioRuoli();
+    const ids = async (q = '') => (await json<Elenco>(await chiama(db, `/api/ricerche${q}`, { cookie }))).righe.map((r) => r.id);
+    expect(await ids()).toEqual([rC, rB, rAdmin]);
+    expect(await ids(`?operatore=${idB}`)).toEqual([rB]);
+  });
+
+  it('/api/operatori è solo per l’admin', async () => {
+    const { db, cookie, cookieB } = await scenarioRuoli();
+    expect((await chiama(db, '/api/operatori', { cookie: cookieB })).status).toBe(403);
+    expect((await chiama(db, '/api/operatori', { cookie })).status).toBe(200);
+  });
+
+  it('l’operatore non apre una ricerca altrui: 404 identico a quella inesistente', async () => {
+    const { db, cookieB, rB, rC } = await scenarioRuoli();
+    const altrui = await chiama(db, `/api/ricerche/${rC}`, { cookie: cookieB });
+    const inesistente = await chiama(db, '/api/ricerche/9999', { cookie: cookieB });
+    expect(altrui.status).toBe(404);
+    expect(inesistente.status).toBe(404);
+    expect(await altrui.json()).toEqual({ errore: 'Ricerca non trovata' });
+    expect(await inesistente.json()).toEqual({ errore: 'Ricerca non trovata' });
+    expect((await chiama(db, `/api/ricerche/${rB}`, { cookie: cookieB })).status).toBe(200);
+  });
+
+  it('l’admin apre qualsiasi ricerca', async () => {
+    const { db, cookie, rB, rC } = await scenarioRuoli();
+    for (const id of [rB, rC]) expect((await chiama(db, `/api/ricerche/${id}`, { cookie })).status).toBe(200);
+  });
+
+  it('"Recupera dettagli" su ricerca altrui: 404 e nessuna chiamata a Google', async () => {
+    const { db, cookieB, rC, mock, rete } = await scenarioRuoli();
+    const res = await chiama(db, `/api/ricerche/${rC}/dettagli`, { body: { placeId: 'PC' }, cookie: cookieB });
+    expect(res.status).toBe(404);
+    expect(await res.json()).toEqual({ errore: 'Ricerca non trovata' });
+    const vuota = await chiama(db, `/api/ricerche/${rC}/dettagli`, { body: {}, cookie: cookieB });
+    expect(vuota.status).toBe(404); // nemmeno il 400 rivela che la ricerca esiste
+    expect(mock).not.toHaveBeenCalled();
+    expect(rete).not.toHaveBeenCalled();
+  });
+
+  it('"Recupera dettagli": l’admin può usarlo su ricerche altrui', async () => {
+    const { db, cookie, rC, mock } = await scenarioRuoli();
+    expect((await chiama(db, `/api/ricerche/${rC}/dettagli`, { body: { placeId: 'PC' }, cookie })).status).toBe(200);
+    expect(mock).toHaveBeenCalledTimes(1);
   });
 });
 

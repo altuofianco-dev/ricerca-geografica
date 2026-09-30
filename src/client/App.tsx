@@ -62,7 +62,7 @@ export default function App() {
           <Dashboard />
         ) : pagina === 'elenco' ? (
           aperta === null ? (
-            <ElencoRicerche onApri={setAperta} />
+            <ElencoRicerche onApri={setAperta} admin={utente.role === 'admin'} />
           ) : (
             <DettaglioRicerca id={aperta} onIndietro={() => setAperta(null)} />
           )

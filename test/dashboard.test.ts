@@ -23,7 +23,8 @@ const json = async <T>(res: Response) => (await res.json()) as T;
 
 async function conSessione() {
   const { db, sql } = creaDb();
-  const idA = await aggiungiUtente(sql, { email: 'a@example.com', password: 'password-lunga-1', name: 'Anna' });
+  // Anna è admin: la dashboard mostra tutto (il caso operatore è nel blocco "per ruolo").
+  const idA = await aggiungiUtente(sql, { email: 'a@example.com', password: 'password-lunga-1', name: 'Anna', role: 'admin' });
   const idB = await aggiungiUtente(sql, { email: 'b@example.com', password: 'password-lunga-2', name: 'Bruno', active: 0 });
   const { cookie } = await login(db, 'a@example.com', 'password-lunga-1');
   return { db, sql, cookie, idA, idB };
@@ -74,6 +75,56 @@ describe('GET /api/dashboard', () => {
     const d = await json<Dash>(await chiama(db, '/api/dashboard?periodo=30giorni', { cookie }));
     expect(d.ricerche).toBe(1);
     expect(d.risultati).toBe(4);
+  });
+});
+
+describe('GET /api/dashboard per ruolo (S6c)', () => {
+  async function scenarioRuoli() {
+    const s = await conSessione(); // Anna admin, Bruno operatore disattivato
+    const idC = await aggiungiUtente(s.sql, { email: 'c@example.com', password: 'password-lunga-3', name: 'Carla' });
+    aggiungiRicerca(s.sql, s.idA, '2026-09-01T10:00:00.000Z', 10);
+    aggiungiRicerca(s.sql, s.idB, '2026-09-02T10:00:00.000Z', 3);
+    aggiungiRicerca(s.sql, idC, '2026-09-03T10:00:00.000Z', 6);
+    aggiungiRicerca(s.sql, idC, '2026-09-04T10:00:00.000Z', 0, 'errore');
+    const cookieC = (await login(s.db, 'c@example.com', 'password-lunga-3')).cookie;
+    return { ...s, cookieC };
+  }
+
+  it('l’operatore vede solo i propri totali e nessuna tabella per operatore', async () => {
+    const { db, cookieC } = await scenarioRuoli();
+    const d = await json<Partial<Dash>>(await chiama(db, '/api/dashboard?periodo=tutto', { cookie: cookieC }));
+    expect(d).toMatchObject({ ricerche: 2, risultati: 6, media: 3 });
+    expect(d.perOperatore).toBeUndefined();
+  });
+
+  it('l’operatore senza ricerche proprie vede zeri', async () => {
+    const { db, sql } = await scenarioRuoli();
+    await aggiungiUtente(sql, { email: 'd@example.com', password: 'password-lunga-4', name: 'Dario' });
+    const { cookie } = await login(db, 'd@example.com', 'password-lunga-4');
+    const d = await json<Partial<Dash>>(await chiama(db, '/api/dashboard?periodo=tutto', { cookie }));
+    expect(d).toMatchObject({ ricerche: 0, risultati: 0, media: null });
+  });
+
+  it('l’operatore rispetta anche il periodo', async () => {
+    const { db, sql, cookieC } = await scenarioRuoli();
+    aggiungiRicerca(sql, 3, new Date(Date.now() - 400 * 86_400_000).toISOString(), 50); // fuori periodo
+    aggiungiRicerca(sql, 3, new Date().toISOString(), 5);
+    aggiungiRicerca(sql, 1, new Date().toISOString(), 7); // di un altro utente
+    const tutto = await json<Partial<Dash>>(await chiama(db, '/api/dashboard?periodo=tutto', { cookie: cookieC }));
+    const recenti = await json<Partial<Dash>>(await chiama(db, '/api/dashboard?periodo=30giorni', { cookie: cookieC }));
+    expect(tutto.ricerche! - recenti.ricerche!).toBe(1);
+    expect(tutto.risultati! - recenti.risultati!).toBe(50);
+  });
+
+  it('l’admin vede i totali complessivi e la tabella per operatore', async () => {
+    const { db, cookie } = await scenarioRuoli();
+    const d = await json<Dash>(await chiama(db, '/api/dashboard?periodo=tutto', { cookie }));
+    expect(d).toMatchObject({ ricerche: 4, risultati: 19 });
+    expect(d.perOperatore.map((o) => [o.nome, o.ricerche, o.risultati])).toEqual([
+      ['Carla', 2, 6],
+      ['Anna', 1, 10],
+      ['Bruno', 1, 3],
+    ]);
   });
 });
 

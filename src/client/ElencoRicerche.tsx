@@ -27,7 +27,7 @@ interface Pagina {
 
 const decimale = (n: number) => String(n).replace('.', ',');
 
-export default function ElencoRicerche({ onApri }: { onApri: (id: number) => void }) {
+export default function ElencoRicerche({ onApri, admin }: { onApri: (id: number) => void; admin: boolean }) {
   const [operatori, setOperatori] = useState<Operatore[]>([]);
   const [dal, setDal] = useState('');
   const [al, setAl] = useState('');
@@ -37,15 +37,15 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
   const [errore, setErrore] = useState('');
 
   useEffect(() => {
-    api<Operatore[]>('/api/operatori').then(setOperatori).catch(() => {});
-  }, []);
+    if (admin) api<Operatore[]>('/api/operatori').then(setOperatori).catch(() => {});
+  }, [admin]);
 
   useEffect(() => {
     let annullata = false;
     const q = new URLSearchParams({ pagina: String(pagina) });
     if (dal) q.set('dal', dal);
     if (al) q.set('al', al);
-    if (operatore) q.set('operatore', operatore);
+    if (admin && operatore) q.set('operatore', operatore);
     api<Pagina>(`/api/ricerche?${q}`)
       .then((r) => {
         if (annullata) return;
@@ -56,7 +56,7 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
     return () => {
       annullata = true;
     };
-  }, [dal, al, operatore, pagina]);
+  }, [dal, al, operatore, pagina, admin]);
 
   const cambia = (f: (v: string) => void) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     f(e.target.value);
@@ -77,18 +77,20 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
           Al
           <input type="date" value={al} min={dal || undefined} onChange={cambia(setAl)} />
         </label>
-        <label>
-          Operatore
-          <select value={operatore} onChange={cambia(setOperatore)}>
-            <option value="">Tutti</option>
-            {operatori.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.name}
-                {o.active ? '' : ' (disattivato)'}
-              </option>
-            ))}
-          </select>
-        </label>
+        {admin && (
+          <label>
+            Operatore
+            <select value={operatore} onChange={cambia(setOperatore)}>
+              <option value="">Tutti</option>
+              {operatori.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.name}
+                  {o.active ? '' : ' (disattivato)'}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
       </div>
 
       {errore && <Errore testo={errore} />}
@@ -102,7 +104,7 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
               <thead>
                 <tr>
                   <th>Data</th>
-                  <th>Operatore</th>
+                  {admin && <th>Operatore</th>}
                   <th>Indirizzo di partenza</th>
                   <th>Raggio (km)</th>
                   <th>Risultati</th>
@@ -113,7 +115,7 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
                 {dati.righe.map((r) => (
                   <tr key={r.id}>
                     <td>{formattaData(r.created_at)}</td>
-                    <td>{r.operatore}</td>
+                    {admin && <td>{r.operatore}</td>}
                     <td>{r.address_text}</td>
                     <td>{decimale(r.radius_km)}</td>
                     <td>{r.status === 'errore' ? 'Errore' : r.status === 'in_corso' ? 'In corso' : (r.result_count ?? 0)}</td>
@@ -124,7 +126,7 @@ export default function ElencoRicerche({ onApri }: { onApri: (id: number) => voi
                 ))}
                 {dati.righe.length === 0 && (
                   <tr>
-                    <td colSpan={6}>Nessuna ricerca trovata</td>
+                    <td colSpan={admin ? 6 : 5}>Nessuna ricerca trovata</td>
                   </tr>
                 )}
               </tbody>

@@ -11,9 +11,9 @@ Uso interno, 2-3 utenti. Sicurezza di base ma corretta (password con hash, chiav
 ## 2. Utenti e ruoli
 
 - **admin**: tutto ciò che fa un operatore, più la gestione utenti (§4.1).
-- **operatore**: effettua ricerche e consulta ricerche e dashboard.
+- **operatore**: effettua ricerche e consulta le proprie ricerche e la propria dashboard.
 
-Tutti gli utenti vedono tutte le ricerche.
+**Visibilità delle ricerche**: l'admin vede tutte le ricerche; l'operatore vede solo le proprie. Il controllo è fatto lato server su ogni endpoint (elenco, dettaglio, "Recupera dettagli", dashboard, elenco operatori), non solo nell'interfaccia. Il limite giornaliero `MAX_RICERCHE_GIORNO` resta unico per tutta l'app (contano le ricerche di tutti gli utenti).
 
 ## 3. Sezioni dell'app
 
@@ -101,7 +101,9 @@ Tabella con: denominazione, indirizzo, categorie (etichette italiane quando disp
 
 ## 7. Elenco ricerche
 
-Colonne: data, operatore, indirizzo di partenza, raggio, n. risultati. Filtri: data da … a …, operatore. Ordinamento: più recenti prima. Paginazione da 25 righe.
+Colonne: data, operatore (solo admin), indirizzo di partenza, raggio, n. risultati. Filtri: data da … a …, operatore (solo admin). Ordinamento: più recenti prima. Paginazione da 25 righe.
+
+Visibilità (§2): l'operatore vede solo le proprie ricerche; il parametro `operatore` dell'API viene ignorato per lui e `GET /api/operatori` è riservato all'admin (403 all'operatore). Se un operatore prova ad aprire una ricerca altrui (dettaglio o "Recupera dettagli"), anche forzando l'id, il server risponde 404 "Ricerca non trovata", come per una ricerca inesistente, senza chiamare Google.
 
 ### Dettaglio ricerca
 
@@ -112,8 +114,10 @@ Parametri della ricerca e l'elenco dei risultati salvati (vedi §9). Per ogni ri
 - N. ricerche effettuate
 - N. risultati ottenuti (somma)
 - N. medio di risultati per ricerca
-- N. ricerche per operatore
-- N. risultati per operatore
+- N. ricerche per operatore (solo admin)
+- N. risultati per operatore (solo admin)
+
+Per l'operatore i totali contano solo le sue ricerche e la tabella per operatore non è disponibile (il server non la restituisce); l'admin vede i totali complessivi e la tabella.
 
 Filtro periodo opzionale: ultimi 30 giorni / anno corrente / tutto.
 

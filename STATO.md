@@ -14,6 +14,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S5 — Elenco ricerche e dettaglio | completata e verificata dal committente | 30/09/2026 |
 | S6 — Dashboard e rifinitura | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S6b — Selettore ad albero delle categorie | completata (in attesa di verifica del committente) | 30/09/2026 |
+| S6c — Visibilità delle ricerche per ruolo | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
@@ -22,7 +23,19 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Produzione: https://ricerca-geografica.altuofianco-dev.workers.dev
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
-## Ultima sessione (S6b)
+## Ultima sessione (S6c)
+- Sessione: S6c — Visibilità delle ricerche per ruolo (correzione prima della S7)
+- Regola: l'admin vede tutte le ricerche, l'operatore solo le proprie (controllo lato server). SPEC §2, §7, §8 aggiornate.
+- Cosa è stato fatto:
+  - `storico.ts`: `GET /api/operatori` solo admin (403 all'operatore); `GET /api/ricerche` filtra sempre per l'id dell'operatore e ignora il parametro `operatore`; `GET /api/ricerche/:id` e `POST /api/ricerche/:id/dettagli` rispondono 404 "Ricerca non trovata" se la ricerca non è dell'operatore (uguale a una inesistente; per i dettagli il controllo precede ogni altra verifica e nessuna chiamata a Google).
+  - `dashboard.ts`: per l'operatore i totali contano solo le sue ricerche e `perOperatore` non viene restituito (solo admin).
+  - `MAX_RICERCHE_GIORNO` invariato: conteggio unico per tutta l'app.
+  - Interfaccia: l'operatore non vede filtro né colonna "Operatore" nell'elenco, né la tabella per operatore in Dashboard.
+  - Test: 127 in tutto (12 nuovi; Google sempre finto). Nei test esistenti l'utente di prova ora è admin, per mantenere la visibilità globale. Controllo tipi e `npm run build` ok. Interfaccia non provata nel browser (serve un login locale).
+- Azioni richieste al committente: `npm run deploy`; poi provare online con un operatore (vede solo le sue ricerche, niente filtro/colonna operatore, Dashboard solo con i suoi totali) e con l'admin (vede tutto).
+- Nota: nel dettaglio di una ricerca il campo "Operatore" resta visibile (per l'operatore è sempre se stesso).
+
+## Sessione precedente (S6b)
 - Sessione: S6b — Selettore ad albero delle categorie (correzione prima della S7)
 - Cosa è stato fatto:
   - `src/data/place-types.it.json`: ogni tipo ha `gruppo` (18 macro-categorie in italiano, secondo la Table A); `generico: true` sulla categoria ampia di 8 gruppi (restaurant, store, lodging, service, educational_institution, government_office, transportation_service, sports_activity_location), mostrata con "(in generale)" solo nel selettore (le etichette usate da CSV e risultati restano quelle normali; `service` ora si chiama "Servizio"); "Cibo e bevande" ha in cima restaurant, cafe, bar, bakery, meal_takeaway; `parole` con sinonimi italiani (idraulico/caldaia/riscaldamento → plumber, meccanico/officina → car_repair, ecc.). Il file è ora formattato con un tipo per riga.

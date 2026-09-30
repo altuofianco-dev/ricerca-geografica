@@ -145,6 +145,17 @@ describe('POST /api/ricerche', () => {
     expect((sql.prepare('SELECT COUNT(*) AS n FROM searches').get() as { n: number }).n).toBe(2);
   });
 
+  it('il limite è unico per tutta l’app: le ricerche degli altri utenti contano', async () => {
+    const { db, sql, cookie } = await conSessione();
+    await aggiungiUtente(sql, { email: 'b@example.com', password: 'password-lunga-2' });
+    const cookieB = (await login(db, 'b@example.com', 'password-lunga-2')).cookie;
+    finto(async () => []);
+    const env = { MAX_RICERCHE_GIORNO: '2' };
+    expect((await chiama(db, '/api/ricerche', { body: corpo(), cookie, env })).status).toBe(200);
+    expect((await chiama(db, '/api/ricerche', { body: corpo(), cookie, env })).status).toBe(200);
+    expect((await chiama(db, '/api/ricerche', { body: corpo(), cookie: cookieB, env })).status).toBe(429);
+  });
+
   it('le ricerche di ieri non contano nel limite di oggi', async () => {
     const { db, sql, cookie } = await conSessione();
     sql.prepare(

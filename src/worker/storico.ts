@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import type { AppEnv } from './auth';
+import { soloAdmin, type AppEnv } from './auth';
 import { inizioGiornoRomaDa } from './ricerche';
 
 // Elenco ricerche, dettaglio e "Recupera dettagli" (SPEC §7, §9).
@@ -78,8 +78,11 @@ const idValido = (s: string) => /^\d{1,12}$/.test(s);
 
 export const storico = new Hono<AppEnv>();
 
-// Tutti gli utenti (anche disattivati: le loro ricerche restano nello storico, SPEC §4.1). Solo id e nome.
-storico.get('/api/operatori', async (c) => {
+// Visibilità (SPEC §2): l'admin vede tutte le ricerche, l'operatore solo le proprie.
+const soloProprie = (utente: { id: number; role: string }) => utente.role !== 'admin';
+
+// Solo admin. Tutti gli utenti (anche disattivati: le loro ricerche restano nello storico, SPEC §4.1). Solo id e nome.
+storico.get('/api/operatori', soloAdmin, async (c) => {
   const { results } = await c.env.DB.prepare('SELECT id, name, active FROM users ORDER BY name COLLATE NOCASE').all();
   return c.json(results);
 });
@@ -104,8 +107,13 @@ storico.get('/api/ricerche', async (c) => {
     cond.push('s.created_at < ?');
     par.push(inizioGiornoRomaDa(giornoDopo));
   }
+  const utente = c.get('utente');
   const operatore = c.req.query('operatore');
-  if (operatore) {
+  if (soloProprie(utente)) {
+    // Per l'operatore il filtro è sempre il suo id: il parametro "operatore" viene ignorato.
+    cond.push('s.user_id = ?');
+    par.push(utente.id);
+  } else if (operatore) {
     if (!idValido(operatore)) return c.json({ errore: 'Operatore non valido' }, 400);
     cond.push('s.user_id = ?');
     par.push(Number(operatore));
@@ -131,13 +139,14 @@ storico.get('/api/ricerche', async (c) => {
 storico.get('/api/ricerche/:id', async (c) => {
   const id = c.req.param('id');
   if (!idValido(id)) return c.json({ errore: 'Ricerca non trovata' }, 404);
+  const utente = c.get('utente');
   const s = await c.env.DB.prepare(
     `SELECT s.id, s.created_at, s.address_text, s.address_place_id, s.lat, s.lng, s.radius_km, s.types_json,
             s.include_contacts, s.status, s.result_count, s.api_calls, s.saturated_calls, s.error_message,
             u.name AS operatore
-     FROM searches s JOIN users u ON u.id = s.user_id WHERE s.id = ?`,
+     FROM searches s JOIN users u ON u.id = s.user_id WHERE s.id = ?${soloProprie(utente) ? ' AND s.user_id = ?' : ''}`,
   )
-    .bind(Number(id))
+    .bind(...(soloProprie(utente) ? [Number(id), utente.id] : [Number(id)]))
     .first<Record<string, unknown> & { types_json: string; include_contacts: number }>();
   if (!s) return c.json({ errore: 'Ricerca non trovata' }, 404);
   const { results } = await c.env.DB.prepare(
@@ -159,7 +168,16 @@ storico.post('/api/ricerche/:id/dettagli', async (c) => {
   const id = c.req.param('id');
   const b = await c.req.json<{ placeId?: unknown }>().catch(() => null);
   const placeId = typeof b?.placeId === 'string' ? b.placeId : '';
-  if (!idValido(id) || !placeId) return c.json({ errore: 'Richiesta non valida' }, 400);
+  if (!idValido(id)) return c.json({ errore: 'Ricerca non trovata' }, 404);
+  // Ricerca altrui (o inesistente): stessa risposta, e nessuna chiamata a Google.
+  const utente = c.get('utente');
+  if (soloProprie(utente)) {
+    const mia = await c.env.DB.prepare('SELECT 1 FROM searches WHERE id = ? AND user_id = ?')
+      .bind(Number(id), utente.id)
+      .first();
+    if (!mia) return c.json({ errore: 'Ricerca non trovata' }, 404);
+  }
+  if (!placeId) return c.json({ errore: 'Richiesta non valida' }, 400);
   // Il luogo deve appartenere alla ricerca: niente chiamate a pagamento su Place ID arbitrari.
   const riga = await c.env.DB.prepare('SELECT place_id FROM search_results WHERE search_id = ? AND place_id = ?')
     .bind(Number(id), placeId)

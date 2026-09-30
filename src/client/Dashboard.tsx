@@ -8,7 +8,7 @@ interface Dati {
   ricerche: number;
   risultati: number;
   media: number | null;
-  perOperatore: { id: number; nome: string; attivo: number; ricerche: number; risultati: number }[];
+  perOperatore?: { id: number; nome: string; attivo: number; ricerche: number; risultati: number }[];
 }
 
 const numero = (n: number) => new Intl.NumberFormat('it-IT').format(n);
@@ -64,6 +64,7 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {dati.perOperatore && (
           <div className="scorri">
             <table>
               <thead>
@@ -92,6 +93,7 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
+          )}
         </>
       )}
     </>

@@ -38,14 +38,18 @@ dashboard.get('/api/dashboard', async (c) => {
   if (!PERIODI.includes(periodo)) return c.json({ errore: 'Periodo non valido' }, 400);
 
   const inizio = inizioPeriodo(periodo);
+  // L'operatore conta solo le proprie ricerche (SPEC §2); l'admin tutte.
+  const utente = c.get('utente');
+  const admin = utente.role === 'admin';
+  const cond = [...(inizio ? ['s.created_at >= ?'] : []), ...(admin ? [] : ['s.user_id = ?'])];
   const { results } = await c.env.DB.prepare(
     `SELECT u.id AS id, u.name AS nome, u.active AS attivo,
             COUNT(*) AS ricerche, COALESCE(SUM(s.result_count), 0) AS risultati
      FROM searches s JOIN users u ON u.id = s.user_id
-     ${inizio ? 'WHERE s.created_at >= ?' : ''}
+     ${cond.length ? `WHERE ${cond.join(' AND ')}` : ''}
      GROUP BY u.id ORDER BY ricerche DESC, u.name COLLATE NOCASE`,
   )
-    .bind(...(inizio ? [inizio] : []))
+    .bind(...(inizio ? [inizio] : []), ...(admin ? [] : [utente.id]))
     .all<RigaOperatore>();
 
   // I totali derivano dalle stesse righe per operatore: i numeri non possono divergere.
@@ -56,6 +60,7 @@ dashboard.get('/api/dashboard', async (c) => {
     ricerche,
     risultati,
     media: ricerche > 0 ? risultati / ricerche : null,
-    perOperatore: results,
+    // La tabella per operatore è solo per l'admin.
+    ...(admin ? { perOperatore: results } : {}),
   });
 });
