@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import tipiIt from '../data/place-types.it.json';
 import { api } from './api';
-import { generaCsv, scaricaCsv } from './csv';
+import { csvRisultati, etichette, scaricaCsv } from './csv';
 
 const TIPI = tipiIt as { type: string; label: string }[];
 const ETICHETTE = new Map(TIPI.map((t) => [t.type, t.label]));
@@ -30,7 +30,6 @@ interface Esito {
   contatti: boolean;
 }
 
-const etichette = (tipi: string[]) => tipi.map((t) => ETICHETTE.get(t)).filter(Boolean).join(', ');
 const nuovaSessione = () => crypto.randomUUID();
 const senzaAccenti = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
@@ -124,11 +123,7 @@ export default function NuovaRicerca() {
   }
 
   function scarica(x: Esito) {
-    const csv = generaCsv(
-      ['Denominazione', 'Indirizzo', 'Categorie', 'Telefono', 'Sito web', 'Place ID'],
-      x.risultati.map((l) => [l.nome, l.indirizzo, etichette(l.tipi), l.telefono, l.sito, l.placeId]),
-    );
-    scaricaCsv(`ricerca-${x.id}.csv`, csv);
+    scaricaCsv(`ricerca-${x.id}.csv`, csvRisultati(x.risultati));
   }
 
   return (

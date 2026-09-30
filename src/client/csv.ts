@@ -1,6 +1,9 @@
 // CSV per Excel in italiano: UTF-8 con BOM, separatore ";", righe CRLF.
 
+import tipiIt from '../data/place-types.it.json';
+
 const BOM = '﻿';
+const ETICHETTE = new Map((tipiIt as { type: string; label: string }[]).map((t) => [t.type, t.label]));
 
 /** Racchiude la cella tra virgolette se serve; neutralizza le formule (= + - @) anteponendo un apice. */
 export function cellaCsv(valore: string | null | undefined): string {
@@ -13,6 +16,25 @@ export function generaCsv(intestazioni: string[], righe: (string | null | undefi
   const linee = [intestazioni, ...righe].map((r) => r.map(cellaCsv).join(';'));
   return BOM + linee.join('\r\n') + '\r\n';
 }
+
+export interface LuogoCsv {
+  placeId: string;
+  nome: string | null;
+  indirizzo: string | null;
+  tipi: string[];
+  telefono: string | null;
+  sito: string | null;
+}
+
+/** Etichette italiane dei tipi Google (quelle sconosciute vengono omesse). */
+export const etichette = (tipi: string[]) => tipi.map((t) => ETICHETTE.get(t)).filter(Boolean).join(', ');
+
+/** CSV dei risultati: usato da "Nuova ricerca" e dal dettaglio di una ricerca. */
+export const csvRisultati = (luoghi: LuogoCsv[]) =>
+  generaCsv(
+    ['Denominazione', 'Indirizzo', 'Categorie', 'Telefono', 'Sito web', 'Place ID'],
+    luoghi.map((l) => [l.nome, l.indirizzo, etichette(l.tipi), l.telefono, l.sito, l.placeId]),
+  );
 
 export function scaricaCsv(nomeFile: string, contenuto: string) {
   const url = URL.createObjectURL(new Blob([contenuto], { type: 'text/csv;charset=utf-8' }));

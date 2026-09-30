@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cellaCsv, generaCsv } from '../src/client/csv';
+import { cellaCsv, csvRisultati, etichette, generaCsv } from '../src/client/csv';
 
 describe('CSV', () => {
   it('inizia con BOM, usa ; e righe CRLF, accenti intatti', () => {
@@ -17,6 +17,17 @@ describe('CSV', () => {
   it('gestisce null e vuoti', () => {
     expect(cellaCsv(null)).toBe('');
     expect(cellaCsv(undefined)).toBe('');
+  });
+
+  it('csvRisultati usa le etichette italiane e gestisce i dati mancanti', () => {
+    const csv = csvRisultati([
+      { placeId: 'P1', nome: 'Farmacia Rossi', indirizzo: 'Via Roma 1', tipi: ['pharmacy', 'tipo_ignoto'], telefono: '06 123456', sito: null },
+      { placeId: 'P2', nome: null, indirizzo: null, tipi: [], telefono: null, sito: null },
+    ]);
+    const righe = csv.slice(1).split('\r\n');
+    expect(righe[0]).toBe('Denominazione;Indirizzo;Categorie;Telefono;Sito web;Place ID');
+    expect(righe[1]).toBe(`Farmacia Rossi;Via Roma 1;${etichette(['pharmacy'])};06 123456;;P1`);
+    expect(righe[2]).toBe(';;;;;P2');
   });
 
   it('neutralizza le formule', () => {

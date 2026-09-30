@@ -141,3 +141,23 @@ tr.disattivo td {
   color: #1a7f37;
   margin: 0.5rem 0;
 }
+.filtri {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.azioni {
+  align-items: center;
+  margin: 0.75rem 0;
+}
+.parametri {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+}
+.parametri dt {
+  font-weight: 600;
+}
+.parametri dd {
+  margin: 0;
+}
