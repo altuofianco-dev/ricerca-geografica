@@ -44,8 +44,21 @@ function offsetRomaMs(istante: number): number {
 export function inizioGiornoRoma(adesso: Date = new Date()): string {
   const t = adesso.getTime();
   const romaComeUtc = new Date(t + offsetRomaMs(t));
-  const mezzanotteComeUtc = Date.UTC(romaComeUtc.getUTCFullYear(), romaComeUtc.getUTCMonth(), romaComeUtc.getUTCDate());
-  let guess = mezzanotteComeUtc - offsetRomaMs(t);
+  return mezzanotteRoma(Date.UTC(romaComeUtc.getUTCFullYear(), romaComeUtc.getUTCMonth(), romaComeUtc.getUTCDate()), t);
+}
+
+/** Inizio (00:00 Europe/Rome) del giorno AAAA-MM-GG, come istante ISO UTC; null se la data non è valida. */
+export function inizioGiornoRomaDa(ymd: string): string | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ymd);
+  if (!m) return null;
+  const [a, me, g] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  const d = new Date(Date.UTC(a, me - 1, g));
+  if (d.getUTCFullYear() !== a || d.getUTCMonth() !== me - 1 || d.getUTCDate() !== g) return null;
+  return mezzanotteRoma(d.getTime(), d.getTime());
+}
+
+function mezzanotteRoma(mezzanotteComeUtc: number, istanteApprossimato: number): string {
+  let guess = mezzanotteComeUtc - offsetRomaMs(istanteApprossimato);
   guess = mezzanotteComeUtc - offsetRomaMs(guess); // correzione se l'ora legale cambia nella giornata
   return new Date(guess).toISOString();
 }

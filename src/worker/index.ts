@@ -3,6 +3,7 @@ import { auth, richiediSessione, soloJson, type AppEnv } from './auth';
 import { utenti } from './utenti';
 import { luoghi } from './luoghi';
 import { ricerche } from './ricerche';
+import { storico } from './storico';
 
 export type { Env } from './auth';
 
@@ -31,6 +32,7 @@ app.route('/', auth);
 app.route('/', utenti);
 app.route('/', luoghi);
 app.route('/', ricerche);
+app.route('/', storico);
 
 app.all('/api/*', (c) => c.json({ errore: 'Risorsa non trovata' }, 404));
 
