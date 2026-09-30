@@ -17,11 +17,10 @@ app.get('/api/health', async (c) => {
     )
       .bind(...TABELLE)
       .first<{ n: number }>();
-    const tabelle = row?.n ?? 0;
-    const ok = tabelle === TABELLE.length;
-    return c.json({ status: ok ? 'ok' : 'errore', db: 'ok', tabelle }, ok ? 200 : 500);
+    const ok = (row?.n ?? 0) === TABELLE.length;
+    return c.json({ status: ok ? 'ok' : 'errore' }, ok ? 200 : 500);
   } catch {
-    return c.json({ status: 'errore', db: 'non raggiungibile' }, 500);
+    return c.json({ status: 'errore' }, 500);
   }
 });
 

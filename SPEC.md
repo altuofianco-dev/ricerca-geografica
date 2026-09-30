@@ -34,6 +34,7 @@ Interfaccia interamente in italiano. Date e ore nel fuso Europe/Rome, formato gg
 - **Nessun recupero password** e nessuna registrazione pubblica: le password sono impostate solo dall'admin. Gli utenti non cambiano la propria password.
 - Primo admin creato con uno script/comando da riga di comando.
 - Un utente disattivato non può accedere.
+- Ogni endpoint `/api/*` richiede una sessione valida, tranne il login e `/api/health` (controllo tecnico pubblico: risponde solo `{"status":"ok"}` oppure `{"status":"errore"}`, senza dettagli).
 
 ### 4.1 Gestione utenti (solo admin)
 

@@ -27,6 +27,6 @@ Il committente non scrive codice: spiega in italiano semplice cosa gli chiedi di
 - **Segreti**: la chiave Google sta solo in `.dev.vars` (locale) e come secret Wrangler (remoto). Mai nel codice, nei log, nei commit o nelle risposte. `.dev.vars` deve essere in `.gitignore`.
 - **Costi Google**: ogni ricerca reale costa. Chiedi conferma prima di ogni chiamata reale a Google; nei test usa dati finti (mock).
 - **Password**: PBKDF2-SHA256 Web Crypto, 100.000 iterazioni. Niente bcrypt/argon2.
-- Ogni endpoint `/api/*` (tranne login) richiede sessione valida; gli endpoint admin controllano il ruolo lato server.
+- Ogni endpoint `/api/*` (tranne login e `/api/health`) richiede sessione valida; `/api/health` è pubblico ma risponde solo ok/errore, senza dettagli; gli endpoint admin controllano il ruolo lato server.
 - Testi dell'interfaccia in italiano; date in Europe/Rome.
 - Dipendenze: il minimo indispensabile. Chiedi prima di aggiungerne di nuove.

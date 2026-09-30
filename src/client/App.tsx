@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-type Health = { status: string; db: string; tabelle?: number };
+type Health = { status: string };
 
 export default function App() {
   const [health, setHealth] = useState<Health | null>(null);
@@ -23,7 +23,7 @@ export default function App() {
           : !health
             ? 'verifica in corso…'
             : health.status === 'ok'
-              ? `tutto funziona (database collegato, ${health.tabelle} tabelle)`
+              ? 'tutto funziona'
               : 'problema con il database'}
       </p>
     </main>

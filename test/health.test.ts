@@ -15,14 +15,21 @@ function fakeDb(n: number | Error) {
 }
 
 describe('/api/health', () => {
-  it('risponde ok quando le 4 tabelle esistono', async () => {
+  it('risponde solo ok quando le 4 tabelle esistono', async () => {
     const res = await app.request('/api/health', {}, { DB: fakeDb(4) });
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ status: 'ok', db: 'ok', tabelle: 4 });
+    expect(await res.json()).toEqual({ status: 'ok' });
   });
 
-  it('risponde 500 se il database non è raggiungibile', async () => {
+  it('risponde solo errore se mancano tabelle', async () => {
+    const res = await app.request('/api/health', {}, { DB: fakeDb(2) });
+    expect(res.status).toBe(500);
+    expect(await res.json()).toEqual({ status: 'errore' });
+  });
+
+  it('risponde solo errore se il database non è raggiungibile', async () => {
     const res = await app.request('/api/health', {}, { DB: fakeDb(new Error('x')) });
     expect(res.status).toBe(500);
+    expect(await res.json()).toEqual({ status: 'errore' });
   });
 });
