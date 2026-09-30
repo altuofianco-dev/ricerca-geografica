@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { api, messaggioErrore } from './api';
 import { csvRisultati, etichetteRisultato, formatoCoordinate, scaricaCsv } from './csv';
+import { useCategorie } from './elencoCategorie';
 import SelettoreCategorie from './SelettoreCategorie';
 import { LinkMaps, SitoWeb, Telefono } from './Stati';
 
@@ -32,6 +33,7 @@ interface Esito {
 const nuovaSessione = () => crypto.randomUUID();
 
 export default function NuovaRicerca() {
+  const elenco = useCategorie().tipi ?? [];
   const [testo, setTesto] = useState('');
   const [scelto, setScelto] = useState<{ placeId: string; testo: string; lat: number; lng: number } | null>(null);
   const [suggerimenti, setSuggerimenti] = useState<Suggerimento[]>([]);
@@ -114,7 +116,7 @@ export default function NuovaRicerca() {
   }
 
   function scarica(x: Esito) {
-    scaricaCsv(`ricerca-${x.id}.csv`, csvRisultati(x.risultati));
+    scaricaCsv(`ricerca-${x.id}.csv`, csvRisultati(x.risultati, elenco));
   }
 
   return (
@@ -212,7 +214,7 @@ export default function NuovaRicerca() {
                     <td>{l.nome}</td>
                     <td><LinkMaps nome={l.nome} indirizzo={l.indirizzo} placeId={l.placeId} /></td>
                     <td className="unariga">{formatoCoordinate(l.lat, l.lng)}</td>
-                    <td>{etichetteRisultato(l.tipi)}</td>
+                    <td>{etichetteRisultato(l.tipi, elenco)}</td>
                     <td className="unariga"><Telefono numero={l.telefono} /></td>
                     <td className="unariga"><SitoWeb url={l.sito} /></td>
                     <td className="placeid" title={l.placeId}>{l.placeId}</td>

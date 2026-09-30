@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { cellaCsv, csvRisultati, decimaleIt, etichette, etichetteRisultato, formatoCoordinate, generaCsv, linkMaps, numeroTel } from '../src/client/csv';
 
+// Elenco come lo restituisce GET /api/categorie (dati finti).
+const ELENCO = [
+  { type: 'pharmacy', label: 'Farmacia' },
+  { type: 'service', label: 'Servizio', generico: true },
+];
+
 describe('CSV', () => {
   it('inizia con BOM, usa ; e righe CRLF, accenti intatti', () => {
     const csv = generaCsv(['Nome', 'Indirizzo'], [['Caffè Città', 'Via Roma 1']]);
@@ -23,11 +29,11 @@ describe('CSV', () => {
     const csv = csvRisultati([
       { placeId: 'P1', nome: 'Farmacia Rossi', indirizzo: 'Via Roma 1', tipi: ['pharmacy', 'tipo_ignoto'], telefono: '06 123456', sito: null, lat: 41.85421, lng: 12.47851 },
       { placeId: 'P2', nome: null, indirizzo: null, tipi: [], telefono: null, sito: null },
-    ]);
+    ], ELENCO);
     const righe = csv.slice(1).split('\r\n');
     expect(righe[0]).toBe('Denominazione;Indirizzo;Latitudine;Longitudine;Categorie;Telefono;Sito web;Place ID;Link Google Maps');
     expect(righe[1]).toBe(
-      `Farmacia Rossi;Via Roma 1;41,85421;12,47851;${etichette(['pharmacy'])};06 123456;;P1;${linkMaps('Farmacia Rossi', 'Via Roma 1', 'P1')}`,
+      `Farmacia Rossi;Via Roma 1;41,85421;12,47851;Farmacia;06 123456;;P1;${linkMaps('Farmacia Rossi', 'Via Roma 1', 'P1')}`,
     );
     expect(righe[2]).toBe(`;;;;;;;P2;${linkMaps(null, null, 'P2')}`);
   });
@@ -57,10 +63,15 @@ describe('CSV', () => {
   });
 
   it('nasconde le categorie generiche quando ce ne sono di più specifiche (anche nel CSV)', () => {
-    expect(etichetteRisultato(['service', 'pharmacy'])).toBe(etichette(['pharmacy']));
-    expect(etichetteRisultato(['service'])).toBe(etichette(['service']));
-    const csv = csvRisultati([{ placeId: 'P1', nome: 'A', indirizzo: null, tipi: ['service', 'pharmacy'], telefono: null, sito: null }]);
-    expect(csv).not.toContain(etichette(['service']));
+    expect(etichetteRisultato(['service', 'pharmacy'], ELENCO)).toBe('Farmacia');
+    expect(etichetteRisultato(['service'], ELENCO)).toBe('Servizio');
+    const csv = csvRisultati([{ placeId: 'P1', nome: 'A', indirizzo: null, tipi: ['service', 'pharmacy'], telefono: null, sito: null }], ELENCO);
+    expect(csv).not.toContain('Servizio');
+  });
+
+  it('le etichette seguono i dati ricevuti dall’API (modificati dall’admin)', () => {
+    const modificato = [{ type: 'pharmacy', label: 'Parafarmacia' }];
+    expect(etichette(['pharmacy', 'sconosciuto'], modificato)).toBe('Parafarmacia');
   });
 
   it('neutralizza le formule', () => {

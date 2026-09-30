@@ -369,6 +369,18 @@ tr.disattivo td {
   background: var(--bianco);
   padding: 0.25rem 0.5rem;
 }
+.albero-alto {
+  max-height: none;
+}
+.tabella-categorie {
+  margin: 0.25rem 0 0.75rem 2.25rem;
+  width: calc(100% - 2.25rem);
+  font-weight: 400;
+}
+.tabella-categorie code {
+  font-size: 0.8rem;
+  color: var(--testo-tenue);
+}
 .macro {
   display: flex;
   align-items: center;

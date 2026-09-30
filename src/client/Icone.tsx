@@ -49,6 +49,12 @@ export const IconaUtenti = () => (
   </Icona>
 );
 
+export const IconaCategorie = () => (
+  <Icona>
+    <path d="M3.5 4.5h7v7h-7zM13.5 4.5h7v7h-7zM3.5 14.5h7v5h-7zM13.5 14.5h7v5h-7z" />
+  </Icona>
+);
+
 export const IconaEsci = () => (
   <Icona>
     <path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M10 8l-4 4 4 4M6 12h10" />

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api, formattaData, messaggioErrore, testoErroreRicerca } from './api';
 import { Caricamento, Errore, EtichettaStato, LinkMaps, SitoWeb, Telefono } from './Stati';
 import { csvRisultati, etichette, etichetteRisultato, formatoCoordinate, scaricaCsv, type LuogoCsv } from './csv';
+import { useCategorie } from './elencoCategorie';
 
 interface LuogoSalvato extends LuogoCsv {
   recuperatoIl: string;
@@ -27,6 +28,7 @@ interface Dettaglio {
 const decimale = (n: number) => String(n).replace('.', ',');
 
 export default function DettaglioRicerca({ id, onIndietro }: { id: number; onIndietro: () => void }) {
+  const elenco = useCategorie().tipi ?? [];
   const [d, setD] = useState<Dettaglio | null>(null);
   const [errore, setErrore] = useState('');
   // Un solo recupero alla volta per riga (e mai due insieme): ogni chiamata è a pagamento.
@@ -67,7 +69,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
             <dt>Operatore</dt><dd>{d.operatore}</dd>
             <dt>Indirizzo di partenza</dt><dd>{d.address_text}</dd>
             <dt>Raggio</dt><dd>{decimale(d.radius_km)} km</dd>
-            <dt>Categorie</dt><dd>{etichette(d.categorie) || '—'}</dd>
+            <dt>Categorie</dt><dd>{etichette(d.categorie, elenco) || '—'}</dd>
             <dt>Telefono e sito web</dt><dd>{d.include_contacts ? 'Inclusi' : 'Non inclusi'}</dd>
             <dt>Stato</dt><dd><EtichettaStato stato={d.status} /></dd>
             <dt>Chiamate Google</dt><dd>{d.api_calls ?? 0} (sature: {d.saturated_calls ?? 0})</dd>
@@ -79,7 +81,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
 
           <h2>Risultati: {d.risultati.length}</h2>
           <div className="azioni">
-            <button type="button" disabled={d.risultati.length === 0} onClick={() => scaricaCsv(`ricerca-${d.id}.csv`, csvRisultati(d.risultati))}>
+            <button type="button" disabled={d.risultati.length === 0} onClick={() => scaricaCsv(`ricerca-${d.id}.csv`, csvRisultati(d.risultati, elenco))}>
               Scarica CSV
             </button>
           </div>
@@ -103,7 +105,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
                     <td>{l.nome ?? ''}</td>
                     <td><LinkMaps nome={l.nome} indirizzo={l.indirizzo} placeId={l.placeId} /></td>
                     <td className="unariga">{formatoCoordinate(l.lat, l.lng)}</td>
-                    <td>{etichetteRisultato(l.tipi)}</td>
+                    <td>{etichetteRisultato(l.tipi, elenco)}</td>
                     <td className="unariga"><Telefono numero={l.telefono} /></td>
                     <td className="unariga"><SitoWeb url={l.sito} /></td>
                     <td className="placeid" title={l.placeId}>{l.placeId}</td>

@@ -1,11 +1,23 @@
 // CSV per Excel in italiano: UTF-8 con BOM, separatore ";", righe CRLF.
 
-import tipiIt from '../data/place-types.it.json';
-
 const BOM = '﻿';
-const TIPI = tipiIt as { type: string; label: string; generico?: boolean }[];
-const ETICHETTE = new Map(TIPI.map((t) => [t.type, t.label]));
-const GENERICI = new Set(TIPI.filter((t) => t.generico).map((t) => t.type));
+
+/** Categoria come arriva da GET /api/categorie (bastano questi campi). */
+export interface TipoEtichetta {
+  type: string;
+  label: string;
+  generico?: boolean;
+}
+
+const cache = new WeakMap<TipoEtichetta[], { etichette: Map<string, string>; generici: Set<string> }>();
+function indice(elenco: TipoEtichetta[]) {
+  let i = cache.get(elenco);
+  if (!i) {
+    i = { etichette: new Map(elenco.map((t) => [t.type, t.label])), generici: new Set(elenco.filter((t) => t.generico).map((t) => t.type)) };
+    cache.set(elenco, i);
+  }
+  return i;
+}
 
 /** Racchiude la cella tra virgolette se serve; neutralizza le formule (= + - @) anteponendo un apice. */
 export function cellaCsv(valore: string | null | undefined): string {
@@ -53,17 +65,21 @@ export function numeroTel(telefono: string): string {
 }
 
 /** Etichette italiane dei tipi Google (quelle sconosciute vengono omesse). */
-export const etichette = (tipi: string[]) => tipi.map((t) => ETICHETTE.get(t)).filter(Boolean).join(', ');
+export const etichette = (tipi: string[], elenco: TipoEtichetta[]) => {
+  const { etichette: e } = indice(elenco);
+  return tipi.map((t) => e.get(t)).filter(Boolean).join(', ');
+};
 
 /** Come `etichette`, ma senza i tipi generici (es. "Servizio") quando ce ne sono di più specifici. */
-export function etichetteRisultato(tipi: string[]): string {
-  const noti = tipi.filter((t) => ETICHETTE.has(t));
-  const specifici = noti.filter((t) => !GENERICI.has(t));
-  return etichette(specifici.length > 0 ? specifici : noti);
+export function etichetteRisultato(tipi: string[], elenco: TipoEtichetta[]): string {
+  const { etichette: e, generici } = indice(elenco);
+  const noti = tipi.filter((t) => e.has(t));
+  const specifici = noti.filter((t) => !generici.has(t));
+  return etichette(specifici.length > 0 ? specifici : noti, elenco);
 }
 
 /** CSV dei risultati: usato da "Nuova ricerca" e dal dettaglio di una ricerca. */
-export const csvRisultati = (luoghi: LuogoCsv[]) =>
+export const csvRisultati = (luoghi: LuogoCsv[], elenco: TipoEtichetta[]) =>
   generaCsv(
     ['Denominazione', 'Indirizzo', 'Latitudine', 'Longitudine', 'Categorie', 'Telefono', 'Sito web', 'Place ID', 'Link Google Maps'],
     luoghi.map((l) => [
@@ -71,7 +87,7 @@ export const csvRisultati = (luoghi: LuogoCsv[]) =>
       l.indirizzo,
       decimaleIt(l.lat),
       decimaleIt(l.lng),
-      etichetteRisultato(l.tipi),
+      etichetteRisultato(l.tipi, elenco),
       l.telefono,
       l.sito,
       l.placeId,

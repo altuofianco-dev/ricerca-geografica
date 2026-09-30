@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import tipiIt from '../data/place-types.it.json';
+import { useCategorie } from './elencoCategorie';
+import { Caricamento, Errore } from './Stati';
 import {
   MAX_CATEGORIE,
   TESTO_GENERICO,
@@ -13,12 +14,8 @@ import {
   raggruppa,
   statoMacro,
   type Gruppo,
-  type Tipo,
 } from './categorie';
 
-const TIPI = tipiIt as Tipo[];
-const GRUPPI = raggruppa(TIPI);
-const ETICHETTE = new Map(TIPI.map((t) => [t.type, t.label]));
 
 /** Casella con stato indeterminato (trattino) per le macro parzialmente selezionate. */
 function CasellaMacro(p: { stato: 'nessuna' | 'parziale' | 'tutte'; disabled: boolean; onChange: () => void; titolo?: string }) {
@@ -41,8 +38,11 @@ export default function SelettoreCategorie(p: {
   const [aperte, setAperte] = useState<Set<string>>(new Set());
   const inFiltro = filtro.trim() !== '';
   const insieme = useMemo(() => new Set(scelte), [scelte]);
+  const { tipi, errore } = useCategorie();
+  const GRUPPI = useMemo(() => raggruppa(tipi ?? []), [tipi]);
+  const ETICHETTE = useMemo(() => new Map((tipi ?? []).map((t) => [t.type, t.label])), [tipi]);
 
-  const visibili: Gruppo[] = useMemo(() => (inFiltro ? cercaPerGruppo(GRUPPI, filtro) : GRUPPI), [filtro, inFiltro]);
+  const visibili: Gruppo[] = useMemo(() => (inFiltro ? cercaPerGruppo(GRUPPI, filtro) : GRUPPI), [GRUPPI, filtro, inFiltro]);
   // Con il filtro si aprono solo le macro con corrispondenze (tutte quelle visibili); senza, quelle aperte a mano.
   const eAperta = (nome: string) => inFiltro || aperte.has(nome);
   const alterna = (nome: string) => {
@@ -52,6 +52,8 @@ export default function SelettoreCategorie(p: {
     setAperte(n);
   };
   const alMassimo = scelte.length >= MAX_CATEGORIE;
+
+  if (tipi === null) return errore ? <Errore testo={errore} /> : <Caricamento testo="Caricamento categorie…" />;
 
   return (
     <div className="categorie">

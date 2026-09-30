@@ -33,6 +33,9 @@ export function normalizza(s: string): string {
 /** Etichetta mostrata nel selettore: i tipi generici finiscono con "(in generale)". */
 export const etichettaTipo = (t: Tipo) => (t.generico ? `${t.label} (in generale)` : t.label);
 
+/** "a, b ,, a" → ["a", "b"] (testo del campo Sinonimi); il Worker ripulisce comunque spazi e doppioni. */
+export const dividiSinonimi = (testo: string) => testo.split(',').map((x) => x.trim()).filter(Boolean);
+
 /** Macro-categorie nell'ordine in cui compaiono nell'elenco; dentro ogni macro l'ordine dell'elenco. */
 export function raggruppa(tipi: Tipo[]): Gruppo[] {
   const mappa = new Map<string, Tipo[]>();

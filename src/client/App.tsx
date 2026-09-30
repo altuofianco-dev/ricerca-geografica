@@ -3,13 +3,15 @@ import { api, impostaSessioneScaduta, type Utente } from './api';
 import Dashboard from './Dashboard';
 import DettaglioRicerca from './DettaglioRicerca';
 import ElencoRicerche from './ElencoRicerche';
-import { IconaDashboard, IconaElenco, IconaEsci, IconaNuova, IconaUtenti } from './Icone';
+import PaginaCategorie from './PaginaCategorie';
+import { dimenticaCategorie } from './elencoCategorie';
+import { IconaCategorie, IconaDashboard, IconaElenco, IconaEsci, IconaNuova, IconaUtenti } from './Icone';
 import Login from './Login';
 import { Caricamento } from './Stati';
 import NuovaRicerca from './NuovaRicerca';
 import Utenti from './Utenti';
 
-type Pagina = 'home' | 'elenco' | 'dashboard' | 'utenti';
+type Pagina = 'home' | 'elenco' | 'dashboard' | 'categorie' | 'utenti';
 
 export default function App() {
   const [utente, setUtente] = useState<Utente | null>(null);
@@ -28,6 +30,7 @@ export default function App() {
   async function esci() {
     await api('/api/logout', {}).catch(() => {});
     setUtente(null);
+    dimenticaCategorie();
     setPagina('home');
     setAperta(null);
   }
@@ -58,6 +61,11 @@ export default function App() {
             <IconaDashboard /><span>Dashboard</span>
           </button>
           {utente.role === 'admin' && (
+            <button type="button" title="Categorie" className={pagina === 'categorie' ? 'attiva' : ''} onClick={() => vai('categorie')}>
+              <IconaCategorie /><span>Categorie</span>
+            </button>
+          )}
+          {utente.role === 'admin' && (
             <button type="button" title="Utenti" className={pagina === 'utenti' ? 'attiva' : ''} onClick={() => vai('utenti')}>
               <IconaUtenti /><span>Utenti</span>
             </button>
@@ -76,6 +84,8 @@ export default function App() {
       <main>
         {pagina === 'utenti' && utente.role === 'admin' ? (
           <Utenti io={utente} />
+        ) : pagina === 'categorie' && utente.role === 'admin' ? (
+          <PaginaCategorie />
         ) : pagina === 'dashboard' ? (
           <Dashboard />
         ) : pagina === 'elenco' ? (
