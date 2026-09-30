@@ -16,7 +16,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S6b — Selettore ad albero delle categorie | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S6c — Visibilità delle ricerche per ruolo | completata e verificata dal committente | 30/09/2026 |
 | S6d — Restyling "Al tuo fianco" | completata e pubblicata (deploy ok) | 30/09/2026 |
-| S6e — Correzioni prima della S7 | completata in locale (migrazione e deploy da fare) | 30/09/2026 |
+| S6e — Correzioni prima della S7 | completata e pubblicata (migrazione e deploy ok) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
