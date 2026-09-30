@@ -15,8 +15,8 @@ function fakeDb(n: number | Error) {
 }
 
 describe('/api/health', () => {
-  it('risponde solo ok quando le 4 tabelle esistono', async () => {
-    const res = await app.request('/api/health', {}, { DB: fakeDb(4) });
+  it('risponde solo ok quando le 5 tabelle esistono', async () => {
+    const res = await app.request('/api/health', {}, { DB: fakeDb(5) });
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ status: 'ok' });
   });

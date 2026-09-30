@@ -6,7 +6,7 @@ import { hashPassword } from '../src/worker/password';
 /** D1 finto basato su SQLite in memoria (stesso schema della migrazione reale). */
 export function creaDb() {
   const sql = new DatabaseSync(':memory:');
-  for (const f of ['0001_schema_iniziale.sql', '0002_coordinate_risultati.sql'])
+  for (const f of ['0001_schema_iniziale.sql', '0002_coordinate_risultati.sql', '0003_categorie.sql'])
     sql.exec(readFileSync(`migrations/${f}`, 'utf8'));
   const db = {
     prepare(query: string) {

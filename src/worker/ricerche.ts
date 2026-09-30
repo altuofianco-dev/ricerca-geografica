@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import type { AppEnv } from './auth';
-import tipiIt from '../data/place-types.it.json';
+import { tipiAmmessi } from './categorie';
 import {
   creaChiamaNearby,
   eseguiRicerca,
@@ -14,7 +14,6 @@ import {
 // Nuova ricerca (SPEC §5, §6, §9): valida, applica il limite giornaliero, esegue,
 // salva su D1 e restituisce i risultati completi.
 
-const TIPI_AMMESSI = new Set((tipiIt as { type: string }[]).map((t) => t.type));
 const BLOCCO_INSERT = 50;
 
 /** Fabbrica del client Google: sostituibile nei test così non si chiama mai la rete. */
@@ -92,7 +91,7 @@ ricerche.post('/api/ricerche', async (c) => {
   };
   if (typeof b.lat !== 'number' || typeof b.lng !== 'number' || typeof b.raggioKm !== 'number')
     return c.json({ errore: 'Parametri non validi' }, 400);
-  const errore = validaParametri(p, TIPI_AMMESSI);
+  const errore = validaParametri(p, await tipiAmmessi(c.env.DB));
   if (errore) return c.json({ errore }, 400);
   if (!c.env.GOOGLE_API_KEY) return c.json({ errore: 'Servizio Google non configurato' }, 500);
 
