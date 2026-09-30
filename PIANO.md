@@ -213,3 +213,4 @@ manutenzione (deploy, creazione admin, reset password). Proponi prima il piano.
 - Invio email per recupero password (es. Resend).
 - Mappa dei risultati.
 - Deploy automatico da GitHub.
+- Ricerca a testo libero con Text Search (New), con suggerimenti di Google.
