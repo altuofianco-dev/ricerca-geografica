@@ -1,15 +1,16 @@
 import { Hono } from 'hono';
+import { auth, richiediSessione, soloJson, type AppEnv } from './auth';
+import { utenti } from './utenti';
 
-export interface Env {
-  DB: D1Database;
-  MAX_RICERCHE_GIORNO: string;
-  SALVA_DATI_ESTESI: string;
-}
+export type { Env } from './auth';
 
 const TABELLE = ['users', 'sessions', 'searches', 'search_results'];
 
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono<AppEnv>();
 
+app.use('/api/*', soloJson, richiediSessione);
+
+// Controllo tecnico pubblico: solo ok/errore, senza dettagli.
 app.get('/api/health', async (c) => {
   try {
     const row = await c.env.DB.prepare(
@@ -23,6 +24,9 @@ app.get('/api/health', async (c) => {
     return c.json({ status: 'errore' }, 500);
   }
 });
+
+app.route('/', auth);
+app.route('/', utenti);
 
 app.all('/api/*', (c) => c.json({ errore: 'Risorsa non trovata' }, 404));
 
