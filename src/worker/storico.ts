@@ -64,7 +64,7 @@ function tipiDa(json: string | null): string[] {
   }
 }
 
-const luogoDaRiga = (r: RigaRisultato) => ({
+const luogoDaRiga = (r: RigaRisultato, salvataIl: string) => ({
   placeId: r.place_id,
   nome: r.name,
   indirizzo: r.address,
@@ -72,7 +72,25 @@ const luogoDaRiga = (r: RigaRisultato) => ({
   telefono: r.phone,
   sito: r.website,
   recuperatoIl: r.fetched_at,
+  // Già recuperato con "Recupera dettagli" (senza cambiare lo schema): tutti i risultati salvati
+  // insieme hanno lo stesso fetched_at, un recupero successivo lo sposta in avanti.
+  recuperato: r.fetched_at > salvataIl,
 });
+
+/** Momento del salvataggio iniziale: il fetched_at più frequente (a parità, il più vecchio). */
+function salvataggioIniziale(righe: RigaRisultato[]): string {
+  const conteggi = new Map<string, number>();
+  for (const r of righe) conteggi.set(r.fetched_at, (conteggi.get(r.fetched_at) ?? 0) + 1);
+  let migliore = '';
+  let max = 0;
+  for (const [t, n] of conteggi) {
+    if (n > max || (n === max && t < migliore)) {
+      migliore = t;
+      max = n;
+    }
+  }
+  return migliore;
+}
 
 const idValido = (s: string) => /^\d{1,12}$/.test(s);
 
@@ -155,12 +173,13 @@ storico.get('/api/ricerche/:id', async (c) => {
   )
     .bind(Number(id))
     .all<RigaRisultato>();
+  const iniziale = salvataggioIniziale(results);
   return c.json({
     ...s,
     types_json: undefined,
     categorie: tipiDa(s.types_json),
     include_contacts: !!s.include_contacts,
-    risultati: results.map(luogoDaRiga),
+    risultati: results.map((r) => luogoDaRiga(r, iniziale)),
   });
 });
 
@@ -205,5 +224,5 @@ storico.post('/api/ricerche/:id/dettagli', async (c) => {
       return c.json({ errore: 'Salvataggio dei dettagli non riuscito' }, 500);
     }
   }
-  return c.json({ placeId, ...d, recuperatoIl: ora, salvato: c.env.SALVA_DATI_ESTESI === 'true' });
+  return c.json({ placeId, ...d, recuperatoIl: ora, recuperato: true, salvato: c.env.SALVA_DATI_ESTESI === 'true' });
 });

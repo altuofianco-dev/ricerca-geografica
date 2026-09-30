@@ -158,6 +158,18 @@ describe('POST /api/ricerche/:id/dettagli', () => {
     expect(riga).toMatchObject({ name: 'Farmacia Uno', phone: '06 123456', website: 'https://esempio.it', types_json: '["pharmacy"]' });
   });
 
+  it('segna "recuperato" solo le righe aggiornate dopo il salvataggio iniziale', async () => {
+    const { db, sql, cookie, id } = await scenario();
+    aggiungiRisultato(sql, id, 'P2');
+    aggiungiRisultato(sql, id, 'P3');
+    const leggi = async () =>
+      (await json<{ risultati: { placeId: string; recuperato: boolean }[] }>(await chiama(db, `/api/ricerche/${id}`, { cookie }))).risultati;
+    expect((await leggi()).map((r) => r.recuperato)).toEqual([false, false, false]);
+    const res = await chiama(db, `/api/ricerche/${id}/dettagli`, { body: { placeId: 'P1' }, cookie });
+    expect((await json<{ recuperato: boolean }>(res)).recuperato).toBe(true);
+    expect(Object.fromEntries((await leggi()).map((r) => [r.placeId, r.recuperato]))).toEqual({ P1: true, P2: false, P3: false });
+  });
+
   it('non salva nulla con SALVA_DATI_ESTESI=false', async () => {
     const { db, sql, cookie, id } = await scenario();
     const res = await chiama(db, `/api/ricerche/${id}/dettagli`, { body: { placeId: 'P1' }, cookie, env: { SALVA_DATI_ESTESI: 'false' } });

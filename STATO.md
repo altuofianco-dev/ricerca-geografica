@@ -34,6 +34,15 @@ Stati possibili: da fare · in corso · completata · bloccata
   - Dettaglio ricerca: "Recupera dettagli" piccolo, "Aggiorna" se telefono e sito ci sono già; stato come etichetta colorata (`EtichettaStato`, usata anche nell'elenco per errore/in corso).
   - Utenti: titolo pagina ora h1 come le altre pagine.
 - Controlli: tipi, 127 test e `npm run build` ok. Aspetto non verificato nel browser (pannello anteprima non visibile in questa sessione).
+- Rifiniture S6d (secondo giro):
+  - Tabelle: celle centrate in verticale; colonne numeriche a destra (Elenco: raggio e risultati; Dashboard); telefono, sito e data su una riga; Place ID su una riga, tagliato con "…" (max 11 rem) e valore completo nel tooltip (il CSV resta completo).
+  - Categorie dei risultati: `etichetteRisultato` (`csv.ts`) toglie i tipi generici (`generico` in `place-types.it.json`, es. "Servizio", "Negozio") se ce ne sono di specifici; vale a video e nel CSV. Se ci sono solo generici restano.
+  - Elenco ricerche: tutta la riga è cliccabile (il pulsante "Apri" resta).
+  - "Recupera dettagli"/"Aggiorna": "Aggiorna" se la ricerca includeva i contatti o la riga è già stata recuperata; altrimenti "Recupera dettagli". Pulsanti di larghezza uniforme (min 8,5 rem). Backend: `GET /api/ricerche/:id` e `POST .../dettagli` restituiscono `recuperato` (schema D1 invariato). Come si calcola: i risultati salvati insieme hanno lo stesso `fetched_at`; un recupero lo sposta in avanti, quindi `recuperato` = `fetched_at` successivo a quello più frequente della ricerca. Limite: se TUTTE le righe di una ricerca vengono recuperate (o è una ricerca con una sola riga già recuperata) il riferimento si perde e dopo il ricaricamento della pagina torna "Recupera dettagli" (prima del ricaricamento il pulsante è già corretto).
+  - Nuova ricerca: Indirizzo (largo) e Raggio (stretto) sulla stessa riga; sotto i 720 px uno sotto l'altro. L'indicazione "da 0,5 a 50, a passi di 0,5" è ora nel tooltip del campo (l'errore di validazione resta visibile).
+  - Dashboard: tabella per operatore in un riquadro bianco "Per operatore", numeri a destra.
+  - Nessuna scroll orizzontale prevista a finestra normale (barra laterale fissa, contenuto con margine a sinistra; le colonne senza a capo sono poche e strette), ma non provato nel browser.
+  - Test: 129 (2 nuovi: `recuperato`, categorie generiche).
 - Azioni richieste al committente: `npm run dev` e guardare login, menu (anche a finestra stretta), tabelle con intestazione fissa, dettaglio ricerca, selettore categorie; poi `npm run deploy`.
 
 ## Sessione precedente (S6c)

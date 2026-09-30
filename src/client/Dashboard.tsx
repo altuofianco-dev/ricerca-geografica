@@ -65,13 +65,14 @@ export default function Dashboard() {
           </div>
 
           {dati.perOperatore && (
-          <div className="scorri">
+          <section>
+            <h2>Per operatore</h2>
             <table>
               <thead>
                 <tr>
                   <th>Operatore</th>
-                  <th>Ricerche</th>
-                  <th>Risultati</th>
+                  <th className="num">Ricerche</th>
+                  <th className="num">Risultati</th>
                 </tr>
               </thead>
               <tbody>
@@ -81,8 +82,8 @@ export default function Dashboard() {
                       {o.nome}
                       {o.attivo ? '' : ' (disattivato)'}
                     </td>
-                    <td>{numero(o.ricerche)}</td>
-                    <td>{numero(o.risultati)}</td>
+                    <td className="num">{numero(o.ricerche)}</td>
+                    <td className="num">{numero(o.risultati)}</td>
                   </tr>
                 ))}
                 {dati.perOperatore.length === 0 && (
@@ -92,7 +93,7 @@ export default function Dashboard() {
                 )}
               </tbody>
             </table>
-          </div>
+          </section>
           )}
         </>
       )}

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { api, formattaData, messaggioErrore, testoErroreRicerca } from './api';
 import { Caricamento, Errore, EtichettaStato, SitoWeb } from './Stati';
-import { csvRisultati, etichette, scaricaCsv, type LuogoCsv } from './csv';
+import { csvRisultati, etichette, etichetteRisultato, scaricaCsv, type LuogoCsv } from './csv';
 
 interface LuogoSalvato extends LuogoCsv {
   recuperatoIl: string;
+  recuperato: boolean;
 }
 
 interface Dettaglio {
@@ -100,13 +101,13 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
                   <tr key={l.placeId}>
                     <td>{l.nome ?? ''}</td>
                     <td>{l.indirizzo ?? ''}</td>
-                    <td>{etichette(l.tipi)}</td>
-                    <td>{l.telefono ?? ''}</td>
-                    <td><SitoWeb url={l.sito} /></td>
-                    <td className="placeid">{l.placeId}</td>
+                    <td>{etichetteRisultato(l.tipi)}</td>
+                    <td className="unariga">{l.telefono ?? ''}</td>
+                    <td className="unariga"><SitoWeb url={l.sito} /></td>
+                    <td className="placeid" title={l.placeId}>{l.placeId}</td>
                     <td>
                       <button type="button" className="piccolo" disabled={inCorso !== null} onClick={() => void recupera(l.placeId)}>
-                        {inCorso === l.placeId ? 'Recupero…' : l.telefono && l.sito ? 'Aggiorna' : 'Recupera dettagli'}
+                        {inCorso === l.placeId ? 'Recupero…' : d.include_contacts || l.recuperato ? 'Aggiorna' : 'Recupera dettagli'}
                       </button>
                       {erroreRiga?.placeId === l.placeId && <p className="errore">{erroreRiga.testo}</p>}
                     </td>

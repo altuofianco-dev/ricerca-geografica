@@ -106,23 +106,23 @@ export default function ElencoRicerche({ onApri, admin }: { onApri: (id: number)
                   <th>Data</th>
                   {admin && <th>Operatore</th>}
                   <th>Indirizzo di partenza</th>
-                  <th>Raggio (km)</th>
-                  <th>Risultati</th>
+                  <th className="num">Raggio (km)</th>
+                  <th className="num">Risultati</th>
                   <th />
                 </tr>
               </thead>
               <tbody>
                 {dati.righe.map((r) => (
-                  <tr key={r.id}>
-                    <td>{formattaData(r.created_at)}</td>
+                  <tr key={r.id} className="cliccabile" onClick={() => onApri(r.id)}>
+                    <td className="unariga">{formattaData(r.created_at)}</td>
                     {admin && <td>{r.operatore}</td>}
                     <td>{r.address_text}</td>
-                    <td>{decimale(r.radius_km)}</td>
-                    <td>
+                    <td className="num">{decimale(r.radius_km)}</td>
+                    <td className="num">
                       {r.status === 'completata' ? (r.result_count ?? 0) : <EtichettaStato stato={r.status} />}
                     </td>
                     <td>
-                      <button type="button" onClick={() => onApri(r.id)}>Apri</button>
+                      <button type="button" onClick={(e) => { e.stopPropagation(); onApri(r.id); }}>Apri</button>
                     </td>
                   </tr>
                 ))}

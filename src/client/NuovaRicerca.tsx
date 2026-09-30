@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { api, messaggioErrore } from './api';
-import { csvRisultati, etichette, scaricaCsv } from './csv';
+import { csvRisultati, etichetteRisultato, scaricaCsv } from './csv';
 import SelettoreCategorie from './SelettoreCategorie';
 import { SitoWeb } from './Stati';
 
@@ -119,19 +119,34 @@ export default function NuovaRicerca() {
     <>
       <h1>Nuova ricerca</h1>
       <form className="scheda" onSubmit={cerca}>
-        <label>
-          Indirizzo
-          <input
-            value={testo}
-            onChange={(e) => {
-              setTesto(e.target.value);
-              setScelto(null);
-            }}
-            placeholder="Scrivi almeno 3 caratteri"
-            autoComplete="off"
-            disabled={inCorso}
-          />
-        </label>
+        <div className="indirizzo-raggio">
+          <label className="campo-indirizzo">
+            Indirizzo
+            <input
+              value={testo}
+              onChange={(e) => {
+                setTesto(e.target.value);
+                setScelto(null);
+              }}
+              placeholder="Scrivi almeno 3 caratteri"
+              autoComplete="off"
+              disabled={inCorso}
+            />
+          </label>
+          <label className="campo-raggio">
+            Raggio (km)
+            <input
+              type="number"
+              min={0.5}
+              max={50}
+              step={0.5}
+              value={raggio}
+              onChange={(e) => setRaggio(e.target.value)}
+              disabled={inCorso}
+              title="Da 0,5 a 50 km, a passi di 0,5"
+            />
+          </label>
+        </div>
         {suggerimenti.length > 0 && (
           <ul className="suggerimenti">
             {suggerimenti.map((s) => (
@@ -144,18 +159,6 @@ export default function NuovaRicerca() {
         {erroreIndirizzo && <p className="errore">{erroreIndirizzo}</p>}
         {scelto && <p className="ok">Indirizzo selezionato ({scelto.lat.toFixed(5).replace('.', ',')}; {scelto.lng.toFixed(5).replace('.', ',')})</p>}
 
-        <label>
-          Raggio (km, da 0,5 a 50, a passi di 0,5)
-          <input
-            type="number"
-            min={0.5}
-            max={50}
-            step={0.5}
-            value={raggio}
-            onChange={(e) => setRaggio(e.target.value)}
-            disabled={inCorso}
-          />
-        </label>
         {!raggioValido && <p className="errore">Il raggio deve essere tra 0,5 e 50 km, a passi di 0,5</p>}
 
         <SelettoreCategorie scelte={categorie} onChange={setCategorie} disabled={inCorso} />
@@ -205,10 +208,10 @@ export default function NuovaRicerca() {
                   <tr key={l.placeId}>
                     <td>{l.nome}</td>
                     <td>{l.indirizzo}</td>
-                    <td>{etichette(l.tipi)}</td>
-                    <td>{l.telefono ?? ''}</td>
-                    <td><SitoWeb url={l.sito} /></td>
-                    <td className="placeid">{l.placeId}</td>
+                    <td>{etichetteRisultato(l.tipi)}</td>
+                    <td className="unariga">{l.telefono ?? ''}</td>
+                    <td className="unariga"><SitoWeb url={l.sito} /></td>
+                    <td className="placeid" title={l.placeId}>{l.placeId}</td>
                   </tr>
                 ))}
               </tbody>
