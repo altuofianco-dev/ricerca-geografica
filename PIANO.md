@@ -211,6 +211,6 @@ manutenzione (deploy, creazione admin, reset password). Proponi prima il piano.
 ## Backlog (idee per dopo, non ora)
 
 - Invio email per recupero password (es. Resend).
-- Mappa dei risultati.
+- Mappa dei risultati. Termini Google EEA: sulla mappa solo coordinate e place_id; per mostrare i dati delle attività usare Places UI Kit (costi e chiave browser dedicata).
 - Deploy automatico da GitHub.
 - Ricerca a testo libero con Text Search (New), con suggerimenti di Google.

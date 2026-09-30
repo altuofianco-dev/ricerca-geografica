@@ -12,13 +12,13 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S3 — Motore di ricerca Google | completata | 30/09/2026 |
 | S4 — Nuova ricerca e risultati | completata e verificata dal committente | 30/09/2026 |
 | S5 — Elenco ricerche e dettaglio | completata e verificata dal committente | 30/09/2026 |
-| S6 — Dashboard e rifinitura | completata (in attesa di verifica del committente) | 30/09/2026 |
-| S6b — Selettore ad albero delle categorie | completata (in attesa di verifica del committente) | 30/09/2026 |
+| S6 — Dashboard e rifinitura | completata e verificata dal committente | 30/09/2026 |
+| S6b — Selettore ad albero delle categorie | completata e verificata dal committente | 30/09/2026 |
 | S6c — Visibilità delle ricerche per ruolo | completata e verificata dal committente | 30/09/2026 |
 | S6d — Restyling "Al tuo fianco" | completata e pubblicata (deploy ok) | 30/09/2026 |
 | S6e — Correzioni prima della S7 | completata e pubblicata (migrazione e deploy ok) | 30/09/2026 |
 | S6f — Categorie modificabili dall'admin | completata e pubblicata (migrazione 0003 e deploy ok, verificata dal committente) | 30/09/2026 |
-| S7 — Messa in produzione | da fare | |
+| S7 — Messa in produzione | completata (deploy finale a cura del committente) | 30/09/2026 |
 
 Stati possibili: da fare · in corso · completata · bloccata
 
@@ -26,7 +26,26 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Produzione: https://ricerca-geografica.altuofianco-dev.workers.dev
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
-## Ultima sessione (S6f)
+## Ultima sessione (S7)
+- Sessione: S7 — messa in produzione. Nessuna nuova dipendenza, nessuna chiamata reale a Google, nessun comando `wrangler secret`. Secret `GOOGLE_API_KEY` già impostato in produzione; migrazioni remote già applicate fino alla 0003.
+- Controllo di sicurezza, esito punto per punto:
+  1. Cookie `sid`: HttpOnly, Secure, SameSite=Lax, Path=/, durata 7 giorni; in D1 solo l'hash del token; logout, reset password e disattivazione cancellano le sessioni. OK (test).
+  2. Sessione su ogni `/api/*` tranne `POST /api/login` e `GET /api/health`: OK. Nuovo test che scorre tutte le rotte registrate senza cookie (tutte 401).
+  3. Ruolo admin lato server: utenti (5 endpoint), `POST /api/categorie/:type` e `/sposta`, `GET /api/operatori` → 403 all'operatore; `perOperatore` della dashboard solo all'admin. OK (nuovo test su tutti gli endpoint admin).
+  4. Visibilità per ruolo (elenco, dettaglio, Recupera dettagli, dashboard): OK, coperta dai test S6c, rieseguiti.
+  5. Segreti: nessuna chiave Google (`AIza…`) nel repo né nella storia Git; `.dev.vars` ignorato e mai tracciato. OK.
+  6. Chiave Google: solo nell'header `X-Goog-Api-Key` lato Worker; assente da `src/client` e da `dist/client`; nessun `console.log` con dati sensibili. OK.
+  7. Messaggi d'errore: quelli applicativi erano già in italiano senza dettagli. **Problema trovato e corretto**: mancava un gestore degli errori imprevisti (risposta di testo grezzo e log con lo stack). Ora `app.onError` risponde `{"errore":"Si è verificato un problema, riprova"}` (500) e registra solo il tipo di errore.
+  8. Regole deny in `.claude/settings.json` (4 regole `wrangler secret`, Bash e PowerShell): presenti.
+  9. Intestazioni HTTP (nuove, senza dipendenze): API con `secureHeaders` di Hono (nosniff, X-Frame-Options DENY, Referrer-Policy same-origin, ecc.) e `Cache-Control: no-store`; file statici con `public/_headers` (nosniff, DENY, Referrer-Policy, HSTS, Permissions-Policy, CSP `default-src 'self'`, stili inline ammessi). Nel codice non ci sono risorse esterne, quindi la CSP non dovrebbe bloccare nulla, ma **non è stata provata nel browser**.
+- README.md creato (pubblicazione, admin, password, unico admin che dimentica la password, categorie, variabili, backup, consumi Google, cambio chiave, pagina bianca). PIANO.md: nota "Termini Google EEA" alla voce "Mappa dei risultati". 149 test passano (5 nuovi), tipi e `npm run build` ok.
+- Azioni richieste al committente (in quest'ordine):
+  1. `npm run deploy` (nessuna migrazione nuova).
+  2. Online: login, navigare tutte le pagine (nessuna pagina bianca: se compare, Ctrl+Maiusc+R e riferire l'errore nella console del browser, possibile CSP).
+  3. Controllo intestazioni (facoltativo): `curl -I https://ricerca-geografica.altuofianco-dev.workers.dev/` deve mostrare `content-security-policy` e `x-content-type-options`.
+- Nota: la regola "solo strumenti di modifica file" è stata rispettata in questa sessione.
+
+## Sessione precedente (S6f)
 - Sessione: S6f — categorie modificabili dall'admin. Nessuna nuova dipendenza, nessuna chiamata reale a Google.
 - Cosa è stato fatto:
   - Migrazione `0003_categorie.sql`: tabella `categorie` (`type`, `label`, `gruppo`, `gruppo_ordine`, `generico`, `parole`, `ordine`) con le 471 righe di `place-types.it.json`. Righe generate con uno script temporaneo (non committato, cancellato); un test verifica che l'elenco restituito dall'API coincida con il JSON (471 righe, stessi campi e ordine). Il JSON resta solo come dato iniziale e non è più importato dal codice.
