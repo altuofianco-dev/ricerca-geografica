@@ -16,7 +16,7 @@ type Pagina = 'home' | 'elenco' | 'dashboard' | 'categorie' | 'utenti';
 export default function App() {
   const [utente, setUtente] = useState<Utente | null>(null);
   const [caricamento, setCaricamento] = useState(true);
-  const [pagina, setPagina] = useState<Pagina>('home');
+  const [pagina, setPagina] = useState<Pagina>('dashboard');
   const [aperta, setAperta] = useState<number | null>(null);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function App() {
     await api('/api/logout', {}).catch(() => {});
     setUtente(null);
     dimenticaCategorie();
-    setPagina('home');
+    setPagina('dashboard');
     setAperta(null);
   }
 
@@ -51,23 +51,23 @@ export default function App() {
           <strong>Ricerca geografica</strong>
         </div>
         <nav>
+          <button type="button" title="Dashboard" className={pagina === 'dashboard' ? 'attiva' : ''} onClick={() => vai('dashboard')}>
+            <IconaDashboard /><span>Dashboard</span>
+          </button>
           <button type="button" title="Nuova ricerca" className={pagina === 'home' ? 'attiva' : ''} onClick={() => vai('home')}>
             <IconaNuova /><span>Nuova ricerca</span>
           </button>
           <button type="button" title="Elenco ricerche" className={pagina === 'elenco' ? 'attiva' : ''} onClick={() => vai('elenco')}>
             <IconaElenco /><span>Elenco ricerche</span>
           </button>
-          <button type="button" title="Dashboard" className={pagina === 'dashboard' ? 'attiva' : ''} onClick={() => vai('dashboard')}>
-            <IconaDashboard /><span>Dashboard</span>
-          </button>
-          {utente.role === 'admin' && (
-            <button type="button" title="Categorie" className={pagina === 'categorie' ? 'attiva' : ''} onClick={() => vai('categorie')}>
-              <IconaCategorie /><span>Categorie</span>
-            </button>
-          )}
           {utente.role === 'admin' && (
             <button type="button" title="Utenti" className={pagina === 'utenti' ? 'attiva' : ''} onClick={() => vai('utenti')}>
               <IconaUtenti /><span>Utenti</span>
+            </button>
+          )}
+          {utente.role === 'admin' && (
+            <button type="button" title="Categorie" className={pagina === 'categorie' ? 'attiva' : ''} onClick={() => vai('categorie')}>
+              <IconaCategorie /><span>Categorie</span>
             </button>
           )}
         </nav>

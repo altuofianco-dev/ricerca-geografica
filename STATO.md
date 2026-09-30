@@ -20,6 +20,8 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S6f — Categorie modificabili dall'admin | completata e pubblicata (migrazione 0003 e deploy ok, verificata dal committente) | 30/09/2026 |
 | S7 — Messa in produzione | completata (deploy finale a cura del committente) | 30/09/2026 |
 
+Modifica finale (30/09/2026): dopo il login la pagina iniziale è la Dashboard; barra laterale in ordine Dashboard, Nuova ricerca, Elenco ricerche, Utenti, Categorie (queste ultime due solo admin). Solo interfaccia (`App.tsx`), SPEC §3 aggiornata. Da pubblicare con `npm run deploy` a cura del committente.
+
 Stati possibili: da fare · in corso · completata · bloccata
 
 ## URL
@@ -122,7 +124,7 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Sessione: S6 — Dashboard e rifinitura
 - Cosa è stato fatto:
   - Backend `src/worker/dashboard.ts`: `GET /api/dashboard?periodo=30giorni|anno|tutto` (con sessione). Conta tutte le ricerche, anche in errore, come l'elenco; operatori disattivati inclusi; totali ricavati dalle stesse righe per operatore. Periodi sui giorni di Europe/Rome: "30 giorni" = oggi + 29 giorni precedenti, "anno" = dal 1° gennaio.
-  - Interfaccia: pagina `Dashboard.tsx` (selettore periodo, 3 riquadri, tabella per operatore con "(disattivato)"); media con una cifra decimale e virgola, "—" senza ricerche. Voce "Dashboard" nella barra; "Nuova ricerca" resta la pagina iniziale (la pagina "Ciao, ..." e le frasi su sezioni future non erano più presenti nel codice).
+  - Interfaccia: pagina `Dashboard.tsx` (selettore periodo, 3 riquadri, tabella per operatore con "(disattivato)"); media con una cifra decimale e virgola, "—" senza ricerche. Voce "Dashboard" nella barra; "Nuova ricerca" resta la pagina iniziale [decisione superata dalla "Modifica finale": ora la pagina iniziale è la Dashboard] (la pagina "Ciao, ..." e le frasi su sezioni future non erano più presenti nel codice).
   - Errori in italiano: `messaggioErrore` in `api.ts` traduce errori di rete ("Failed to fetch") e risposte senza messaggio; usato in tutte le pagine. Componenti condivisi `Caricamento`/`Errore` (`Stati.tsx`).
   - 99 test Vitest (13 nuovi, Google sempre finto): passano; controllo tipi e `npm run build` ok. Interfaccia non provata nel browser (serve un login locale).
 - Azioni richieste al committente:

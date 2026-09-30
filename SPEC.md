@@ -18,10 +18,13 @@ Uso interno, 2-3 utenti. Sicurezza di base ma corretta (password con hash, chiav
 ## 3. Sezioni dell'app
 
 1. Login
-2. Dashboard
+2. Dashboard (pagina iniziale dopo il login)
 3. Nuova ricerca
 4. Elenco ricerche (con dettaglio ricerca)
 5. Gestione utenti (solo admin)
+6. Categorie (solo admin)
+
+Ordine della barra laterale: Dashboard, Nuova ricerca, Elenco ricerche, poi (solo admin) Utenti e Categorie.
 
 Interfaccia interamente in italiano. Date e ore nel fuso Europe/Rome, formato gg/mm/aaaa hh:mm. Numeri con virgola decimale.
 
