@@ -473,7 +473,7 @@
   },
   {
     "type": "bar",
-    "label": "Bar"
+    "label": "Bar / pub (locale serale)"
   },
   {
     "type": "bar_and_grill",
@@ -541,7 +541,7 @@
   },
   {
     "type": "cafe",
-    "label": "Caffetteria"
+    "label": "Bar / caffetteria"
   },
   {
     "type": "cafeteria",
@@ -613,7 +613,7 @@
   },
   {
     "type": "coffee_shop",
-    "label": "Bar caffetteria"
+    "label": "Caffetteria (coffee shop)"
   },
   {
     "type": "coffee_stand",
