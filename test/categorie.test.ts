@@ -40,8 +40,16 @@ describe('elenco tipi con gruppi (place-types.it.json)', () => {
       expect(gruppo(g).tipi[0].type).toBe(tipo);
       expect(gruppo(g).tipi[0].generico).toBe(true);
     }
-    expect(gruppo('Cibo e bevande').tipi.slice(0, 5).map((x) => x.type)).toEqual(['restaurant', 'cafe', 'bar', 'bakery', 'meal_takeaway']);
     expect(tipi.filter((x) => x.generico)).toHaveLength(8);
+  });
+
+  it('in ogni gruppo: prima i generici, poi le altre categorie in ordine alfabetico italiano', () => {
+    const cmp = (a: string, b: string) => a.localeCompare(b, 'it', { sensitivity: 'base' });
+    for (const g of gruppi) {
+      const resto = g.tipi.filter((x) => !x.generico);
+      expect(g.tipi.slice(0, g.tipi.length - resto.length).every((x) => x.generico)).toBe(true);
+      expect(resto.map((x) => x.label)).toEqual([...resto.map((x) => x.label)].sort(cmp));
+    }
   });
 
   it('il generico ha etichetta "(in generale)" solo nel selettore', () => {
