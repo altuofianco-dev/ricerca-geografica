@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cellaCsv, csvRisultati, etichette, etichetteRisultato, generaCsv } from '../src/client/csv';
+import { cellaCsv, csvRisultati, decimaleIt, etichette, etichetteRisultato, formatoCoordinate, generaCsv, linkMaps, numeroTel } from '../src/client/csv';
 
 describe('CSV', () => {
   it('inizia con BOM, usa ; e righe CRLF, accenti intatti', () => {
@@ -21,13 +21,39 @@ describe('CSV', () => {
 
   it('csvRisultati usa le etichette italiane e gestisce i dati mancanti', () => {
     const csv = csvRisultati([
-      { placeId: 'P1', nome: 'Farmacia Rossi', indirizzo: 'Via Roma 1', tipi: ['pharmacy', 'tipo_ignoto'], telefono: '06 123456', sito: null },
+      { placeId: 'P1', nome: 'Farmacia Rossi', indirizzo: 'Via Roma 1', tipi: ['pharmacy', 'tipo_ignoto'], telefono: '06 123456', sito: null, lat: 41.85421, lng: 12.47851 },
       { placeId: 'P2', nome: null, indirizzo: null, tipi: [], telefono: null, sito: null },
     ]);
     const righe = csv.slice(1).split('\r\n');
-    expect(righe[0]).toBe('Denominazione;Indirizzo;Categorie;Telefono;Sito web;Place ID');
-    expect(righe[1]).toBe(`Farmacia Rossi;Via Roma 1;${etichette(['pharmacy'])};06 123456;;P1`);
-    expect(righe[2]).toBe(';;;;;P2');
+    expect(righe[0]).toBe('Denominazione;Indirizzo;Latitudine;Longitudine;Categorie;Telefono;Sito web;Place ID;Link Google Maps');
+    expect(righe[1]).toBe(
+      `Farmacia Rossi;Via Roma 1;41,85421;12,47851;${etichette(['pharmacy'])};06 123456;;P1;${linkMaps('Farmacia Rossi', 'Via Roma 1', 'P1')}`,
+    );
+    expect(righe[2]).toBe(`;;;;;;;P2;${linkMaps(null, null, 'P2')}`);
+  });
+
+  it('coordinate: 5 decimali con virgola, vuote se mancano', () => {
+    expect(decimaleIt(41.854213)).toBe('41,85421');
+    expect(decimaleIt(12.4)).toBe('12,40000');
+    expect(decimaleIt(null)).toBe('');
+    expect(formatoCoordinate(41.85421, 12.47851)).toBe('41,85421; 12,47851');
+    expect(formatoCoordinate(41.85421, null)).toBe('');
+    expect(formatoCoordinate(undefined, undefined)).toBe('');
+  });
+
+  it('link Google Maps: nome e indirizzo codificati, Place ID', () => {
+    expect(linkMaps('Caffè & Co', 'Via Roma 1, Roma', 'ChIJ abc')).toBe(
+      'https://www.google.com/maps/search/?api=1&query=Caff%C3%A8%20%26%20Co%2C%20Via%20Roma%201%2C%20Roma&query_place_id=ChIJ%20abc',
+    );
+  });
+
+  it('telefono: senza spazi, +39 se manca il prefisso internazionale', () => {
+    expect(numeroTel('06 1234 5678')).toBe('+390612345678');
+    expect(numeroTel('333 123-4567')).toBe('+393331234567');
+    expect(numeroTel('+39 06 1234')).toBe('+39061234');
+    expect(numeroTel('+44 20 7946 0958')).toBe('+442079460958');
+    expect(numeroTel('0039 06 1234')).toBe('+39061234');
+    expect(numeroTel('(06) 1234')).toBe('+39061234');
   });
 
   it('nasconde le categorie generiche quando ce ne sono di più specifiche (anche nel CSV)', () => {

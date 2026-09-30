@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { api, messaggioErrore } from './api';
-import { csvRisultati, etichetteRisultato, scaricaCsv } from './csv';
+import { csvRisultati, etichetteRisultato, formatoCoordinate, scaricaCsv } from './csv';
 import SelettoreCategorie from './SelettoreCategorie';
-import { SitoWeb } from './Stati';
+import { LinkMaps, SitoWeb, Telefono } from './Stati';
 
 interface Suggerimento {
   placeId: string;
@@ -16,6 +16,8 @@ interface Luogo {
   tipi: string[];
   telefono: string | null;
   sito: string | null;
+  lat: number;
+  lng: number;
 }
 
 interface Esito {
@@ -197,6 +199,7 @@ export default function NuovaRicerca() {
                 <tr>
                   <th>Denominazione</th>
                   <th>Indirizzo</th>
+                  <th>Coordinate</th>
                   <th>Categorie</th>
                   <th>Telefono</th>
                   <th>Sito web</th>
@@ -207,9 +210,10 @@ export default function NuovaRicerca() {
                 {esito.risultati.map((l) => (
                   <tr key={l.placeId}>
                     <td>{l.nome}</td>
-                    <td>{l.indirizzo}</td>
+                    <td><LinkMaps nome={l.nome} indirizzo={l.indirizzo} placeId={l.placeId} /></td>
+                    <td className="unariga">{formatoCoordinate(l.lat, l.lng)}</td>
                     <td>{etichetteRisultato(l.tipi)}</td>
-                    <td className="unariga">{l.telefono ?? ''}</td>
+                    <td className="unariga"><Telefono numero={l.telefono} /></td>
                     <td className="unariga"><SitoWeb url={l.sito} /></td>
                     <td className="placeid" title={l.placeId}>{l.placeId}</td>
                   </tr>

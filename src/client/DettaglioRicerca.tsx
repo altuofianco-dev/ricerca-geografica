@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api, formattaData, messaggioErrore, testoErroreRicerca } from './api';
-import { Caricamento, Errore, EtichettaStato, SitoWeb } from './Stati';
-import { csvRisultati, etichette, etichetteRisultato, scaricaCsv, type LuogoCsv } from './csv';
+import { Caricamento, Errore, EtichettaStato, LinkMaps, SitoWeb, Telefono } from './Stati';
+import { csvRisultati, etichette, etichetteRisultato, formatoCoordinate, scaricaCsv, type LuogoCsv } from './csv';
 
 interface LuogoSalvato extends LuogoCsv {
   recuperatoIl: string;
@@ -89,6 +89,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
                 <tr>
                   <th>Denominazione</th>
                   <th>Indirizzo</th>
+                  <th>Coordinate</th>
                   <th>Categorie</th>
                   <th>Telefono</th>
                   <th>Sito web</th>
@@ -100,9 +101,10 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
                 {d.risultati.map((l) => (
                   <tr key={l.placeId}>
                     <td>{l.nome ?? ''}</td>
-                    <td>{l.indirizzo ?? ''}</td>
+                    <td><LinkMaps nome={l.nome} indirizzo={l.indirizzo} placeId={l.placeId} /></td>
+                    <td className="unariga">{formatoCoordinate(l.lat, l.lng)}</td>
                     <td>{etichetteRisultato(l.tipi)}</td>
-                    <td className="unariga">{l.telefono ?? ''}</td>
+                    <td className="unariga"><Telefono numero={l.telefono} /></td>
                     <td className="unariga"><SitoWeb url={l.sito} /></td>
                     <td className="placeid" title={l.placeId}>{l.placeId}</td>
                     <td>
@@ -115,7 +117,7 @@ export default function DettaglioRicerca({ id, onIndietro }: { id: number; onInd
                 ))}
                 {d.risultati.length === 0 && (
                   <tr>
-                    <td colSpan={7}>Nessun risultato salvato</td>
+                    <td colSpan={8}>Nessun risultato salvato</td>
                   </tr>
                 )}
               </tbody>

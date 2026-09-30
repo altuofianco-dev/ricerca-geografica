@@ -1,3 +1,5 @@
+import { linkMaps, numeroTel } from './csv';
+
 export const Caricamento = ({ testo = 'Caricamento…' }: { testo?: string }) => (
   <p className="caricamento" role="status">{testo}</p>
 );
@@ -20,6 +22,20 @@ export function dominio(url: string): string {
   } catch {
     return url;
   }
+}
+
+export function Telefono({ numero }: { numero: string | null | undefined }) {
+  if (!numero) return null;
+  return <a href={`tel:${numeroTel(numero)}`}>{numero}</a>;
+}
+
+export function LinkMaps({ nome, indirizzo, placeId }: { nome: string | null; indirizzo: string | null; placeId: string }) {
+  if (!indirizzo) return null;
+  return (
+    <a href={linkMaps(nome, indirizzo, placeId)} target="_blank" rel="noopener noreferrer">
+      {indirizzo}
+    </a>
+  );
 }
 
 export function SitoWeb({ url }: { url: string | null | undefined }) {

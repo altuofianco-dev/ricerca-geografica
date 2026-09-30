@@ -26,6 +26,30 @@ export interface LuogoCsv {
   tipi: string[];
   telefono: string | null;
   sito: string | null;
+  lat?: number | null;
+  lng?: number | null;
+}
+
+/** Numero con 5 decimali e virgola decimale (formato italiano); vuoto se manca. */
+export const decimaleIt = (n: number | null | undefined) =>
+  typeof n === 'number' && Number.isFinite(n) ? n.toFixed(5).replace('.', ',') : '';
+
+/** "41,85421; 12,47851"; vuoto se manca una delle due. */
+export const formatoCoordinate = (lat: number | null | undefined, lng: number | null | undefined) =>
+  decimaleIt(lat) && decimaleIt(lng) ? `${decimaleIt(lat)}; ${decimaleIt(lng)}` : '';
+
+/** Link di ricerca Google Maps su nome e indirizzo, agganciato al Place ID. */
+export const linkMaps = (nome: string | null, indirizzo: string | null, placeId: string) =>
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent([nome, indirizzo].filter(Boolean).join(', ')) +
+  '&query_place_id=' +
+  encodeURIComponent(placeId);
+
+/** Numero per il link tel: senza spazi, con +39 se manca il prefisso internazionale ("00…" diventa "+…"). */
+export function numeroTel(telefono: string): string {
+  let n = telefono.replace(/[^\d+]/g, '');
+  if (n.startsWith('00')) n = `+${n.slice(2)}`;
+  return n.startsWith('+') ? n : `+39${n}`;
 }
 
 /** Etichette italiane dei tipi Google (quelle sconosciute vengono omesse). */
@@ -41,8 +65,18 @@ export function etichetteRisultato(tipi: string[]): string {
 /** CSV dei risultati: usato da "Nuova ricerca" e dal dettaglio di una ricerca. */
 export const csvRisultati = (luoghi: LuogoCsv[]) =>
   generaCsv(
-    ['Denominazione', 'Indirizzo', 'Categorie', 'Telefono', 'Sito web', 'Place ID'],
-    luoghi.map((l) => [l.nome, l.indirizzo, etichetteRisultato(l.tipi), l.telefono, l.sito, l.placeId]),
+    ['Denominazione', 'Indirizzo', 'Latitudine', 'Longitudine', 'Categorie', 'Telefono', 'Sito web', 'Place ID', 'Link Google Maps'],
+    luoghi.map((l) => [
+      l.nome,
+      l.indirizzo,
+      decimaleIt(l.lat),
+      decimaleIt(l.lng),
+      etichetteRisultato(l.tipi),
+      l.telefono,
+      l.sito,
+      l.placeId,
+      linkMaps(l.nome, l.indirizzo, l.placeId),
+    ]),
   );
 
 export function scaricaCsv(nomeFile: string, contenuto: string) {
