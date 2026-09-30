@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { auth, richiediSessione, soloJson, type AppEnv } from './auth';
 import { utenti } from './utenti';
+import { luoghi } from './luoghi';
 
 export type { Env } from './auth';
 
@@ -27,6 +28,7 @@ app.get('/api/health', async (c) => {
 
 app.route('/', auth);
 app.route('/', utenti);
+app.route('/', luoghi);
 
 app.all('/api/*', (c) => c.json({ errore: 'Risorsa non trovata' }, 404));
 

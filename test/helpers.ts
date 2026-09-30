@@ -42,7 +42,7 @@ export function chiama(db: D1Database, path: string, opts: { metodo?: string; bo
   return app.request(
     path,
     { method: opts.metodo ?? (opts.body !== undefined ? 'POST' : 'GET'), headers, body: opts.body === undefined ? undefined : JSON.stringify(opts.body) },
-    { DB: db, MAX_RICERCHE_GIORNO: '30', SALVA_DATI_ESTESI: 'true' },
+    { DB: db, MAX_RICERCHE_GIORNO: '30', SALVA_DATI_ESTESI: 'true', GOOGLE_API_KEY: 'chiave-finta-test' },
   );
 }
 

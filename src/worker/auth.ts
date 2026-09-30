@@ -15,6 +15,7 @@ export interface Env {
   DB: D1Database;
   MAX_RICERCHE_GIORNO: string;
   SALVA_DATI_ESTESI: string;
+  GOOGLE_API_KEY: string;
 }
 
 export type AppEnv = { Bindings: Env; Variables: { utente: Utente } };

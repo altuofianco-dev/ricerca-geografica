@@ -12,6 +12,7 @@
     "db:migrate:local": "wrangler d1 migrations apply ricerca-geografica --local",
     "db:migrate:remote": "wrangler d1 migrations apply ricerca-geografica --remote",
     "cf-typegen": "wrangler types",
+    "prova:google": "node scripts/prova-google.mjs",
     "admin:crea:local": "node scripts/crea-admin.mjs --local",
     "admin:crea:remote": "node scripts/crea-admin.mjs --remote"
   },
