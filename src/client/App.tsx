@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api, impostaSessioneScaduta, type Utente } from './api';
 import Login from './Login';
+import NuovaRicerca from './NuovaRicerca';
 import Utenti from './Utenti';
 
 type Pagina = 'home' | 'utenti';
@@ -32,7 +33,7 @@ export default function App() {
       <header className="barra">
         <strong>Ricerca geografica</strong>
         <nav>
-          <button type="button" className={pagina === 'home' ? 'attiva' : ''} onClick={() => setPagina('home')}>Home</button>
+          <button type="button" className={pagina === 'home' ? 'attiva' : ''} onClick={() => setPagina('home')}>Nuova ricerca</button>
           {utente.role === 'admin' && (
             <button type="button" className={pagina === 'utenti' ? 'attiva' : ''} onClick={() => setPagina('utenti')}>Utenti</button>
           )}
@@ -45,10 +46,7 @@ export default function App() {
         {pagina === 'utenti' && utente.role === 'admin' ? (
           <Utenti io={utente} />
         ) : (
-          <>
-            <h1>Ciao, {utente.name}!</h1>
-            <p>Le sezioni Dashboard e Ricerche arriveranno nelle prossime sessioni.</p>
-          </>
+          <NuovaRicerca />
         )}
       </main>
     </>

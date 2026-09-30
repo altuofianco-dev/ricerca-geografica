@@ -20,6 +20,10 @@ export function creaDb() {
       });
       return { ...crea([]), bind: (...params: unknown[]) => crea(params) };
     },
+    batch: async (stmts: { run: () => Promise<unknown> }[]) => {
+      for (const s of stmts) await s.run();
+      return [];
+    },
   } as unknown as D1Database;
   return { db, sql };
 }
@@ -35,14 +39,14 @@ export async function aggiungiUtente(
   return Number(r.lastInsertRowid);
 }
 
-export function chiama(db: D1Database, path: string, opts: { metodo?: string; body?: unknown; cookie?: string } = {}) {
+export function chiama(db: D1Database, path: string, opts: { metodo?: string; body?: unknown; cookie?: string; env?: Record<string, string> } = {}) {
   const headers: Record<string, string> = {};
   if (opts.body !== undefined) headers['content-type'] = 'application/json';
   if (opts.cookie) headers.cookie = opts.cookie;
   return app.request(
     path,
     { method: opts.metodo ?? (opts.body !== undefined ? 'POST' : 'GET'), headers, body: opts.body === undefined ? undefined : JSON.stringify(opts.body) },
-    { DB: db, MAX_RICERCHE_GIORNO: '30', SALVA_DATI_ESTESI: 'true', GOOGLE_API_KEY: 'chiave-finta-test' },
+    { DB: db, MAX_RICERCHE_GIORNO: '30', SALVA_DATI_ESTESI: 'true', GOOGLE_API_KEY: 'chiave-finta-test', ...opts.env },
   );
 }
 

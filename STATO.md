@@ -10,7 +10,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S1 — Scheletro e pubblicazione | completata | 30/09/2026 |
 | S2 — Autenticazione e utenti | completata e verificata dal committente | 30/09/2026 |
 | S3 — Motore di ricerca Google | completata | 30/09/2026 |
-| S4 — Nuova ricerca e risultati | da fare | |
+| S4 — Nuova ricerca e risultati | completata (in attesa di prova reale del committente) | 30/09/2026 |
 | S5 — Elenco ricerche e dettaglio | da fare | |
 | S6 — Dashboard e rifinitura | da fare | |
 | S7 — Messa in produzione | da fare | |
@@ -22,6 +22,20 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
 ## Ultima sessione
+- Sessione: S4 — Nuova ricerca e risultati
+- Cosa è stato fatto:
+  - Regole in `CLAUDE.md` (file solo con gli strumenti di modifica; mai `wrangler secret`) e `.claude/settings.json` con divieto di `wrangler secret` / `npx wrangler secret` (Bash e PowerShell).
+  - `POST /api/ricerche` (`src/worker/ricerche.ts`): valida, applica il limite giornaliero, salva la ricerca (`in_corso`), esegue le 10 chiamate, salva i risultati secondo `SALVA_DATI_ESTESI`, chiude con `completata` o `errore` (mai lasciata `in_corso`).
+  - Pagina "Nuova ricerca" (`src/client/NuovaRicerca.tsx`): indirizzo con suggerimenti, raggio, categorie con ricerca, casella contatti, tabella risultati, avvisi (chiamate sature, errori parziali, limite giornaliero), download CSV (`src/client/csv.ts`: UTF-8 con BOM, `;`, protezione formule).
+  - 73 test Vitest (15 nuovi, tutti con Google finto): passano; `npm run build` ok.
+  - Non ho fatto chiamate reali a Google né provato l'interfaccia nel browser (serve il login e ogni suggerimento costa).
+- Configurazione (non sono secret): in `wrangler.jsonc`, sezione `vars`: `MAX_RICERCHE_GIORNO="30"` e `SALVA_DATI_ESTESI="true"`. Valgono in locale e in produzione. Per cambiarle: modificare il file e rifare `npm run deploy`. La chiave Google resta l'unico secret (`.dev.vars` in locale, secret Wrangler in produzione).
+- Azioni richieste al committente:
+  1. Reimpostare il secret remoto (vedi S3 sotto) se non già fatto, poi `npm run deploy`.
+  2. Fare una ricerca di prova dall'interfaccia (raggio piccolo, una categoria): controllare che i suggerimenti compaiano, che i risultati siano corretti, che il CSV si apra bene in Excel (accenti e colonne) e che la ricerca risulti in D1 con il numero di risultati giusto.
+- Scelte: il limite giornaliero conta tutte le ricerche del giorno di Roma (anche quelle in errore, perché costano); se tutte le 10 chiamate falliscono la ricerca va in `errore`, se solo alcune fallisce resta `completata` con avviso.
+
+## Sessione precedente
 - Sessione: S3 — Motore di ricerca Google (solo backend)
 - Cosa è stato fatto:
   - Modulo `src/worker/ricerca.ts` (SPEC §6): conversione km/gradi, 10 cerchi (principale + griglia 3×3), haversine, field mask base/contatti, filtro OPERATIONAL, filtro distanza, deduplica per Place ID, conteggio chiamate sature, al massimo 3 chiamate in parallelo, errori parziali registrati, validazione parametri (raggio 0,5–50 a passi di 0,5; 1–50 categorie).
