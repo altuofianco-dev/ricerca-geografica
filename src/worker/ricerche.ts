@@ -153,10 +153,10 @@ async function salvaRisultati(db: D1Database, id: number, esito: EsitoRicerca, e
     estesi
       ? db
           .prepare(
-            `INSERT INTO search_results (search_id, place_id, name, address, types_json, phone, website, fetched_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO search_results (search_id, place_id, name, address, types_json, phone, website, lat, lng, fetched_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           )
-          .bind(id, l.placeId, l.nome, l.indirizzo, JSON.stringify(l.tipi), l.telefono, l.sito, ora)
+          .bind(id, l.placeId, l.nome, l.indirizzo, JSON.stringify(l.tipi), l.telefono, l.sito, l.lat, l.lng, ora)
       : db
           .prepare('INSERT INTO search_results (search_id, place_id, fetched_at) VALUES (?, ?, ?)')
           .bind(id, l.placeId, ora),

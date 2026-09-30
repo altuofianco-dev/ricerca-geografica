@@ -127,6 +127,8 @@ describe('POST /api/ricerche/:id/dettagli', () => {
     tipi: ['pharmacy'],
     telefono: '06 123456',
     sito: 'https://esempio.it',
+    lat: 41.85421,
+    lng: 12.47851,
   };
 
   async function scenario() {
@@ -154,8 +156,10 @@ describe('POST /api/ricerche/:id/dettagli', () => {
     expect(r.salvato).toBe(true);
     expect(mock).toHaveBeenCalledTimes(1);
     expect(rete).not.toHaveBeenCalled();
-    const riga = sql.prepare('SELECT name, phone, website, types_json FROM search_results WHERE place_id = ?').get('P1') as Record<string, string>;
-    expect(riga).toMatchObject({ name: 'Farmacia Uno', phone: '06 123456', website: 'https://esempio.it', types_json: '["pharmacy"]' });
+    const riga = sql.prepare('SELECT name, phone, website, types_json, lat, lng FROM search_results WHERE place_id = ?').get('P1') as Record<string, string>;
+    expect(riga).toMatchObject({ name: 'Farmacia Uno', phone: '06 123456', website: 'https://esempio.it', types_json: '["pharmacy"]', lat: 41.85421, lng: 12.47851 });
+    const dopo = (await json<{ risultati: { lat: number; lng: number }[] }>(await chiama(db, `/api/ricerche/${id}`, { cookie }))).risultati[0];
+    expect(dopo).toMatchObject({ lat: 41.85421, lng: 12.47851 });
   });
 
   it('segna "recuperato" solo le righe aggiornate dopo il salvataggio iniziale', async () => {
@@ -178,6 +182,8 @@ describe('POST /api/ricerche/:id/dettagli', () => {
     const riga = sql.prepare('SELECT name, phone FROM search_results WHERE place_id = ?').get('P1') as Record<string, unknown>;
     expect(riga.name).toBeNull();
     expect(riga.phone).toBeNull();
+    const coord = sql.prepare('SELECT lat, lng FROM search_results WHERE place_id = ?').get('P1') as Record<string, unknown>;
+    expect(coord).toMatchObject({ lat: null, lng: null });
   });
 
   it('rifiuta un place che non appartiene alla ricerca, senza chiamare Google', async () => {
@@ -210,7 +216,7 @@ describe('visibilità per ruolo (S6c)', () => {
     const rC = aggiungiRicerca(s.sql, idC, '2026-09-03T10:00:00.000Z');
     aggiungiRisultato(s.sql, rC, 'PC');
     const cookieB = (await login(s.db, 'b@example.com', 'password-lunga-2')).cookie;
-    const mock = vi.fn(async () => ({ nome: 'X', indirizzo: null, tipi: [], telefono: null, sito: null }));
+    const mock = vi.fn(async () => ({ nome: 'X', indirizzo: null, tipi: [], telefono: null, sito: null, lat: null, lng: null }));
     fabbricaDettagli.crea = () => mock;
     const rete = vi.fn();
     vi.stubGlobal('fetch', rete);
@@ -285,15 +291,17 @@ describe('fabbricaDettagli (client Google)', () => {
           types: ['pharmacy'],
           nationalPhoneNumber: '06 1',
           websiteUri: 'https://x.it',
+          location: { latitude: 41.85421, longitude: 12.47851 },
         }),
       ),
     );
     const d = await fabbricaDettagli.crea('CHIAVE-SEGRETA', fetchFinto as unknown as typeof fetch)('P1');
     expect(d.nome).toBe('Farmacia Uno');
+    expect(d).toMatchObject({ lat: 41.85421, lng: 12.47851 });
     const [url, opz] = fetchFinto.mock.calls[0] as unknown as [string, { headers: Record<string, string> }];
     expect(url).not.toContain('CHIAVE-SEGRETA');
     expect(opz.headers['X-Goog-Api-Key']).toBe('CHIAVE-SEGRETA');
-    expect(opz.headers['X-Goog-FieldMask']).toBe('displayName,formattedAddress,types,nationalPhoneNumber,websiteUri');
+    expect(opz.headers['X-Goog-FieldMask']).toBe('displayName,formattedAddress,types,nationalPhoneNumber,websiteUri,location');
 
     const ko = vi.fn(async () => new Response('{}', { status: 403 }));
     await expect(fabbricaDettagli.crea('CHIAVE-SEGRETA', ko as unknown as typeof fetch)('P1')).rejects.toThrow('Google HTTP 403');

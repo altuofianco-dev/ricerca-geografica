@@ -6,7 +6,7 @@ import { inizioGiornoRomaDa } from './ricerche';
 
 const PER_PAGINA = 25;
 const URL_DETTAGLI = 'https://places.googleapis.com/v1/places/';
-const CAMPI_DETTAGLI = 'displayName,formattedAddress,types,nationalPhoneNumber,websiteUri';
+const CAMPI_DETTAGLI = 'displayName,formattedAddress,types,nationalPhoneNumber,websiteUri,location';
 
 export interface DettagliLuogo {
   nome: string | null;
@@ -14,6 +14,8 @@ export interface DettagliLuogo {
   tipi: string[];
   telefono: string | null;
   sito: string | null;
+  lat: number | null;
+  lng: number | null;
 }
 
 export type RecuperaDettagli = (placeId: string) => Promise<DettagliLuogo>;
@@ -33,6 +35,7 @@ export const fabbricaDettagli = {
         types?: string[];
         nationalPhoneNumber?: string;
         websiteUri?: string;
+        location?: { latitude?: number; longitude?: number };
       };
       return {
         nome: d.displayName?.text ?? null,
@@ -40,6 +43,8 @@ export const fabbricaDettagli = {
         tipi: Array.isArray(d.types) ? d.types : [],
         telefono: d.nationalPhoneNumber ?? null,
         sito: d.websiteUri ?? null,
+        lat: typeof d.location?.latitude === 'number' ? d.location.latitude : null,
+        lng: typeof d.location?.longitude === 'number' ? d.location.longitude : null,
       };
     };
   },
@@ -52,6 +57,8 @@ interface RigaRisultato {
   types_json: string | null;
   phone: string | null;
   website: string | null;
+  lat: number | null;
+  lng: number | null;
   fetched_at: string;
 }
 
@@ -71,6 +78,8 @@ const luogoDaRiga = (r: RigaRisultato, salvataIl: string) => ({
   tipi: tipiDa(r.types_json),
   telefono: r.phone,
   sito: r.website,
+  lat: r.lat,
+  lng: r.lng,
   recuperatoIl: r.fetched_at,
   // Già recuperato con "Recupera dettagli" (senza cambiare lo schema): tutti i risultati salvati
   // insieme hanno lo stesso fetched_at, un recupero successivo lo sposta in avanti.
@@ -168,7 +177,7 @@ storico.get('/api/ricerche/:id', async (c) => {
     .first<Record<string, unknown> & { types_json: string; include_contacts: number }>();
   if (!s) return c.json({ errore: 'Ricerca non trovata' }, 404);
   const { results } = await c.env.DB.prepare(
-    `SELECT place_id, name, address, types_json, phone, website, fetched_at
+    `SELECT place_id, name, address, types_json, phone, website, lat, lng, fetched_at
      FROM search_results WHERE search_id = ? ORDER BY name COLLATE NOCASE, place_id`,
   )
     .bind(Number(id))
@@ -215,10 +224,10 @@ storico.post('/api/ricerche/:id/dettagli', async (c) => {
   if (c.env.SALVA_DATI_ESTESI === 'true') {
     try {
       await c.env.DB.prepare(
-        `UPDATE search_results SET name = ?, address = ?, types_json = ?, phone = ?, website = ?, fetched_at = ?
+        `UPDATE search_results SET name = ?, address = ?, types_json = ?, phone = ?, website = ?, lat = ?, lng = ?, fetched_at = ?
          WHERE search_id = ? AND place_id = ?`,
       )
-        .bind(d.nome, d.indirizzo, JSON.stringify(d.tipi), d.telefono, d.sito, ora, Number(id), placeId)
+        .bind(d.nome, d.indirizzo, JSON.stringify(d.tipi), d.telefono, d.sito, d.lat, d.lng, ora, Number(id), placeId)
         .run();
     } catch {
       return c.json({ errore: 'Salvataggio dei dettagli non riuscito' }, 500);

@@ -72,7 +72,7 @@ describe('POST /api/ricerche', () => {
     expect(s).toMatchObject({ status: 'completata', result_count: 2, api_calls: 10, saturated_calls: 0, include_contacts: 1, address_place_id: 'ChIJtest1' });
     const r = sql.prepare('SELECT * FROM search_results WHERE search_id = ? ORDER BY place_id').all(dati.id) as Record<string, unknown>[];
     expect(r).toHaveLength(2);
-    expect(r[0]).toMatchObject({ place_id: 'P1', name: 'Farmacia P1', phone: '06 123456', website: 'https://esempio.it' });
+    expect(r[0]).toMatchObject({ place_id: 'P1', name: 'Farmacia P1', phone: '06 123456', website: 'https://esempio.it', lat: 41.9, lng: 12.5 });
   });
 
   it('con SALVA_DATI_ESTESI=false salva solo Place ID e data ma risponde con i dati completi', async () => {
@@ -82,7 +82,7 @@ describe('POST /api/ricerche', () => {
     const dati = (await res.json()) as { id: number; risultati: { nome: string }[] };
     expect(dati.risultati[0].nome).toBe('Farmacia P1');
     const r = sql.prepare('SELECT * FROM search_results WHERE search_id = ?').get(dati.id) as Record<string, unknown>;
-    expect(r).toMatchObject({ place_id: 'P1', name: null, address: null, phone: null, website: null });
+    expect(r).toMatchObject({ place_id: 'P1', name: null, address: null, phone: null, website: null, lat: null, lng: null });
     expect(r.fetched_at).toBeTruthy();
   });
 
