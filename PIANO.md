@@ -30,7 +30,7 @@ Regole per risparmiare utilizzo:
 | Telefono e sito | Opzionali per ricerca (casella), default disattivati |
 | Griglia | 3×3 vera, raggio R·√2/3, filtro finale entro R |
 | Password | Impostate solo dall'admin; nessun recupero né cambio da parte dell'utente |
-| Dati salvati | Solo Place ID (`SALVA_DATI_ESTESI=false`) finché non verifichi i termini |
+| Dati salvati | Dati completi (`SALVA_DATI_ESTESI=true`); la verifica dei termini Google resta a carico del committente |
 | Limite di sicurezza | 30 ricerche al giorno per tutta l'app |
 
 ---
@@ -60,7 +60,7 @@ Regole per risparmiare utilizzo:
 - Copia nella radice del repo: `SPEC.md`, `PIANO.md`, `STATO.md`, `CLAUDE.md`. Commit e push.
 
 **T0.5 — Termini Google (può andare in parallelo)**
-- Leggi i termini specifici di Google Maps Platform (versione SEE) sulla conservazione dei contenuti e decidi se tenere `SALVA_DATI_ESTESI=false`.
+- Leggi i termini specifici di Google Maps Platform (versione SEE) sulla conservazione dei contenuti per confermare che `SALVA_DATI_ESTESI=true` sia compatibile (in caso contrario si torna a `false` senza modificare il codice).
 
 ✅ Fatto quando: repo su GitHub con i 4 file, chiave Google con quote e budget, account Cloudflare pronto.
 

@@ -118,8 +118,8 @@ I termini di Google Maps Platform permettono di conservare i **Place ID** senza 
 
 Comportamento controllato dalla variabile `SALVA_DATI_ESTESI`:
 
-- `false` (**default**): in `search_results` si salvano solo Place ID e data. I dati completi vengono mostrati ed esportati solo al momento della ricerca; nel dettaglio di una ricerca passata si usano i pulsanti "Recupera dettagli".
-- `true`: si salvano anche nome, indirizzo, categorie, telefono e sito, con data di recupero.
+- `false`: in `search_results` si salvano solo Place ID e data. I dati completi vengono mostrati ed esportati solo al momento della ricerca; nel dettaglio di una ricerca passata si usano i pulsanti "Recupera dettagli".
+- `true` (**scelta del committente**): si salvano anche nome, indirizzo, categorie, telefono e sito, con data di recupero. "Recupera dettagli" serve a completare o aggiornare i dati mancanti (es. telefono e sito se la ricerca era senza contatti) e salva i dati recuperati.
 
 ## 10. Modello dati (Cloudflare D1)
 
