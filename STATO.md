@@ -10,8 +10,8 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S1 — Scheletro e pubblicazione | completata | 30/09/2026 |
 | S2 — Autenticazione e utenti | completata e verificata dal committente | 30/09/2026 |
 | S3 — Motore di ricerca Google | completata | 30/09/2026 |
-| S4 — Nuova ricerca e risultati | completata (in attesa di prova reale del committente) | 30/09/2026 |
-| S5 — Elenco ricerche e dettaglio | da fare | |
+| S4 — Nuova ricerca e risultati | completata e verificata dal committente | 30/09/2026 |
+| S5 — Elenco ricerche e dettaglio | completata (in attesa di prova reale di "Recupera dettagli") | 30/09/2026 |
 | S6 — Dashboard e rifinitura | da fare | |
 | S7 — Messa in produzione | da fare | |
 
@@ -22,21 +22,25 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
 ## Ultima sessione
-- Sessione: S4 — Nuova ricerca e risultati
+- Sessione: S5 — Elenco ricerche e dettaglio
 - Cosa è stato fatto:
-  - Regole in `CLAUDE.md` (file solo con gli strumenti di modifica; mai `wrangler secret`) e `.claude/settings.json` con divieto di `wrangler secret` / `npx wrangler secret` (Bash e PowerShell).
-  - `POST /api/ricerche` (`src/worker/ricerche.ts`): valida, applica il limite giornaliero, salva la ricerca (`in_corso`), esegue le 10 chiamate, salva i risultati secondo `SALVA_DATI_ESTESI`, chiude con `completata` o `errore` (mai lasciata `in_corso`).
-  - Pagina "Nuova ricerca" (`src/client/NuovaRicerca.tsx`): indirizzo con suggerimenti, raggio, categorie con ricerca, casella contatti, tabella risultati, avvisi (chiamate sature, errori parziali, limite giornaliero), download CSV (`src/client/csv.ts`: UTF-8 con BOM, `;`, protezione formule).
-  - 73 test Vitest (15 nuovi, tutti con Google finto): passano; `npm run build` ok.
-  - Non ho fatto chiamate reali a Google né provato l'interfaccia nel browser (serve il login e ogni suggerimento costa).
-- Configurazione (non sono secret): in `wrangler.jsonc`, sezione `vars`: `MAX_RICERCHE_GIORNO="30"` e `SALVA_DATI_ESTESI="true"`. Valgono in locale e in produzione. Per cambiarle: modificare il file e rifare `npm run deploy`. La chiave Google resta l'unico secret (`.dev.vars` in locale, secret Wrangler in produzione).
+  - Backend `src/worker/storico.ts`: `GET /api/ricerche` (filtri `dal`/`al` come giorni di Europe/Rome, `operatore`, `pagina`; 25 righe, più recenti prima), `GET /api/operatori` (tutti gli utenti, anche disattivati, solo id/nome/attivo, per il filtro), `GET /api/ricerche/:id` (parametri + risultati salvati), `POST /api/ricerche/:id/dettagli` (Place Details con `displayName,formattedAddress,types,nationalPhoneNumber,websiteUri`; il Place ID deve appartenere alla ricerca; salva solo se `SALVA_DATI_ESTESI="true"`, altrimenti mostra soltanto). Tutti con sessione.
+  - Interfaccia: voce "Elenco ricerche" nella barra; `ElencoRicerche.tsx` (filtri data e operatore con "(disattivato)", paginazione), `DettaglioRicerca.tsx` (parametri, risultati, "Recupera dettagli" per riga, CSV). Il pulsante "Recupera dettagli" si disabilita durante la richiesta (un solo recupero alla volta) per evitare doppie chiamate a pagamento.
+  - CSV: la funzione di S4 è stata resa condivisa (`csvRisultati` e `etichette` in `src/client/csv.ts`), usata sia da "Nuova ricerca" sia dal dettaglio: nessun codice duplicato.
+  - `inizioGiornoRomaDa(AAAA-MM-GG)` in `ricerche.ts` (riusa la logica di `inizioGiornoRoma`).
+  - 86 test Vitest (13 nuovi, Google sempre finto): passano; `npm run build` e controllo tipi ok. Nessuna chiamata reale a Google, interfaccia non provata nel browser.
 - Azioni richieste al committente:
-  1. Reimpostare il secret remoto (vedi S3 sotto) se non già fatto, poi `npm run deploy`.
-  2. Fare una ricerca di prova dall'interfaccia (raggio piccolo, una categoria): controllare che i suggerimenti compaiano, che i risultati siano corretti, che il CSV si apra bene in Excel (accenti e colonne) e che la ricerca risulti in D1 con il numero di risultati giusto.
-- Scelte: il limite giornaliero conta tutte le ricerche del giorno di Roma (anche quelle in errore, perché costano); se tutte le 10 chiamate falliscono la ricerca va in `errore`, se solo alcune fallisce resta `completata` con avviso.
+  1. `npm run deploy`.
+  2. Provare online dal dettaglio di una ricerca "Recupera dettagli" su un risultato (costa: SKU Enterprise): devono comparire telefono e sito. Controllare anche i filtri per data e operatore e il CSV dal dettaglio.
+- Scelte (confermate): con `SALVA_DATI_ESTESI="false"` "Recupera dettagli" mostra i dati senza salvarli; il filtro "al" include l'intero giorno indicato. Nel dettaglio, se i dati estesi non sono salvati, nome e indirizzo restano vuoti finché non si usa "Recupera dettagli".
 
 ## Sessione precedente
-- Sessione: S3 — Motore di ricerca Google (solo backend)
+- Sessione: S4 — Nuova ricerca e risultati (verificata dal committente)
+- Cosa è stato fatto: `POST /api/ricerche` con limite giornaliero e salvataggio su D1; pagina "Nuova ricerca" con suggerimenti, categorie, avvisi e CSV; regole in `CLAUDE.md` e blocco di `wrangler secret` in `.claude/settings.json`; 73 test.
+- Configurazione (non sono secret): in `wrangler.jsonc`, sezione `vars`: `MAX_RICERCHE_GIORNO="30"` e `SALVA_DATI_ESTESI="true"`. Valgono in locale e in produzione. Per cambiarle: modificare il file e rifare `npm run deploy`. La chiave Google resta l'unico secret (`.dev.vars` in locale, secret Wrangler in produzione).
+- Scelte: il limite giornaliero conta tutte le ricerche del giorno di Roma (anche quelle in errore, perché costano); se tutte le 10 chiamate falliscono la ricerca va in `errore`, se solo alcune fallisce resta `completata` con avviso.
+
+## Sessione S3 — Motore di ricerca Google (solo backend)
 - Cosa è stato fatto:
   - Modulo `src/worker/ricerca.ts` (SPEC §6): conversione km/gradi, 10 cerchi (principale + griglia 3×3), haversine, field mask base/contatti, filtro OPERATIONAL, filtro distanza, deduplica per Place ID, conteggio chiamate sature, al massimo 3 chiamate in parallelo, errori parziali registrati, validazione parametri (raggio 0,5–50 a passi di 0,5; 1–50 categorie).
   - Chiave Google solo nell'header `X-Goog-Api-Key`, mai nell'URL; i messaggi d'errore contengono solo lo stato HTTP.
@@ -46,10 +50,7 @@ Stati possibili: da fare · in corso · completata · bloccata
   - 58 test Vitest (32 nuovi, tutti con dati finti): passano.
 - Prova reale (eseguita dal committente): Roma (41,85421; 12,4783), pharmacy, 1 km → 10 chiamate, 0 sature, 0 errori; 46 ricevuti, 45 OPERATIONAL, 34 entro 1 km, 13 dopo deduplica. Risultati corretti: criterio di accettazione soddisfatto.
 - Cosa resta da fare: sessione S4 (nuova ricerca e risultati). Il salvataggio su D1, il limite `MAX_RICERCHE_GIORNO` e l'uso del modulo sono previsti in S4.
-- Azioni richieste al committente:
-  1. IMPORTANTE: reimpostare il secret remoto della chiave Google con `npx wrangler secret put GOOGLE_API_KEY` (incollando la chiave). Per un errore di Claude Code il secret è stato sovrascritto con un valore non valido (vedi Problemi aperti).
-  2. Poi pubblicare con `npm run deploy` (non eseguito da me).
-- Problemi aperti: a fine S3 un comando `wrangler secret put GOOGLE_API_KEY` è stato eseguito per errore da Claude Code (testo del comando interpretato dalla shell) e ha caricato sul Worker remoto un valore non valido al posto della chiave. La chiave locale in `.dev.vars` non è stata toccata. Finché non viene reimpostata, in produzione le chiamate Google falliranno; `/api/health` non ne risente.
+- Problemi risolti: a fine S3 un comando `wrangler secret put GOOGLE_API_KEY` era stato eseguito per errore da Claude Code (testo del comando interpretato dalla shell) e aveva creato sul Worker remoto un secret errato, chiamato `GOOGLE_API_KEY\` (con barra rovesciata). Il committente ha reimpostato `GOOGLE_API_KEY`, eliminato il secret errato `GOOGLE_API_KEY\` e verificato che le ricerche online funzionano. Chiuso.
 - Altri problemi: nel database locale ci sono utenti di prova (prova@example.com, op@example.com): si possono ignorare.
 
 ## Decisioni prese durante lo sviluppo
