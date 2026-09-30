@@ -1,11 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import tipiIt from '../data/place-types.it.json';
+import { useEffect, useRef, useState } from 'react';
 import { api, messaggioErrore } from './api';
 import { csvRisultati, etichette, scaricaCsv } from './csv';
-
-const TIPI = tipiIt as { type: string; label: string }[];
-const ETICHETTE = new Map(TIPI.map((t) => [t.type, t.label]));
-const MAX_CATEGORIE = 50;
+import SelettoreCategorie from './SelettoreCategorie';
 
 interface Suggerimento {
   placeId: string;
@@ -31,7 +27,6 @@ interface Esito {
 }
 
 const nuovaSessione = () => crypto.randomUUID();
-const senzaAccenti = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 export default function NuovaRicerca() {
   const [testo, setTesto] = useState('');
@@ -41,7 +36,6 @@ export default function NuovaRicerca() {
   const sessione = useRef(nuovaSessione());
   const [raggio, setRaggio] = useState('1');
   const [categorie, setCategorie] = useState<string[]>([]);
-  const [filtro, setFiltro] = useState('');
   const [contatti, setContatti] = useState(false);
   const [inCorso, setInCorso] = useState(false);
   const [errore, setErrore] = useState('');
@@ -87,12 +81,6 @@ export default function NuovaRicerca() {
       sessione.current = nuovaSessione(); // il token vale per una sola sessione di digitazione
     }
   }
-
-  const tipiFiltrati = useMemo(() => {
-    const f = senzaAccenti(filtro.trim());
-    if (!f) return [];
-    return TIPI.filter((t) => !categorie.includes(t.type) && senzaAccenti(t.label).includes(f)).slice(0, 12);
-  }, [filtro, categorie]);
 
   const raggioNum = Number(raggio.replace(',', '.'));
   const raggioValido = raggioNum >= 0.5 && raggioNum <= 50 && Number.isInteger(raggioNum * 2);
@@ -169,41 +157,7 @@ export default function NuovaRicerca() {
         </label>
         {!raggioValido && <p className="errore">Il raggio deve essere tra 0,5 e 50 km, a passi di 0,5</p>}
 
-        <label>
-          Categorie ({categorie.length}/{MAX_CATEGORIE})
-          <input
-            value={filtro}
-            onChange={(e) => setFiltro(e.target.value)}
-            placeholder="Cerca una categoria, es. farmacia"
-            disabled={inCorso}
-          />
-        </label>
-        {tipiFiltrati.length > 0 && (
-          <ul className="suggerimenti">
-            {tipiFiltrati.map((t) => (
-              <li key={t.type}>
-                <button
-                  type="button"
-                  disabled={categorie.length >= MAX_CATEGORIE}
-                  onClick={() => {
-                    setCategorie([...categorie, t.type]);
-                    setFiltro('');
-                  }}
-                >
-                  {t.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {categorie.length >= MAX_CATEGORIE && <p className="errore">Hai raggiunto il massimo di {MAX_CATEGORIE} categorie</p>}
-        <div className="riga">
-          {categorie.map((c) => (
-            <button key={c} type="button" className="chip" disabled={inCorso} onClick={() => setCategorie(categorie.filter((x) => x !== c))}>
-              {ETICHETTE.get(c) ?? c} ✕
-            </button>
-          ))}
-        </div>
+        <SelettoreCategorie scelte={categorie} onChange={setCategorie} disabled={inCorso} />
 
         <label className="casella">
           <input type="checkbox" checked={contatti} onChange={(e) => setContatti(e.target.checked)} disabled={inCorso} />

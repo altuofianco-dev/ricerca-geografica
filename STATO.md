@@ -13,6 +13,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S4 — Nuova ricerca e risultati | completata e verificata dal committente | 30/09/2026 |
 | S5 — Elenco ricerche e dettaglio | completata e verificata dal committente | 30/09/2026 |
 | S6 — Dashboard e rifinitura | completata (in attesa di verifica del committente) | 30/09/2026 |
+| S6b — Selettore ad albero delle categorie | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
@@ -21,7 +22,18 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Produzione: https://ricerca-geografica.altuofianco-dev.workers.dev
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
-## Ultima sessione
+## Ultima sessione (S6b)
+- Sessione: S6b — Selettore ad albero delle categorie (correzione prima della S7)
+- Cosa è stato fatto:
+  - `src/data/place-types.it.json`: ogni tipo ha `gruppo` (18 macro-categorie in italiano, secondo la Table A); `generico: true` sulla categoria ampia di 8 gruppi (restaurant, store, lodging, service, educational_institution, government_office, transportation_service, sports_activity_location), mostrata con "(in generale)" solo nel selettore (le etichette usate da CSV e risultati restano quelle normali; `service` ora si chiama "Servizio"); "Cibo e bevande" ha in cima restaurant, cafe, bar, bakery, meal_takeaway; `parole` con sinonimi italiani (idraulico/caldaia/riscaldamento → plumber, meccanico/officina → car_repair, ecc.). Il file è ora formattato con un tipo per riga.
+  - Verifica Google: nella Table A non esiste un tipo per gli installatori di impianti di riscaldamento; si usa `plumber` tramite i sinonimi.
+  - `src/client/categorie.ts` (funzioni pure: normalizzazione, ricerca con ordine, stato macro, limite 50) e `SelettoreCategorie.tsx` (etichette ×, "Svuota selezione", contatore N/50, albero con caselle e stato indeterminato, casella macro disattivata con spiegazione se supera 50, ricerca che apre solo le macro con corrispondenze, nota sui 20 risultati per zona). Sostituisce il vecchio campo in `NuovaRicerca.tsx`, senza nuove dipendenze.
+  - SPEC §5 aggiornata (formato JSON e comportamento). 115 test Vitest (14 nuovi), controllo tipi e `npm run build` ok. Interfaccia non provata nel browser (serve un login locale).
+- Azioni richieste al committente: `npm run deploy`; poi provare online il selettore (aprire una macro, spuntarla, cercare "caldaia", "farmacia", "citta", raggiungere 50 categorie).
+- Nota: la macro "Cibo e bevande" (oltre 150 tipi) ha sempre la casella disattivata (supera 50): si scelgono le singole categorie o "Ristorante (in generale)".
+- Nota di metodo: in S6 alcune modifiche a `STATO.md` erano state fatte con uno script da shell, contro la regola di `CLAUDE.md`; da S6b in poi i file si modificano solo con gli strumenti di modifica.
+
+## Sessione precedente (S6)
 - Sessione: S6 — Dashboard e rifinitura
 - Cosa è stato fatto:
   - Backend `src/worker/dashboard.ts`: `GET /api/dashboard?periodo=30giorni|anno|tutto` (con sessione). Conta tutte le ricerche, anche in errore, come l'elenco; operatori disattivati inclusi; totali ricavati dalle stesse righe per operatore. Periodi sui giorni di Europe/Rome: "30 giorni" = oggi + 29 giorni precedenti, "anno" = dal 1° gennaio.
