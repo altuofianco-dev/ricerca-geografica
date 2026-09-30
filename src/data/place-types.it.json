@@ -1,1886 +1,473 @@
 [
-  {
-    "type": "car_dealer",
-    "label": "Concessionario auto"
-  },
-  {
-    "type": "car_rental",
-    "label": "Autonoleggio"
-  },
-  {
-    "type": "car_repair",
-    "label": "Officina meccanica"
-  },
-  {
-    "type": "car_wash",
-    "label": "Autolavaggio"
-  },
-  {
-    "type": "ebike_charging_station",
-    "label": "Ricarica e-bike"
-  },
-  {
-    "type": "electric_vehicle_charging_station",
-    "label": "Colonnina di ricarica elettrica"
-  },
-  {
-    "type": "gas_station",
-    "label": "Distributore di carburante"
-  },
-  {
-    "type": "parking",
-    "label": "Parcheggio"
-  },
-  {
-    "type": "parking_garage",
-    "label": "Autorimessa"
-  },
-  {
-    "type": "parking_lot",
-    "label": "Area di parcheggio"
-  },
-  {
-    "type": "rest_stop",
-    "label": "Area di sosta"
-  },
-  {
-    "type": "tire_shop",
-    "label": "Gommista"
-  },
-  {
-    "type": "truck_dealer",
-    "label": "Concessionario camion"
-  },
-  {
-    "type": "business_center",
-    "label": "Centro servizi per aziende"
-  },
-  {
-    "type": "corporate_office",
-    "label": "Sede aziendale"
-  },
-  {
-    "type": "coworking_space",
-    "label": "Spazio di coworking"
-  },
-  {
-    "type": "farm",
-    "label": "Azienda agricola"
-  },
-  {
-    "type": "manufacturer",
-    "label": "Azienda manifatturiera"
-  },
-  {
-    "type": "ranch",
-    "label": "Ranch"
-  },
-  {
-    "type": "supplier",
-    "label": "Fornitore"
-  },
-  {
-    "type": "television_studio",
-    "label": "Studio televisivo"
-  },
-  {
-    "type": "art_gallery",
-    "label": "Galleria d'arte"
-  },
-  {
-    "type": "art_museum",
-    "label": "Museo d'arte"
-  },
-  {
-    "type": "art_studio",
-    "label": "Studio d'artista"
-  },
-  {
-    "type": "auditorium",
-    "label": "Auditorium"
-  },
-  {
-    "type": "castle",
-    "label": "Castello"
-  },
-  {
-    "type": "cultural_landmark",
-    "label": "Luogo di interesse culturale"
-  },
-  {
-    "type": "fountain",
-    "label": "Fontana"
-  },
-  {
-    "type": "historical_place",
-    "label": "Luogo storico"
-  },
-  {
-    "type": "history_museum",
-    "label": "Museo di storia"
-  },
-  {
-    "type": "monument",
-    "label": "Monumento"
-  },
-  {
-    "type": "museum",
-    "label": "Museo"
-  },
-  {
-    "type": "performing_arts_theater",
-    "label": "Teatro"
-  },
-  {
-    "type": "sculpture",
-    "label": "Scultura"
-  },
-  {
-    "type": "academic_department",
-    "label": "Dipartimento universitario"
-  },
-  {
-    "type": "educational_institution",
-    "label": "Istituto di istruzione"
-  },
-  {
-    "type": "library",
-    "label": "Biblioteca"
-  },
-  {
-    "type": "preschool",
-    "label": "Scuola dell'infanzia"
-  },
-  {
-    "type": "primary_school",
-    "label": "Scuola primaria"
-  },
-  {
-    "type": "research_institute",
-    "label": "Istituto di ricerca"
-  },
-  {
-    "type": "school",
-    "label": "Scuola"
-  },
-  {
-    "type": "secondary_school",
-    "label": "Scuola secondaria"
-  },
-  {
-    "type": "university",
-    "label": "Università"
-  },
-  {
-    "type": "adventure_sports_center",
-    "label": "Centro sport d'avventura"
-  },
-  {
-    "type": "amphitheatre",
-    "label": "Anfiteatro"
-  },
-  {
-    "type": "amusement_center",
-    "label": "Sala giochi"
-  },
-  {
-    "type": "amusement_park",
-    "label": "Parco divertimenti"
-  },
-  {
-    "type": "aquarium",
-    "label": "Acquario"
-  },
-  {
-    "type": "banquet_hall",
-    "label": "Sala banchetti"
-  },
-  {
-    "type": "barbecue_area",
-    "label": "Area barbecue"
-  },
-  {
-    "type": "botanical_garden",
-    "label": "Orto botanico"
-  },
-  {
-    "type": "bowling_alley",
-    "label": "Bowling"
-  },
-  {
-    "type": "casino",
-    "label": "Casinò"
-  },
-  {
-    "type": "childrens_camp",
-    "label": "Campo per bambini"
-  },
-  {
-    "type": "city_park",
-    "label": "Parco cittadino"
-  },
-  {
-    "type": "comedy_club",
-    "label": "Locale di cabaret"
-  },
-  {
-    "type": "community_center",
-    "label": "Centro comunitario"
-  },
-  {
-    "type": "concert_hall",
-    "label": "Sala concerti"
-  },
-  {
-    "type": "convention_center",
-    "label": "Centro congressi"
-  },
-  {
-    "type": "cultural_center",
-    "label": "Centro culturale"
-  },
-  {
-    "type": "cycling_park",
-    "label": "Parco per ciclismo"
-  },
-  {
-    "type": "dance_hall",
-    "label": "Sala da ballo"
-  },
-  {
-    "type": "dog_park",
-    "label": "Area cani"
-  },
-  {
-    "type": "event_venue",
-    "label": "Location per eventi"
-  },
-  {
-    "type": "ferris_wheel",
-    "label": "Ruota panoramica"
-  },
-  {
-    "type": "garden",
-    "label": "Giardino"
-  },
-  {
-    "type": "go_karting_venue",
-    "label": "Pista di kart"
-  },
-  {
-    "type": "hiking_area",
-    "label": "Area escursionistica"
-  },
-  {
-    "type": "historical_landmark",
-    "label": "Monumento storico"
-  },
-  {
-    "type": "indoor_playground",
-    "label": "Parco giochi al coperto"
-  },
-  {
-    "type": "internet_cafe",
-    "label": "Internet point"
-  },
-  {
-    "type": "karaoke",
-    "label": "Karaoke"
-  },
-  {
-    "type": "live_music_venue",
-    "label": "Locale con musica dal vivo"
-  },
-  {
-    "type": "marina",
-    "label": "Porto turistico"
-  },
-  {
-    "type": "miniature_golf_course",
-    "label": "Minigolf"
-  },
-  {
-    "type": "movie_rental",
-    "label": "Noleggio film"
-  },
-  {
-    "type": "movie_theater",
-    "label": "Cinema"
-  },
-  {
-    "type": "national_park",
-    "label": "Parco nazionale"
-  },
-  {
-    "type": "night_club",
-    "label": "Discoteca"
-  },
-  {
-    "type": "observation_deck",
-    "label": "Terrazza panoramica"
-  },
-  {
-    "type": "off_roading_area",
-    "label": "Area fuoristrada"
-  },
-  {
-    "type": "opera_house",
-    "label": "Teatro dell'opera"
-  },
-  {
-    "type": "paintball_center",
-    "label": "Centro paintball"
-  },
-  {
-    "type": "park",
-    "label": "Parco"
-  },
-  {
-    "type": "philharmonic_hall",
-    "label": "Sala filarmonica"
-  },
-  {
-    "type": "picnic_ground",
-    "label": "Area picnic"
-  },
-  {
-    "type": "planetarium",
-    "label": "Planetario"
-  },
-  {
-    "type": "plaza",
-    "label": "Piazza"
-  },
-  {
-    "type": "roller_coaster",
-    "label": "Montagne russe"
-  },
-  {
-    "type": "skateboard_park",
-    "label": "Skate park"
-  },
-  {
-    "type": "state_park",
-    "label": "Parco regionale"
-  },
-  {
-    "type": "tourist_attraction",
-    "label": "Attrazione turistica"
-  },
-  {
-    "type": "video_arcade",
-    "label": "Sala videogiochi"
-  },
-  {
-    "type": "vineyard",
-    "label": "Vigneto"
-  },
-  {
-    "type": "visitor_center",
-    "label": "Centro visitatori"
-  },
-  {
-    "type": "water_park",
-    "label": "Parco acquatico"
-  },
-  {
-    "type": "wedding_venue",
-    "label": "Location per matrimoni"
-  },
-  {
-    "type": "wildlife_park",
-    "label": "Parco faunistico"
-  },
-  {
-    "type": "wildlife_refuge",
-    "label": "Riserva faunistica"
-  },
-  {
-    "type": "zoo",
-    "label": "Zoo"
-  },
-  {
-    "type": "public_bath",
-    "label": "Bagni pubblici"
-  },
-  {
-    "type": "public_bathroom",
-    "label": "Servizi igienici pubblici"
-  },
-  {
-    "type": "stable",
-    "label": "Stalla"
-  },
-  {
-    "type": "accounting",
-    "label": "Commercialista"
-  },
-  {
-    "type": "atm",
-    "label": "Bancomat"
-  },
-  {
-    "type": "bank",
-    "label": "Banca"
-  },
-  {
-    "type": "acai_shop",
-    "label": "Bar di açaí"
-  },
-  {
-    "type": "afghani_restaurant",
-    "label": "Ristorante afghano"
-  },
-  {
-    "type": "african_restaurant",
-    "label": "Ristorante africano"
-  },
-  {
-    "type": "american_restaurant",
-    "label": "Ristorante americano"
-  },
-  {
-    "type": "argentinian_restaurant",
-    "label": "Ristorante argentino"
-  },
-  {
-    "type": "asian_fusion_restaurant",
-    "label": "Ristorante fusion asiatico"
-  },
-  {
-    "type": "asian_restaurant",
-    "label": "Ristorante asiatico"
-  },
-  {
-    "type": "australian_restaurant",
-    "label": "Ristorante australiano"
-  },
-  {
-    "type": "austrian_restaurant",
-    "label": "Ristorante austriaco"
-  },
-  {
-    "type": "bagel_shop",
-    "label": "Bagel shop"
-  },
-  {
-    "type": "bakery",
-    "label": "Panificio"
-  },
-  {
-    "type": "bangladeshi_restaurant",
-    "label": "Ristorante bengalese"
-  },
-  {
-    "type": "bar",
-    "label": "Bar / pub (locale serale)"
-  },
-  {
-    "type": "bar_and_grill",
-    "label": "Bar e grill"
-  },
-  {
-    "type": "barbecue_restaurant",
-    "label": "Ristorante barbecue"
-  },
-  {
-    "type": "basque_restaurant",
-    "label": "Ristorante basco"
-  },
-  {
-    "type": "bavarian_restaurant",
-    "label": "Ristorante bavarese"
-  },
-  {
-    "type": "beer_garden",
-    "label": "Birreria all'aperto"
-  },
-  {
-    "type": "belgian_restaurant",
-    "label": "Ristorante belga"
-  },
-  {
-    "type": "bistro",
-    "label": "Bistrot"
-  },
-  {
-    "type": "brazilian_restaurant",
-    "label": "Ristorante brasiliano"
-  },
-  {
-    "type": "breakfast_restaurant",
-    "label": "Locale per colazioni"
-  },
-  {
-    "type": "brewery",
-    "label": "Birrificio"
-  },
-  {
-    "type": "brewpub",
-    "label": "Brewpub"
-  },
-  {
-    "type": "british_restaurant",
-    "label": "Ristorante britannico"
-  },
-  {
-    "type": "brunch_restaurant",
-    "label": "Locale per brunch"
-  },
-  {
-    "type": "buffet_restaurant",
-    "label": "Ristorante a buffet"
-  },
-  {
-    "type": "burmese_restaurant",
-    "label": "Ristorante birmano"
-  },
-  {
-    "type": "burrito_restaurant",
-    "label": "Ristorante di burrito"
-  },
-  {
-    "type": "cafe",
-    "label": "Bar / caffetteria"
-  },
-  {
-    "type": "cafeteria",
-    "label": "Mensa"
-  },
-  {
-    "type": "cajun_restaurant",
-    "label": "Ristorante cajun"
-  },
-  {
-    "type": "cake_shop",
-    "label": "Negozio di torte"
-  },
-  {
-    "type": "californian_restaurant",
-    "label": "Ristorante californiano"
-  },
-  {
-    "type": "cambodian_restaurant",
-    "label": "Ristorante cambogiano"
-  },
-  {
-    "type": "candy_store",
-    "label": "Negozio di caramelle"
-  },
-  {
-    "type": "cantonese_restaurant",
-    "label": "Ristorante cantonese"
-  },
-  {
-    "type": "caribbean_restaurant",
-    "label": "Ristorante caraibico"
-  },
-  {
-    "type": "cat_cafe",
-    "label": "Caffè dei gatti"
-  },
-  {
-    "type": "chicken_restaurant",
-    "label": "Ristorante di pollo"
-  },
-  {
-    "type": "chicken_wings_restaurant",
-    "label": "Ristorante di alette di pollo"
-  },
-  {
-    "type": "chilean_restaurant",
-    "label": "Ristorante cileno"
-  },
-  {
-    "type": "chinese_noodle_restaurant",
-    "label": "Ristorante di noodle cinesi"
-  },
-  {
-    "type": "chinese_restaurant",
-    "label": "Ristorante cinese"
-  },
-  {
-    "type": "chocolate_factory",
-    "label": "Fabbrica di cioccolato"
-  },
-  {
-    "type": "chocolate_shop",
-    "label": "Cioccolateria"
-  },
-  {
-    "type": "coffee_roastery",
-    "label": "Torrefazione"
-  },
-  {
-    "type": "coffee_shop",
-    "label": "Caffetteria (coffee shop)"
-  },
-  {
-    "type": "coffee_stand",
-    "label": "Chiosco del caffè"
-  },
-  {
-    "type": "colombian_restaurant",
-    "label": "Ristorante colombiano"
-  },
-  {
-    "type": "confectionery",
-    "label": "Confetteria"
-  },
-  {
-    "type": "croatian_restaurant",
-    "label": "Ristorante croato"
-  },
-  {
-    "type": "cuban_restaurant",
-    "label": "Ristorante cubano"
-  },
-  {
-    "type": "czech_restaurant",
-    "label": "Ristorante ceco"
-  },
-  {
-    "type": "danish_restaurant",
-    "label": "Ristorante danese"
-  },
-  {
-    "type": "deli",
-    "label": "Gastronomia"
-  },
-  {
-    "type": "dessert_restaurant",
-    "label": "Locale di dolci"
-  },
-  {
-    "type": "dessert_shop",
-    "label": "Negozio di dolci"
-  },
-  {
-    "type": "dim_sum_restaurant",
-    "label": "Ristorante dim sum"
-  },
-  {
-    "type": "diner",
-    "label": "Diner"
-  },
-  {
-    "type": "dog_cafe",
-    "label": "Caffè per cani"
-  },
-  {
-    "type": "donut_shop",
-    "label": "Negozio di ciambelle"
-  },
-  {
-    "type": "dumpling_restaurant",
-    "label": "Ristorante di ravioli"
-  },
-  {
-    "type": "dutch_restaurant",
-    "label": "Ristorante olandese"
-  },
-  {
-    "type": "eastern_european_restaurant",
-    "label": "Ristorante dell'Europa orientale"
-  },
-  {
-    "type": "ethiopian_restaurant",
-    "label": "Ristorante etiope"
-  },
-  {
-    "type": "european_restaurant",
-    "label": "Ristorante europeo"
-  },
-  {
-    "type": "falafel_restaurant",
-    "label": "Ristorante di falafel"
-  },
-  {
-    "type": "family_restaurant",
-    "label": "Ristorante per famiglie"
-  },
-  {
-    "type": "fast_food_restaurant",
-    "label": "Fast food"
-  },
-  {
-    "type": "filipino_restaurant",
-    "label": "Ristorante filippino"
-  },
-  {
-    "type": "fine_dining_restaurant",
-    "label": "Ristorante gourmet"
-  },
-  {
-    "type": "fish_and_chips_restaurant",
-    "label": "Fish and chips"
-  },
-  {
-    "type": "fondue_restaurant",
-    "label": "Ristorante di fonduta"
-  },
-  {
-    "type": "food_court",
-    "label": "Area ristoro (food court)"
-  },
-  {
-    "type": "french_restaurant",
-    "label": "Ristorante francese"
-  },
-  {
-    "type": "fusion_restaurant",
-    "label": "Ristorante fusion"
-  },
-  {
-    "type": "gastropub",
-    "label": "Gastropub"
-  },
-  {
-    "type": "german_restaurant",
-    "label": "Ristorante tedesco"
-  },
-  {
-    "type": "greek_restaurant",
-    "label": "Ristorante greco"
-  },
-  {
-    "type": "gyro_restaurant",
-    "label": "Ristorante di gyros"
-  },
-  {
-    "type": "halal_restaurant",
-    "label": "Ristorante halal"
-  },
-  {
-    "type": "hamburger_restaurant",
-    "label": "Hamburgeria"
-  },
-  {
-    "type": "hawaiian_restaurant",
-    "label": "Ristorante hawaiano"
-  },
-  {
-    "type": "hookah_bar",
-    "label": "Locale narghilè"
-  },
-  {
-    "type": "hot_dog_restaurant",
-    "label": "Locale di hot dog"
-  },
-  {
-    "type": "hot_dog_stand",
-    "label": "Chiosco di hot dog"
-  },
-  {
-    "type": "hot_pot_restaurant",
-    "label": "Ristorante hot pot"
-  },
-  {
-    "type": "hungarian_restaurant",
-    "label": "Ristorante ungherese"
-  },
-  {
-    "type": "ice_cream_shop",
-    "label": "Gelateria"
-  },
-  {
-    "type": "indian_restaurant",
-    "label": "Ristorante indiano"
-  },
-  {
-    "type": "indonesian_restaurant",
-    "label": "Ristorante indonesiano"
-  },
-  {
-    "type": "irish_pub",
-    "label": "Pub irlandese"
-  },
-  {
-    "type": "irish_restaurant",
-    "label": "Ristorante irlandese"
-  },
-  {
-    "type": "israeli_restaurant",
-    "label": "Ristorante israeliano"
-  },
-  {
-    "type": "italian_restaurant",
-    "label": "Ristorante italiano"
-  },
-  {
-    "type": "japanese_curry_restaurant",
-    "label": "Ristorante di curry giapponese"
-  },
-  {
-    "type": "japanese_izakaya_restaurant",
-    "label": "Izakaya giapponese"
-  },
-  {
-    "type": "japanese_restaurant",
-    "label": "Ristorante giapponese"
-  },
-  {
-    "type": "juice_shop",
-    "label": "Bar di succhi e centrifugati"
-  },
-  {
-    "type": "kebab_shop",
-    "label": "Kebab"
-  },
-  {
-    "type": "korean_barbecue_restaurant",
-    "label": "Ristorante barbecue coreano"
-  },
-  {
-    "type": "korean_restaurant",
-    "label": "Ristorante coreano"
-  },
-  {
-    "type": "latin_american_restaurant",
-    "label": "Ristorante latinoamericano"
-  },
-  {
-    "type": "lebanese_restaurant",
-    "label": "Ristorante libanese"
-  },
-  {
-    "type": "lounge_bar",
-    "label": "Lounge bar"
-  },
-  {
-    "type": "malaysian_restaurant",
-    "label": "Ristorante malese"
-  },
-  {
-    "type": "meal_delivery",
-    "label": "Consegna pasti a domicilio"
-  },
-  {
-    "type": "meal_takeaway",
-    "label": "Pasti da asporto"
-  },
-  {
-    "type": "mediterranean_restaurant",
-    "label": "Ristorante mediterraneo"
-  },
-  {
-    "type": "mexican_restaurant",
-    "label": "Ristorante messicano"
-  },
-  {
-    "type": "middle_eastern_restaurant",
-    "label": "Ristorante mediorientale"
-  },
-  {
-    "type": "mongolian_barbecue_restaurant",
-    "label": "Ristorante barbecue mongolo"
-  },
-  {
-    "type": "moroccan_restaurant",
-    "label": "Ristorante marocchino"
-  },
-  {
-    "type": "noodle_shop",
-    "label": "Locale di noodle"
-  },
-  {
-    "type": "north_indian_restaurant",
-    "label": "Ristorante indiano del nord"
-  },
-  {
-    "type": "oyster_bar_restaurant",
-    "label": "Ostricheria"
-  },
-  {
-    "type": "pakistani_restaurant",
-    "label": "Ristorante pakistano"
-  },
-  {
-    "type": "pastry_shop",
-    "label": "Pasticceria"
-  },
-  {
-    "type": "persian_restaurant",
-    "label": "Ristorante persiano"
-  },
-  {
-    "type": "peruvian_restaurant",
-    "label": "Ristorante peruviano"
-  },
-  {
-    "type": "pizza_delivery",
-    "label": "Pizza a domicilio"
-  },
-  {
-    "type": "pizza_restaurant",
-    "label": "Pizzeria"
-  },
-  {
-    "type": "polish_restaurant",
-    "label": "Ristorante polacco"
-  },
-  {
-    "type": "portuguese_restaurant",
-    "label": "Ristorante portoghese"
-  },
-  {
-    "type": "pub",
-    "label": "Pub"
-  },
-  {
-    "type": "ramen_restaurant",
-    "label": "Ristorante di ramen"
-  },
-  {
-    "type": "restaurant",
-    "label": "Ristorante"
-  },
-  {
-    "type": "romanian_restaurant",
-    "label": "Ristorante rumeno"
-  },
-  {
-    "type": "russian_restaurant",
-    "label": "Ristorante russo"
-  },
-  {
-    "type": "salad_shop",
-    "label": "Insalateria"
-  },
-  {
-    "type": "sandwich_shop",
-    "label": "Paninoteca"
-  },
-  {
-    "type": "scandinavian_restaurant",
-    "label": "Ristorante scandinavo"
-  },
-  {
-    "type": "seafood_restaurant",
-    "label": "Ristorante di pesce"
-  },
-  {
-    "type": "shawarma_restaurant",
-    "label": "Ristorante di shawarma"
-  },
-  {
-    "type": "snack_bar",
-    "label": "Snack bar"
-  },
-  {
-    "type": "soul_food_restaurant",
-    "label": "Ristorante soul food"
-  },
-  {
-    "type": "soup_restaurant",
-    "label": "Locale di zuppe"
-  },
-  {
-    "type": "south_american_restaurant",
-    "label": "Ristorante sudamericano"
-  },
-  {
-    "type": "south_indian_restaurant",
-    "label": "Ristorante indiano del sud"
-  },
-  {
-    "type": "southwestern_us_restaurant",
-    "label": "Ristorante del sud-ovest USA"
-  },
-  {
-    "type": "spanish_restaurant",
-    "label": "Ristorante spagnolo"
-  },
-  {
-    "type": "sports_bar",
-    "label": "Sports bar"
-  },
-  {
-    "type": "sri_lankan_restaurant",
-    "label": "Ristorante singalese"
-  },
-  {
-    "type": "steak_house",
-    "label": "Steakhouse"
-  },
-  {
-    "type": "sushi_restaurant",
-    "label": "Ristorante di sushi"
-  },
-  {
-    "type": "swiss_restaurant",
-    "label": "Ristorante svizzero"
-  },
-  {
-    "type": "taco_restaurant",
-    "label": "Ristorante di tacos"
-  },
-  {
-    "type": "taiwanese_restaurant",
-    "label": "Ristorante taiwanese"
-  },
-  {
-    "type": "tapas_restaurant",
-    "label": "Ristorante di tapas"
-  },
-  {
-    "type": "tea_house",
-    "label": "Sala da tè"
-  },
-  {
-    "type": "tex_mex_restaurant",
-    "label": "Ristorante tex-mex"
-  },
-  {
-    "type": "thai_restaurant",
-    "label": "Ristorante thailandese"
-  },
-  {
-    "type": "tibetan_restaurant",
-    "label": "Ristorante tibetano"
-  },
-  {
-    "type": "tonkatsu_restaurant",
-    "label": "Ristorante di tonkatsu"
-  },
-  {
-    "type": "turkish_restaurant",
-    "label": "Ristorante turco"
-  },
-  {
-    "type": "ukrainian_restaurant",
-    "label": "Ristorante ucraino"
-  },
-  {
-    "type": "vegan_restaurant",
-    "label": "Ristorante vegano"
-  },
-  {
-    "type": "vegetarian_restaurant",
-    "label": "Ristorante vegetariano"
-  },
-  {
-    "type": "vietnamese_restaurant",
-    "label": "Ristorante vietnamita"
-  },
-  {
-    "type": "western_restaurant",
-    "label": "Ristorante western"
-  },
-  {
-    "type": "wine_bar",
-    "label": "Enoteca con mescita"
-  },
-  {
-    "type": "winery",
-    "label": "Cantina vinicola"
-  },
-  {
-    "type": "yakiniku_restaurant",
-    "label": "Ristorante yakiniku"
-  },
-  {
-    "type": "yakitori_restaurant",
-    "label": "Ristorante yakitori"
-  },
-  {
-    "type": "city_hall",
-    "label": "Municipio"
-  },
-  {
-    "type": "courthouse",
-    "label": "Tribunale"
-  },
-  {
-    "type": "embassy",
-    "label": "Ambasciata"
-  },
-  {
-    "type": "fire_station",
-    "label": "Caserma dei vigili del fuoco"
-  },
-  {
-    "type": "government_office",
-    "label": "Ufficio governativo"
-  },
-  {
-    "type": "local_government_office",
-    "label": "Ufficio comunale"
-  },
-  {
-    "type": "neighborhood_police_station",
-    "label": "Commissariato di quartiere"
-  },
-  {
-    "type": "police",
-    "label": "Polizia"
-  },
-  {
-    "type": "post_office",
-    "label": "Ufficio postale"
-  },
-  {
-    "type": "chiropractor",
-    "label": "Chiropratico"
-  },
-  {
-    "type": "dental_clinic",
-    "label": "Clinica odontoiatrica"
-  },
-  {
-    "type": "dentist",
-    "label": "Dentista"
-  },
-  {
-    "type": "doctor",
-    "label": "Medico"
-  },
-  {
-    "type": "drugstore",
-    "label": "Parafarmacia"
-  },
-  {
-    "type": "general_hospital",
-    "label": "Ospedale generale"
-  },
-  {
-    "type": "hospital",
-    "label": "Ospedale"
-  },
-  {
-    "type": "massage",
-    "label": "Massaggi"
-  },
-  {
-    "type": "massage_spa",
-    "label": "Centro massaggi e spa"
-  },
-  {
-    "type": "medical_center",
-    "label": "Centro medico"
-  },
-  {
-    "type": "medical_clinic",
-    "label": "Ambulatorio medico"
-  },
-  {
-    "type": "medical_lab",
-    "label": "Laboratorio analisi"
-  },
-  {
-    "type": "pharmacy",
-    "label": "Farmacia"
-  },
-  {
-    "type": "physiotherapist",
-    "label": "Fisioterapista"
-  },
-  {
-    "type": "sauna",
-    "label": "Sauna"
-  },
-  {
-    "type": "skin_care_clinic",
-    "label": "Centro dermatologico/estetico"
-  },
-  {
-    "type": "spa",
-    "label": "Centro benessere (spa)"
-  },
-  {
-    "type": "tanning_studio",
-    "label": "Solarium"
-  },
-  {
-    "type": "wellness_center",
-    "label": "Centro benessere"
-  },
-  {
-    "type": "yoga_studio",
-    "label": "Studio di yoga"
-  },
-  {
-    "type": "apartment_building",
-    "label": "Condominio"
-  },
-  {
-    "type": "apartment_complex",
-    "label": "Complesso di appartamenti"
-  },
-  {
-    "type": "condominium_complex",
-    "label": "Complesso condominiale"
-  },
-  {
-    "type": "housing_complex",
-    "label": "Complesso residenziale"
-  },
-  {
-    "type": "bed_and_breakfast",
-    "label": "Bed and breakfast"
-  },
-  {
-    "type": "budget_japanese_inn",
-    "label": "Locanda giapponese economica"
-  },
-  {
-    "type": "campground",
-    "label": "Campeggio"
-  },
-  {
-    "type": "camping_cabin",
-    "label": "Bungalow da campeggio"
-  },
-  {
-    "type": "cottage",
-    "label": "Casa vacanze"
-  },
-  {
-    "type": "extended_stay_hotel",
-    "label": "Residence (soggiorni lunghi)"
-  },
-  {
-    "type": "farmstay",
-    "label": "Agriturismo"
-  },
-  {
-    "type": "guest_house",
-    "label": "Casa per ospiti"
-  },
-  {
-    "type": "hostel",
-    "label": "Ostello"
-  },
-  {
-    "type": "hotel",
-    "label": "Albergo"
-  },
-  {
-    "type": "inn",
-    "label": "Locanda"
-  },
-  {
-    "type": "japanese_inn",
-    "label": "Locanda giapponese (ryokan)"
-  },
-  {
-    "type": "lodging",
-    "label": "Struttura ricettiva"
-  },
-  {
-    "type": "mobile_home_park",
-    "label": "Parco case mobili"
-  },
-  {
-    "type": "motel",
-    "label": "Motel"
-  },
-  {
-    "type": "private_guest_room",
-    "label": "Camera privata per ospiti"
-  },
-  {
-    "type": "resort_hotel",
-    "label": "Resort"
-  },
-  {
-    "type": "rv_park",
-    "label": "Area camper"
-  },
-  {
-    "type": "beach",
-    "label": "Spiaggia"
-  },
-  {
-    "type": "island",
-    "label": "Isola"
-  },
-  {
-    "type": "lake",
-    "label": "Lago"
-  },
-  {
-    "type": "mountain_peak",
-    "label": "Vetta"
-  },
-  {
-    "type": "nature_preserve",
-    "label": "Riserva naturale"
-  },
-  {
-    "type": "river",
-    "label": "Fiume"
-  },
-  {
-    "type": "scenic_spot",
-    "label": "Punto panoramico"
-  },
-  {
-    "type": "woods",
-    "label": "Bosco"
-  },
-  {
-    "type": "buddhist_temple",
-    "label": "Tempio buddista"
-  },
-  {
-    "type": "church",
-    "label": "Chiesa"
-  },
-  {
-    "type": "hindu_temple",
-    "label": "Tempio indù"
-  },
-  {
-    "type": "mosque",
-    "label": "Moschea"
-  },
-  {
-    "type": "shinto_shrine",
-    "label": "Santuario shintoista"
-  },
-  {
-    "type": "synagogue",
-    "label": "Sinagoga"
-  },
-  {
-    "type": "aircraft_rental_service",
-    "label": "Noleggio aerei"
-  },
-  {
-    "type": "association_or_organization",
-    "label": "Associazione o organizzazione"
-  },
-  {
-    "type": "astrologer",
-    "label": "Astrologo"
-  },
-  {
-    "type": "barber_shop",
-    "label": "Barbiere"
-  },
-  {
-    "type": "beautician",
-    "label": "Estetista"
-  },
-  {
-    "type": "beauty_salon",
-    "label": "Salone di bellezza"
-  },
-  {
-    "type": "body_art_service",
-    "label": "Tatuaggi e piercing"
-  },
-  {
-    "type": "catering_service",
-    "label": "Servizio di catering"
-  },
-  {
-    "type": "cemetery",
-    "label": "Cimitero"
-  },
-  {
-    "type": "chauffeur_service",
-    "label": "Servizio con autista"
-  },
-  {
-    "type": "child_care_agency",
-    "label": "Agenzia per l'infanzia"
-  },
-  {
-    "type": "consultant",
-    "label": "Consulente"
-  },
-  {
-    "type": "courier_service",
-    "label": "Corriere"
-  },
-  {
-    "type": "electrician",
-    "label": "Elettricista"
-  },
-  {
-    "type": "employment_agency",
-    "label": "Agenzia per il lavoro"
-  },
-  {
-    "type": "florist",
-    "label": "Fioraio"
-  },
-  {
-    "type": "food_delivery",
-    "label": "Consegna di cibo"
-  },
-  {
-    "type": "foot_care",
-    "label": "Podologo"
-  },
-  {
-    "type": "funeral_home",
-    "label": "Onoranze funebri"
-  },
-  {
-    "type": "hair_care",
-    "label": "Cura dei capelli"
-  },
-  {
-    "type": "hair_salon",
-    "label": "Parrucchiere"
-  },
-  {
-    "type": "insurance_agency",
-    "label": "Agenzia di assicurazioni"
-  },
-  {
-    "type": "laundry",
-    "label": "Lavanderia"
-  },
-  {
-    "type": "lawyer",
-    "label": "Avvocato"
-  },
-  {
-    "type": "locksmith",
-    "label": "Fabbro"
-  },
-  {
-    "type": "makeup_artist",
-    "label": "Truccatore"
-  },
-  {
-    "type": "marketing_consultant",
-    "label": "Consulente di marketing"
-  },
-  {
-    "type": "moving_company",
-    "label": "Traslochi"
-  },
-  {
-    "type": "nail_salon",
-    "label": "Salone di manicure"
-  },
-  {
-    "type": "non_profit_organization",
-    "label": "Organizzazione non profit"
-  },
-  {
-    "type": "painter",
-    "label": "Imbianchino"
-  },
-  {
-    "type": "pet_boarding_service",
-    "label": "Pensione per animali"
-  },
-  {
-    "type": "pet_care",
-    "label": "Cura degli animali"
-  },
-  {
-    "type": "plumber",
-    "label": "Idraulico"
-  },
-  {
-    "type": "psychic",
-    "label": "Cartomante"
-  },
-  {
-    "type": "real_estate_agency",
-    "label": "Agenzia immobiliare"
-  },
-  {
-    "type": "roofing_contractor",
-    "label": "Impresa di coperture"
-  },
-  {
-    "type": "service",
-    "label": "Servizio generico"
-  },
-  {
-    "type": "shipping_service",
-    "label": "Servizio di spedizioni"
-  },
-  {
-    "type": "storage",
-    "label": "Self-storage"
-  },
-  {
-    "type": "summer_camp_organizer",
-    "label": "Organizzatore di centri estivi"
-  },
-  {
-    "type": "tailor",
-    "label": "Sarto"
-  },
-  {
-    "type": "telecommunications_service_provider",
-    "label": "Operatore di telecomunicazioni"
-  },
-  {
-    "type": "tour_agency",
-    "label": "Agenzia di tour"
-  },
-  {
-    "type": "tourist_information_center",
-    "label": "Ufficio informazioni turistiche"
-  },
-  {
-    "type": "travel_agency",
-    "label": "Agenzia di viaggi"
-  },
-  {
-    "type": "veterinary_care",
-    "label": "Veterinario"
-  },
-  {
-    "type": "asian_grocery_store",
-    "label": "Alimentari asiatici"
-  },
-  {
-    "type": "auto_parts_store",
-    "label": "Ricambi auto"
-  },
-  {
-    "type": "bicycle_store",
-    "label": "Negozio di biciclette"
-  },
-  {
-    "type": "book_store",
-    "label": "Libreria"
-  },
-  {
-    "type": "building_materials_store",
-    "label": "Materiali edili"
-  },
-  {
-    "type": "butcher_shop",
-    "label": "Macelleria"
-  },
-  {
-    "type": "cell_phone_store",
-    "label": "Negozio di telefonia"
-  },
-  {
-    "type": "clothing_store",
-    "label": "Abbigliamento"
-  },
-  {
-    "type": "convenience_store",
-    "label": "Minimarket"
-  },
-  {
-    "type": "cosmetics_store",
-    "label": "Profumeria"
-  },
-  {
-    "type": "department_store",
-    "label": "Grande magazzino"
-  },
-  {
-    "type": "discount_store",
-    "label": "Discount"
-  },
-  {
-    "type": "discount_supermarket",
-    "label": "Supermercato discount"
-  },
-  {
-    "type": "electronics_store",
-    "label": "Negozio di elettronica"
-  },
-  {
-    "type": "farmers_market",
-    "label": "Mercato contadino"
-  },
-  {
-    "type": "flea_market",
-    "label": "Mercatino delle pulci"
-  },
-  {
-    "type": "food_store",
-    "label": "Negozio alimentare"
-  },
-  {
-    "type": "furniture_store",
-    "label": "Negozio di mobili"
-  },
-  {
-    "type": "garden_center",
-    "label": "Vivaio/garden center"
-  },
-  {
-    "type": "general_store",
-    "label": "Emporio"
-  },
-  {
-    "type": "gift_shop",
-    "label": "Negozio di articoli da regalo"
-  },
-  {
-    "type": "grocery_store",
-    "label": "Alimentari"
-  },
-  {
-    "type": "hardware_store",
-    "label": "Ferramenta"
-  },
-  {
-    "type": "health_food_store",
-    "label": "Negozio di prodotti biologici e dietetici"
-  },
-  {
-    "type": "home_goods_store",
-    "label": "Articoli per la casa"
-  },
-  {
-    "type": "home_improvement_store",
-    "label": "Bricolage"
-  },
-  {
-    "type": "hypermarket",
-    "label": "Ipermercato"
-  },
-  {
-    "type": "jewelry_store",
-    "label": "Gioielleria"
-  },
-  {
-    "type": "liquor_store",
-    "label": "Negozio di liquori"
-  },
-  {
-    "type": "market",
-    "label": "Mercato"
-  },
-  {
-    "type": "pet_store",
-    "label": "Negozio di animali"
-  },
-  {
-    "type": "shoe_store",
-    "label": "Negozio di scarpe"
-  },
-  {
-    "type": "shopping_mall",
-    "label": "Centro commerciale"
-  },
-  {
-    "type": "sporting_goods_store",
-    "label": "Articoli sportivi"
-  },
-  {
-    "type": "sportswear_store",
-    "label": "Abbigliamento sportivo"
-  },
-  {
-    "type": "store",
-    "label": "Negozio"
-  },
-  {
-    "type": "supermarket",
-    "label": "Supermercato"
-  },
-  {
-    "type": "tea_store",
-    "label": "Negozio di tè"
-  },
-  {
-    "type": "thrift_store",
-    "label": "Negozio dell'usato"
-  },
-  {
-    "type": "toy_store",
-    "label": "Negozio di giocattoli"
-  },
-  {
-    "type": "warehouse_store",
-    "label": "Cash and carry"
-  },
-  {
-    "type": "wholesaler",
-    "label": "Grossista"
-  },
-  {
-    "type": "womens_clothing_store",
-    "label": "Abbigliamento donna"
-  },
-  {
-    "type": "arena",
-    "label": "Arena"
-  },
-  {
-    "type": "athletic_field",
-    "label": "Campo sportivo"
-  },
-  {
-    "type": "fishing_charter",
-    "label": "Pesca charter"
-  },
-  {
-    "type": "fishing_pier",
-    "label": "Molo di pesca"
-  },
-  {
-    "type": "fishing_pond",
-    "label": "Laghetto di pesca"
-  },
-  {
-    "type": "fitness_center",
-    "label": "Centro fitness"
-  },
-  {
-    "type": "golf_course",
-    "label": "Campo da golf"
-  },
-  {
-    "type": "gym",
-    "label": "Palestra"
-  },
-  {
-    "type": "ice_skating_rink",
-    "label": "Pista di pattinaggio"
-  },
-  {
-    "type": "indoor_golf_course",
-    "label": "Golf indoor"
-  },
-  {
-    "type": "playground",
-    "label": "Parco giochi"
-  },
-  {
-    "type": "race_course",
-    "label": "Ippodromo/pista"
-  },
-  {
-    "type": "ski_resort",
-    "label": "Stazione sciistica"
-  },
-  {
-    "type": "sports_activity_location",
-    "label": "Impianto per attività sportive"
-  },
-  {
-    "type": "sports_club",
-    "label": "Club sportivo"
-  },
-  {
-    "type": "sports_coaching",
-    "label": "Allenatore sportivo"
-  },
-  {
-    "type": "sports_complex",
-    "label": "Complesso sportivo"
-  },
-  {
-    "type": "sports_school",
-    "label": "Scuola sportiva"
-  },
-  {
-    "type": "stadium",
-    "label": "Stadio"
-  },
-  {
-    "type": "swimming_pool",
-    "label": "Piscina"
-  },
-  {
-    "type": "tennis_court",
-    "label": "Campo da tennis"
-  },
-  {
-    "type": "airport",
-    "label": "Aeroporto"
-  },
-  {
-    "type": "airstrip",
-    "label": "Pista di atterraggio"
-  },
-  {
-    "type": "bike_sharing_station",
-    "label": "Stazione di bike sharing"
-  },
-  {
-    "type": "bridge",
-    "label": "Ponte"
-  },
-  {
-    "type": "bus_station",
-    "label": "Stazione degli autobus"
-  },
-  {
-    "type": "bus_stop",
-    "label": "Fermata dell'autobus"
-  },
-  {
-    "type": "ferry_service",
-    "label": "Servizio di traghetti"
-  },
-  {
-    "type": "ferry_terminal",
-    "label": "Terminal dei traghetti"
-  },
-  {
-    "type": "heliport",
-    "label": "Eliporto"
-  },
-  {
-    "type": "international_airport",
-    "label": "Aeroporto internazionale"
-  },
-  {
-    "type": "light_rail_station",
-    "label": "Stazione della metropolitana leggera"
-  },
-  {
-    "type": "park_and_ride",
-    "label": "Parcheggio di interscambio"
-  },
-  {
-    "type": "subway_station",
-    "label": "Stazione della metropolitana"
-  },
-  {
-    "type": "taxi_service",
-    "label": "Servizio taxi"
-  },
-  {
-    "type": "taxi_stand",
-    "label": "Posteggio taxi"
-  },
-  {
-    "type": "toll_station",
-    "label": "Casello"
-  },
-  {
-    "type": "train_station",
-    "label": "Stazione ferroviaria"
-  },
-  {
-    "type": "train_ticket_office",
-    "label": "Biglietteria ferroviaria"
-  },
-  {
-    "type": "tram_stop",
-    "label": "Fermata del tram"
-  },
-  {
-    "type": "transit_depot",
-    "label": "Deposito mezzi pubblici"
-  },
-  {
-    "type": "transit_station",
-    "label": "Stazione di transito"
-  },
-  {
-    "type": "transit_stop",
-    "label": "Fermata del trasporto pubblico"
-  },
-  {
-    "type": "transportation_service",
-    "label": "Servizio di trasporto"
-  },
-  {
-    "type": "truck_stop",
-    "label": "Area di servizio per camion"
-  }
+  {"type": "car_dealer", "label": "Concessionario auto", "gruppo": "Auto e mezzi"},
+  {"type": "car_rental", "label": "Autonoleggio", "gruppo": "Auto e mezzi"},
+  {"type": "car_repair", "label": "Officina meccanica", "gruppo": "Auto e mezzi", "parole": ["meccanico", "officina"]},
+  {"type": "car_wash", "label": "Autolavaggio", "gruppo": "Auto e mezzi"},
+  {"type": "ebike_charging_station", "label": "Ricarica e-bike", "gruppo": "Auto e mezzi"},
+  {"type": "electric_vehicle_charging_station", "label": "Colonnina di ricarica elettrica", "gruppo": "Auto e mezzi"},
+  {"type": "gas_station", "label": "Distributore di carburante", "gruppo": "Auto e mezzi", "parole": ["benzinaio", "distributore"]},
+  {"type": "parking", "label": "Parcheggio", "gruppo": "Auto e mezzi"},
+  {"type": "parking_garage", "label": "Autorimessa", "gruppo": "Auto e mezzi"},
+  {"type": "parking_lot", "label": "Area di parcheggio", "gruppo": "Auto e mezzi"},
+  {"type": "rest_stop", "label": "Area di sosta", "gruppo": "Auto e mezzi"},
+  {"type": "tire_shop", "label": "Gommista", "gruppo": "Auto e mezzi", "parole": ["gommista", "pneumatici"]},
+  {"type": "truck_dealer", "label": "Concessionario camion", "gruppo": "Auto e mezzi"},
+  {"type": "business_center", "label": "Centro servizi per aziende", "gruppo": "Attività e aziende"},
+  {"type": "corporate_office", "label": "Sede aziendale", "gruppo": "Attività e aziende"},
+  {"type": "coworking_space", "label": "Spazio di coworking", "gruppo": "Attività e aziende"},
+  {"type": "farm", "label": "Azienda agricola", "gruppo": "Attività e aziende"},
+  {"type": "manufacturer", "label": "Azienda manifatturiera", "gruppo": "Attività e aziende"},
+  {"type": "ranch", "label": "Ranch", "gruppo": "Attività e aziende"},
+  {"type": "supplier", "label": "Fornitore", "gruppo": "Attività e aziende"},
+  {"type": "television_studio", "label": "Studio televisivo", "gruppo": "Attività e aziende"},
+  {"type": "art_gallery", "label": "Galleria d'arte", "gruppo": "Cultura"},
+  {"type": "art_museum", "label": "Museo d'arte", "gruppo": "Cultura"},
+  {"type": "art_studio", "label": "Studio d'artista", "gruppo": "Cultura"},
+  {"type": "auditorium", "label": "Auditorium", "gruppo": "Cultura"},
+  {"type": "castle", "label": "Castello", "gruppo": "Cultura"},
+  {"type": "cultural_landmark", "label": "Luogo di interesse culturale", "gruppo": "Cultura"},
+  {"type": "fountain", "label": "Fontana", "gruppo": "Cultura"},
+  {"type": "historical_place", "label": "Luogo storico", "gruppo": "Cultura"},
+  {"type": "history_museum", "label": "Museo di storia", "gruppo": "Cultura"},
+  {"type": "monument", "label": "Monumento", "gruppo": "Cultura"},
+  {"type": "museum", "label": "Museo", "gruppo": "Cultura"},
+  {"type": "performing_arts_theater", "label": "Teatro", "gruppo": "Cultura"},
+  {"type": "sculpture", "label": "Scultura", "gruppo": "Cultura"},
+  {"type": "educational_institution", "label": "Istituto di istruzione", "gruppo": "Istruzione", "generico": true},
+  {"type": "academic_department", "label": "Dipartimento universitario", "gruppo": "Istruzione"},
+  {"type": "library", "label": "Biblioteca", "gruppo": "Istruzione"},
+  {"type": "preschool", "label": "Scuola dell'infanzia", "gruppo": "Istruzione"},
+  {"type": "primary_school", "label": "Scuola primaria", "gruppo": "Istruzione"},
+  {"type": "research_institute", "label": "Istituto di ricerca", "gruppo": "Istruzione"},
+  {"type": "school", "label": "Scuola", "gruppo": "Istruzione"},
+  {"type": "secondary_school", "label": "Scuola secondaria", "gruppo": "Istruzione"},
+  {"type": "university", "label": "Università", "gruppo": "Istruzione"},
+  {"type": "adventure_sports_center", "label": "Centro sport d'avventura", "gruppo": "Intrattenimento e svago"},
+  {"type": "amphitheatre", "label": "Anfiteatro", "gruppo": "Intrattenimento e svago"},
+  {"type": "amusement_center", "label": "Sala giochi", "gruppo": "Intrattenimento e svago"},
+  {"type": "amusement_park", "label": "Parco divertimenti", "gruppo": "Intrattenimento e svago"},
+  {"type": "aquarium", "label": "Acquario", "gruppo": "Intrattenimento e svago"},
+  {"type": "banquet_hall", "label": "Sala banchetti", "gruppo": "Intrattenimento e svago"},
+  {"type": "barbecue_area", "label": "Area barbecue", "gruppo": "Intrattenimento e svago"},
+  {"type": "botanical_garden", "label": "Orto botanico", "gruppo": "Intrattenimento e svago"},
+  {"type": "bowling_alley", "label": "Bowling", "gruppo": "Intrattenimento e svago"},
+  {"type": "casino", "label": "Casinò", "gruppo": "Intrattenimento e svago"},
+  {"type": "childrens_camp", "label": "Campo per bambini", "gruppo": "Intrattenimento e svago"},
+  {"type": "city_park", "label": "Parco cittadino", "gruppo": "Intrattenimento e svago"},
+  {"type": "comedy_club", "label": "Locale di cabaret", "gruppo": "Intrattenimento e svago"},
+  {"type": "community_center", "label": "Centro comunitario", "gruppo": "Intrattenimento e svago"},
+  {"type": "concert_hall", "label": "Sala concerti", "gruppo": "Intrattenimento e svago"},
+  {"type": "convention_center", "label": "Centro congressi", "gruppo": "Intrattenimento e svago"},
+  {"type": "cultural_center", "label": "Centro culturale", "gruppo": "Intrattenimento e svago"},
+  {"type": "cycling_park", "label": "Parco per ciclismo", "gruppo": "Intrattenimento e svago"},
+  {"type": "dance_hall", "label": "Sala da ballo", "gruppo": "Intrattenimento e svago"},
+  {"type": "dog_park", "label": "Area cani", "gruppo": "Intrattenimento e svago"},
+  {"type": "event_venue", "label": "Location per eventi", "gruppo": "Intrattenimento e svago"},
+  {"type": "ferris_wheel", "label": "Ruota panoramica", "gruppo": "Intrattenimento e svago"},
+  {"type": "garden", "label": "Giardino", "gruppo": "Intrattenimento e svago"},
+  {"type": "go_karting_venue", "label": "Pista di kart", "gruppo": "Intrattenimento e svago"},
+  {"type": "hiking_area", "label": "Area escursionistica", "gruppo": "Intrattenimento e svago"},
+  {"type": "historical_landmark", "label": "Monumento storico", "gruppo": "Intrattenimento e svago"},
+  {"type": "indoor_playground", "label": "Parco giochi al coperto", "gruppo": "Intrattenimento e svago"},
+  {"type": "internet_cafe", "label": "Internet point", "gruppo": "Intrattenimento e svago"},
+  {"type": "karaoke", "label": "Karaoke", "gruppo": "Intrattenimento e svago"},
+  {"type": "live_music_venue", "label": "Locale con musica dal vivo", "gruppo": "Intrattenimento e svago"},
+  {"type": "marina", "label": "Porto turistico", "gruppo": "Intrattenimento e svago"},
+  {"type": "miniature_golf_course", "label": "Minigolf", "gruppo": "Intrattenimento e svago"},
+  {"type": "movie_rental", "label": "Noleggio film", "gruppo": "Intrattenimento e svago"},
+  {"type": "movie_theater", "label": "Cinema", "gruppo": "Intrattenimento e svago"},
+  {"type": "national_park", "label": "Parco nazionale", "gruppo": "Intrattenimento e svago"},
+  {"type": "night_club", "label": "Discoteca", "gruppo": "Intrattenimento e svago"},
+  {"type": "observation_deck", "label": "Terrazza panoramica", "gruppo": "Intrattenimento e svago"},
+  {"type": "off_roading_area", "label": "Area fuoristrada", "gruppo": "Intrattenimento e svago"},
+  {"type": "opera_house", "label": "Teatro dell'opera", "gruppo": "Intrattenimento e svago"},
+  {"type": "paintball_center", "label": "Centro paintball", "gruppo": "Intrattenimento e svago"},
+  {"type": "park", "label": "Parco", "gruppo": "Intrattenimento e svago"},
+  {"type": "philharmonic_hall", "label": "Sala filarmonica", "gruppo": "Intrattenimento e svago"},
+  {"type": "picnic_ground", "label": "Area picnic", "gruppo": "Intrattenimento e svago"},
+  {"type": "planetarium", "label": "Planetario", "gruppo": "Intrattenimento e svago"},
+  {"type": "plaza", "label": "Piazza", "gruppo": "Intrattenimento e svago"},
+  {"type": "roller_coaster", "label": "Montagne russe", "gruppo": "Intrattenimento e svago"},
+  {"type": "skateboard_park", "label": "Skate park", "gruppo": "Intrattenimento e svago"},
+  {"type": "state_park", "label": "Parco regionale", "gruppo": "Intrattenimento e svago"},
+  {"type": "tourist_attraction", "label": "Attrazione turistica", "gruppo": "Intrattenimento e svago"},
+  {"type": "video_arcade", "label": "Sala videogiochi", "gruppo": "Intrattenimento e svago"},
+  {"type": "vineyard", "label": "Vigneto", "gruppo": "Intrattenimento e svago"},
+  {"type": "visitor_center", "label": "Centro visitatori", "gruppo": "Intrattenimento e svago"},
+  {"type": "water_park", "label": "Parco acquatico", "gruppo": "Intrattenimento e svago"},
+  {"type": "wedding_venue", "label": "Location per matrimoni", "gruppo": "Intrattenimento e svago"},
+  {"type": "wildlife_park", "label": "Parco faunistico", "gruppo": "Intrattenimento e svago"},
+  {"type": "wildlife_refuge", "label": "Riserva faunistica", "gruppo": "Intrattenimento e svago"},
+  {"type": "zoo", "label": "Zoo", "gruppo": "Intrattenimento e svago"},
+  {"type": "public_bath", "label": "Bagni pubblici", "gruppo": "Strutture pubbliche"},
+  {"type": "public_bathroom", "label": "Servizi igienici pubblici", "gruppo": "Strutture pubbliche"},
+  {"type": "stable", "label": "Stalla", "gruppo": "Strutture pubbliche"},
+  {"type": "accounting", "label": "Commercialista", "gruppo": "Finanza", "parole": ["commercialista", "ragioniere"]},
+  {"type": "atm", "label": "Bancomat", "gruppo": "Finanza"},
+  {"type": "bank", "label": "Banca", "gruppo": "Finanza", "parole": ["banca"]},
+  {"type": "restaurant", "label": "Ristorante", "gruppo": "Cibo e bevande", "generico": true},
+  {"type": "cafe", "label": "Bar / caffetteria", "gruppo": "Cibo e bevande"},
+  {"type": "bar", "label": "Bar / pub (locale serale)", "gruppo": "Cibo e bevande"},
+  {"type": "bakery", "label": "Panificio", "gruppo": "Cibo e bevande", "parole": ["panificio", "panetteria", "forno"]},
+  {"type": "meal_takeaway", "label": "Pasti da asporto", "gruppo": "Cibo e bevande"},
+  {"type": "acai_shop", "label": "Bar di açaí", "gruppo": "Cibo e bevande"},
+  {"type": "afghani_restaurant", "label": "Ristorante afghano", "gruppo": "Cibo e bevande"},
+  {"type": "african_restaurant", "label": "Ristorante africano", "gruppo": "Cibo e bevande"},
+  {"type": "american_restaurant", "label": "Ristorante americano", "gruppo": "Cibo e bevande"},
+  {"type": "argentinian_restaurant", "label": "Ristorante argentino", "gruppo": "Cibo e bevande"},
+  {"type": "asian_fusion_restaurant", "label": "Ristorante fusion asiatico", "gruppo": "Cibo e bevande"},
+  {"type": "asian_restaurant", "label": "Ristorante asiatico", "gruppo": "Cibo e bevande"},
+  {"type": "australian_restaurant", "label": "Ristorante australiano", "gruppo": "Cibo e bevande"},
+  {"type": "austrian_restaurant", "label": "Ristorante austriaco", "gruppo": "Cibo e bevande"},
+  {"type": "bagel_shop", "label": "Bagel shop", "gruppo": "Cibo e bevande"},
+  {"type": "bangladeshi_restaurant", "label": "Ristorante bengalese", "gruppo": "Cibo e bevande"},
+  {"type": "bar_and_grill", "label": "Bar e grill", "gruppo": "Cibo e bevande"},
+  {"type": "barbecue_restaurant", "label": "Ristorante barbecue", "gruppo": "Cibo e bevande"},
+  {"type": "basque_restaurant", "label": "Ristorante basco", "gruppo": "Cibo e bevande"},
+  {"type": "bavarian_restaurant", "label": "Ristorante bavarese", "gruppo": "Cibo e bevande"},
+  {"type": "beer_garden", "label": "Birreria all'aperto", "gruppo": "Cibo e bevande"},
+  {"type": "belgian_restaurant", "label": "Ristorante belga", "gruppo": "Cibo e bevande"},
+  {"type": "bistro", "label": "Bistrot", "gruppo": "Cibo e bevande"},
+  {"type": "brazilian_restaurant", "label": "Ristorante brasiliano", "gruppo": "Cibo e bevande"},
+  {"type": "breakfast_restaurant", "label": "Locale per colazioni", "gruppo": "Cibo e bevande"},
+  {"type": "brewery", "label": "Birrificio", "gruppo": "Cibo e bevande"},
+  {"type": "brewpub", "label": "Brewpub", "gruppo": "Cibo e bevande"},
+  {"type": "british_restaurant", "label": "Ristorante britannico", "gruppo": "Cibo e bevande"},
+  {"type": "brunch_restaurant", "label": "Locale per brunch", "gruppo": "Cibo e bevande"},
+  {"type": "buffet_restaurant", "label": "Ristorante a buffet", "gruppo": "Cibo e bevande"},
+  {"type": "burmese_restaurant", "label": "Ristorante birmano", "gruppo": "Cibo e bevande"},
+  {"type": "burrito_restaurant", "label": "Ristorante di burrito", "gruppo": "Cibo e bevande"},
+  {"type": "cafeteria", "label": "Mensa", "gruppo": "Cibo e bevande"},
+  {"type": "cajun_restaurant", "label": "Ristorante cajun", "gruppo": "Cibo e bevande"},
+  {"type": "cake_shop", "label": "Negozio di torte", "gruppo": "Cibo e bevande"},
+  {"type": "californian_restaurant", "label": "Ristorante californiano", "gruppo": "Cibo e bevande"},
+  {"type": "cambodian_restaurant", "label": "Ristorante cambogiano", "gruppo": "Cibo e bevande"},
+  {"type": "candy_store", "label": "Negozio di caramelle", "gruppo": "Cibo e bevande"},
+  {"type": "cantonese_restaurant", "label": "Ristorante cantonese", "gruppo": "Cibo e bevande"},
+  {"type": "caribbean_restaurant", "label": "Ristorante caraibico", "gruppo": "Cibo e bevande"},
+  {"type": "cat_cafe", "label": "Caffè dei gatti", "gruppo": "Cibo e bevande"},
+  {"type": "chicken_restaurant", "label": "Ristorante di pollo", "gruppo": "Cibo e bevande"},
+  {"type": "chicken_wings_restaurant", "label": "Ristorante di alette di pollo", "gruppo": "Cibo e bevande"},
+  {"type": "chilean_restaurant", "label": "Ristorante cileno", "gruppo": "Cibo e bevande"},
+  {"type": "chinese_noodle_restaurant", "label": "Ristorante di noodle cinesi", "gruppo": "Cibo e bevande"},
+  {"type": "chinese_restaurant", "label": "Ristorante cinese", "gruppo": "Cibo e bevande"},
+  {"type": "chocolate_factory", "label": "Fabbrica di cioccolato", "gruppo": "Cibo e bevande"},
+  {"type": "chocolate_shop", "label": "Cioccolateria", "gruppo": "Cibo e bevande"},
+  {"type": "coffee_roastery", "label": "Torrefazione", "gruppo": "Cibo e bevande"},
+  {"type": "coffee_shop", "label": "Caffetteria (coffee shop)", "gruppo": "Cibo e bevande"},
+  {"type": "coffee_stand", "label": "Chiosco del caffè", "gruppo": "Cibo e bevande"},
+  {"type": "colombian_restaurant", "label": "Ristorante colombiano", "gruppo": "Cibo e bevande"},
+  {"type": "confectionery", "label": "Confetteria", "gruppo": "Cibo e bevande"},
+  {"type": "croatian_restaurant", "label": "Ristorante croato", "gruppo": "Cibo e bevande"},
+  {"type": "cuban_restaurant", "label": "Ristorante cubano", "gruppo": "Cibo e bevande"},
+  {"type": "czech_restaurant", "label": "Ristorante ceco", "gruppo": "Cibo e bevande"},
+  {"type": "danish_restaurant", "label": "Ristorante danese", "gruppo": "Cibo e bevande"},
+  {"type": "deli", "label": "Gastronomia", "gruppo": "Cibo e bevande"},
+  {"type": "dessert_restaurant", "label": "Locale di dolci", "gruppo": "Cibo e bevande"},
+  {"type": "dessert_shop", "label": "Negozio di dolci", "gruppo": "Cibo e bevande"},
+  {"type": "dim_sum_restaurant", "label": "Ristorante dim sum", "gruppo": "Cibo e bevande"},
+  {"type": "diner", "label": "Diner", "gruppo": "Cibo e bevande"},
+  {"type": "dog_cafe", "label": "Caffè per cani", "gruppo": "Cibo e bevande"},
+  {"type": "donut_shop", "label": "Negozio di ciambelle", "gruppo": "Cibo e bevande"},
+  {"type": "dumpling_restaurant", "label": "Ristorante di ravioli", "gruppo": "Cibo e bevande"},
+  {"type": "dutch_restaurant", "label": "Ristorante olandese", "gruppo": "Cibo e bevande"},
+  {"type": "eastern_european_restaurant", "label": "Ristorante dell'Europa orientale", "gruppo": "Cibo e bevande"},
+  {"type": "ethiopian_restaurant", "label": "Ristorante etiope", "gruppo": "Cibo e bevande"},
+  {"type": "european_restaurant", "label": "Ristorante europeo", "gruppo": "Cibo e bevande"},
+  {"type": "falafel_restaurant", "label": "Ristorante di falafel", "gruppo": "Cibo e bevande"},
+  {"type": "family_restaurant", "label": "Ristorante per famiglie", "gruppo": "Cibo e bevande"},
+  {"type": "fast_food_restaurant", "label": "Fast food", "gruppo": "Cibo e bevande"},
+  {"type": "filipino_restaurant", "label": "Ristorante filippino", "gruppo": "Cibo e bevande"},
+  {"type": "fine_dining_restaurant", "label": "Ristorante gourmet", "gruppo": "Cibo e bevande"},
+  {"type": "fish_and_chips_restaurant", "label": "Fish and chips", "gruppo": "Cibo e bevande"},
+  {"type": "fondue_restaurant", "label": "Ristorante di fonduta", "gruppo": "Cibo e bevande"},
+  {"type": "food_court", "label": "Area ristoro (food court)", "gruppo": "Cibo e bevande"},
+  {"type": "french_restaurant", "label": "Ristorante francese", "gruppo": "Cibo e bevande"},
+  {"type": "fusion_restaurant", "label": "Ristorante fusion", "gruppo": "Cibo e bevande"},
+  {"type": "gastropub", "label": "Gastropub", "gruppo": "Cibo e bevande"},
+  {"type": "german_restaurant", "label": "Ristorante tedesco", "gruppo": "Cibo e bevande"},
+  {"type": "greek_restaurant", "label": "Ristorante greco", "gruppo": "Cibo e bevande"},
+  {"type": "gyro_restaurant", "label": "Ristorante di gyros", "gruppo": "Cibo e bevande"},
+  {"type": "halal_restaurant", "label": "Ristorante halal", "gruppo": "Cibo e bevande"},
+  {"type": "hamburger_restaurant", "label": "Hamburgeria", "gruppo": "Cibo e bevande"},
+  {"type": "hawaiian_restaurant", "label": "Ristorante hawaiano", "gruppo": "Cibo e bevande"},
+  {"type": "hookah_bar", "label": "Locale narghilè", "gruppo": "Cibo e bevande"},
+  {"type": "hot_dog_restaurant", "label": "Locale di hot dog", "gruppo": "Cibo e bevande"},
+  {"type": "hot_dog_stand", "label": "Chiosco di hot dog", "gruppo": "Cibo e bevande"},
+  {"type": "hot_pot_restaurant", "label": "Ristorante hot pot", "gruppo": "Cibo e bevande"},
+  {"type": "hungarian_restaurant", "label": "Ristorante ungherese", "gruppo": "Cibo e bevande"},
+  {"type": "ice_cream_shop", "label": "Gelateria", "gruppo": "Cibo e bevande", "parole": ["gelateria"]},
+  {"type": "indian_restaurant", "label": "Ristorante indiano", "gruppo": "Cibo e bevande"},
+  {"type": "indonesian_restaurant", "label": "Ristorante indonesiano", "gruppo": "Cibo e bevande"},
+  {"type": "irish_pub", "label": "Pub irlandese", "gruppo": "Cibo e bevande"},
+  {"type": "irish_restaurant", "label": "Ristorante irlandese", "gruppo": "Cibo e bevande"},
+  {"type": "israeli_restaurant", "label": "Ristorante israeliano", "gruppo": "Cibo e bevande"},
+  {"type": "italian_restaurant", "label": "Ristorante italiano", "gruppo": "Cibo e bevande"},
+  {"type": "japanese_curry_restaurant", "label": "Ristorante di curry giapponese", "gruppo": "Cibo e bevande"},
+  {"type": "japanese_izakaya_restaurant", "label": "Izakaya giapponese", "gruppo": "Cibo e bevande"},
+  {"type": "japanese_restaurant", "label": "Ristorante giapponese", "gruppo": "Cibo e bevande"},
+  {"type": "juice_shop", "label": "Bar di succhi e centrifugati", "gruppo": "Cibo e bevande"},
+  {"type": "kebab_shop", "label": "Kebab", "gruppo": "Cibo e bevande"},
+  {"type": "korean_barbecue_restaurant", "label": "Ristorante barbecue coreano", "gruppo": "Cibo e bevande"},
+  {"type": "korean_restaurant", "label": "Ristorante coreano", "gruppo": "Cibo e bevande"},
+  {"type": "latin_american_restaurant", "label": "Ristorante latinoamericano", "gruppo": "Cibo e bevande"},
+  {"type": "lebanese_restaurant", "label": "Ristorante libanese", "gruppo": "Cibo e bevande"},
+  {"type": "lounge_bar", "label": "Lounge bar", "gruppo": "Cibo e bevande"},
+  {"type": "malaysian_restaurant", "label": "Ristorante malese", "gruppo": "Cibo e bevande"},
+  {"type": "meal_delivery", "label": "Consegna pasti a domicilio", "gruppo": "Cibo e bevande"},
+  {"type": "mediterranean_restaurant", "label": "Ristorante mediterraneo", "gruppo": "Cibo e bevande"},
+  {"type": "mexican_restaurant", "label": "Ristorante messicano", "gruppo": "Cibo e bevande"},
+  {"type": "middle_eastern_restaurant", "label": "Ristorante mediorientale", "gruppo": "Cibo e bevande"},
+  {"type": "mongolian_barbecue_restaurant", "label": "Ristorante barbecue mongolo", "gruppo": "Cibo e bevande"},
+  {"type": "moroccan_restaurant", "label": "Ristorante marocchino", "gruppo": "Cibo e bevande"},
+  {"type": "noodle_shop", "label": "Locale di noodle", "gruppo": "Cibo e bevande"},
+  {"type": "north_indian_restaurant", "label": "Ristorante indiano del nord", "gruppo": "Cibo e bevande"},
+  {"type": "oyster_bar_restaurant", "label": "Ostricheria", "gruppo": "Cibo e bevande"},
+  {"type": "pakistani_restaurant", "label": "Ristorante pakistano", "gruppo": "Cibo e bevande"},
+  {"type": "pastry_shop", "label": "Pasticceria", "gruppo": "Cibo e bevande", "parole": ["pasticceria"]},
+  {"type": "persian_restaurant", "label": "Ristorante persiano", "gruppo": "Cibo e bevande"},
+  {"type": "peruvian_restaurant", "label": "Ristorante peruviano", "gruppo": "Cibo e bevande"},
+  {"type": "pizza_delivery", "label": "Pizza a domicilio", "gruppo": "Cibo e bevande"},
+  {"type": "pizza_restaurant", "label": "Pizzeria", "gruppo": "Cibo e bevande", "parole": ["pizzeria"]},
+  {"type": "polish_restaurant", "label": "Ristorante polacco", "gruppo": "Cibo e bevande"},
+  {"type": "portuguese_restaurant", "label": "Ristorante portoghese", "gruppo": "Cibo e bevande"},
+  {"type": "pub", "label": "Pub", "gruppo": "Cibo e bevande"},
+  {"type": "ramen_restaurant", "label": "Ristorante di ramen", "gruppo": "Cibo e bevande"},
+  {"type": "romanian_restaurant", "label": "Ristorante rumeno", "gruppo": "Cibo e bevande"},
+  {"type": "russian_restaurant", "label": "Ristorante russo", "gruppo": "Cibo e bevande"},
+  {"type": "salad_shop", "label": "Insalateria", "gruppo": "Cibo e bevande"},
+  {"type": "sandwich_shop", "label": "Paninoteca", "gruppo": "Cibo e bevande"},
+  {"type": "scandinavian_restaurant", "label": "Ristorante scandinavo", "gruppo": "Cibo e bevande"},
+  {"type": "seafood_restaurant", "label": "Ristorante di pesce", "gruppo": "Cibo e bevande"},
+  {"type": "shawarma_restaurant", "label": "Ristorante di shawarma", "gruppo": "Cibo e bevande"},
+  {"type": "snack_bar", "label": "Snack bar", "gruppo": "Cibo e bevande"},
+  {"type": "soul_food_restaurant", "label": "Ristorante soul food", "gruppo": "Cibo e bevande"},
+  {"type": "soup_restaurant", "label": "Locale di zuppe", "gruppo": "Cibo e bevande"},
+  {"type": "south_american_restaurant", "label": "Ristorante sudamericano", "gruppo": "Cibo e bevande"},
+  {"type": "south_indian_restaurant", "label": "Ristorante indiano del sud", "gruppo": "Cibo e bevande"},
+  {"type": "southwestern_us_restaurant", "label": "Ristorante del sud-ovest USA", "gruppo": "Cibo e bevande"},
+  {"type": "spanish_restaurant", "label": "Ristorante spagnolo", "gruppo": "Cibo e bevande"},
+  {"type": "sports_bar", "label": "Sports bar", "gruppo": "Cibo e bevande"},
+  {"type": "sri_lankan_restaurant", "label": "Ristorante singalese", "gruppo": "Cibo e bevande"},
+  {"type": "steak_house", "label": "Steakhouse", "gruppo": "Cibo e bevande"},
+  {"type": "sushi_restaurant", "label": "Ristorante di sushi", "gruppo": "Cibo e bevande"},
+  {"type": "swiss_restaurant", "label": "Ristorante svizzero", "gruppo": "Cibo e bevande"},
+  {"type": "taco_restaurant", "label": "Ristorante di tacos", "gruppo": "Cibo e bevande"},
+  {"type": "taiwanese_restaurant", "label": "Ristorante taiwanese", "gruppo": "Cibo e bevande"},
+  {"type": "tapas_restaurant", "label": "Ristorante di tapas", "gruppo": "Cibo e bevande"},
+  {"type": "tea_house", "label": "Sala da tè", "gruppo": "Cibo e bevande"},
+  {"type": "tex_mex_restaurant", "label": "Ristorante tex-mex", "gruppo": "Cibo e bevande"},
+  {"type": "thai_restaurant", "label": "Ristorante thailandese", "gruppo": "Cibo e bevande"},
+  {"type": "tibetan_restaurant", "label": "Ristorante tibetano", "gruppo": "Cibo e bevande"},
+  {"type": "tonkatsu_restaurant", "label": "Ristorante di tonkatsu", "gruppo": "Cibo e bevande"},
+  {"type": "turkish_restaurant", "label": "Ristorante turco", "gruppo": "Cibo e bevande"},
+  {"type": "ukrainian_restaurant", "label": "Ristorante ucraino", "gruppo": "Cibo e bevande"},
+  {"type": "vegan_restaurant", "label": "Ristorante vegano", "gruppo": "Cibo e bevande"},
+  {"type": "vegetarian_restaurant", "label": "Ristorante vegetariano", "gruppo": "Cibo e bevande"},
+  {"type": "vietnamese_restaurant", "label": "Ristorante vietnamita", "gruppo": "Cibo e bevande"},
+  {"type": "western_restaurant", "label": "Ristorante western", "gruppo": "Cibo e bevande"},
+  {"type": "wine_bar", "label": "Enoteca con mescita", "gruppo": "Cibo e bevande"},
+  {"type": "winery", "label": "Cantina vinicola", "gruppo": "Cibo e bevande"},
+  {"type": "yakiniku_restaurant", "label": "Ristorante yakiniku", "gruppo": "Cibo e bevande"},
+  {"type": "yakitori_restaurant", "label": "Ristorante yakitori", "gruppo": "Cibo e bevande"},
+  {"type": "government_office", "label": "Ufficio governativo", "gruppo": "Enti pubblici", "generico": true},
+  {"type": "city_hall", "label": "Municipio", "gruppo": "Enti pubblici"},
+  {"type": "courthouse", "label": "Tribunale", "gruppo": "Enti pubblici"},
+  {"type": "embassy", "label": "Ambasciata", "gruppo": "Enti pubblici"},
+  {"type": "fire_station", "label": "Caserma dei vigili del fuoco", "gruppo": "Enti pubblici"},
+  {"type": "local_government_office", "label": "Ufficio comunale", "gruppo": "Enti pubblici"},
+  {"type": "neighborhood_police_station", "label": "Commissariato di quartiere", "gruppo": "Enti pubblici"},
+  {"type": "police", "label": "Polizia", "gruppo": "Enti pubblici"},
+  {"type": "post_office", "label": "Ufficio postale", "gruppo": "Enti pubblici", "parole": ["poste"]},
+  {"type": "chiropractor", "label": "Chiropratico", "gruppo": "Salute e benessere"},
+  {"type": "dental_clinic", "label": "Clinica odontoiatrica", "gruppo": "Salute e benessere"},
+  {"type": "dentist", "label": "Dentista", "gruppo": "Salute e benessere", "parole": ["dentista", "odontoiatra"]},
+  {"type": "doctor", "label": "Medico", "gruppo": "Salute e benessere", "parole": ["medico"]},
+  {"type": "drugstore", "label": "Parafarmacia", "gruppo": "Salute e benessere"},
+  {"type": "general_hospital", "label": "Ospedale generale", "gruppo": "Salute e benessere"},
+  {"type": "hospital", "label": "Ospedale", "gruppo": "Salute e benessere"},
+  {"type": "massage", "label": "Massaggi", "gruppo": "Salute e benessere"},
+  {"type": "massage_spa", "label": "Centro massaggi e spa", "gruppo": "Salute e benessere"},
+  {"type": "medical_center", "label": "Centro medico", "gruppo": "Salute e benessere"},
+  {"type": "medical_clinic", "label": "Ambulatorio medico", "gruppo": "Salute e benessere"},
+  {"type": "medical_lab", "label": "Laboratorio analisi", "gruppo": "Salute e benessere"},
+  {"type": "pharmacy", "label": "Farmacia", "gruppo": "Salute e benessere", "parole": ["farmacia"]},
+  {"type": "physiotherapist", "label": "Fisioterapista", "gruppo": "Salute e benessere"},
+  {"type": "sauna", "label": "Sauna", "gruppo": "Salute e benessere"},
+  {"type": "skin_care_clinic", "label": "Centro dermatologico/estetico", "gruppo": "Salute e benessere"},
+  {"type": "spa", "label": "Centro benessere (spa)", "gruppo": "Salute e benessere"},
+  {"type": "tanning_studio", "label": "Solarium", "gruppo": "Salute e benessere"},
+  {"type": "wellness_center", "label": "Centro benessere", "gruppo": "Salute e benessere"},
+  {"type": "yoga_studio", "label": "Studio di yoga", "gruppo": "Salute e benessere"},
+  {"type": "apartment_building", "label": "Condominio", "gruppo": "Abitazioni"},
+  {"type": "apartment_complex", "label": "Complesso di appartamenti", "gruppo": "Abitazioni"},
+  {"type": "condominium_complex", "label": "Complesso condominiale", "gruppo": "Abitazioni"},
+  {"type": "housing_complex", "label": "Complesso residenziale", "gruppo": "Abitazioni"},
+  {"type": "lodging", "label": "Struttura ricettiva", "gruppo": "Alloggi", "generico": true},
+  {"type": "bed_and_breakfast", "label": "Bed and breakfast", "gruppo": "Alloggi"},
+  {"type": "budget_japanese_inn", "label": "Locanda giapponese economica", "gruppo": "Alloggi"},
+  {"type": "campground", "label": "Campeggio", "gruppo": "Alloggi"},
+  {"type": "camping_cabin", "label": "Bungalow da campeggio", "gruppo": "Alloggi"},
+  {"type": "cottage", "label": "Casa vacanze", "gruppo": "Alloggi"},
+  {"type": "extended_stay_hotel", "label": "Residence (soggiorni lunghi)", "gruppo": "Alloggi"},
+  {"type": "farmstay", "label": "Agriturismo", "gruppo": "Alloggi"},
+  {"type": "guest_house", "label": "Casa per ospiti", "gruppo": "Alloggi"},
+  {"type": "hostel", "label": "Ostello", "gruppo": "Alloggi"},
+  {"type": "hotel", "label": "Albergo", "gruppo": "Alloggi"},
+  {"type": "inn", "label": "Locanda", "gruppo": "Alloggi"},
+  {"type": "japanese_inn", "label": "Locanda giapponese (ryokan)", "gruppo": "Alloggi"},
+  {"type": "mobile_home_park", "label": "Parco case mobili", "gruppo": "Alloggi"},
+  {"type": "motel", "label": "Motel", "gruppo": "Alloggi"},
+  {"type": "private_guest_room", "label": "Camera privata per ospiti", "gruppo": "Alloggi"},
+  {"type": "resort_hotel", "label": "Resort", "gruppo": "Alloggi"},
+  {"type": "rv_park", "label": "Area camper", "gruppo": "Alloggi"},
+  {"type": "beach", "label": "Spiaggia", "gruppo": "Natura"},
+  {"type": "island", "label": "Isola", "gruppo": "Natura"},
+  {"type": "lake", "label": "Lago", "gruppo": "Natura"},
+  {"type": "mountain_peak", "label": "Vetta", "gruppo": "Natura"},
+  {"type": "nature_preserve", "label": "Riserva naturale", "gruppo": "Natura"},
+  {"type": "river", "label": "Fiume", "gruppo": "Natura"},
+  {"type": "scenic_spot", "label": "Punto panoramico", "gruppo": "Natura"},
+  {"type": "woods", "label": "Bosco", "gruppo": "Natura"},
+  {"type": "buddhist_temple", "label": "Tempio buddista", "gruppo": "Luoghi di culto"},
+  {"type": "church", "label": "Chiesa", "gruppo": "Luoghi di culto", "parole": ["chiesa"]},
+  {"type": "hindu_temple", "label": "Tempio indù", "gruppo": "Luoghi di culto"},
+  {"type": "mosque", "label": "Moschea", "gruppo": "Luoghi di culto"},
+  {"type": "shinto_shrine", "label": "Santuario shintoista", "gruppo": "Luoghi di culto"},
+  {"type": "synagogue", "label": "Sinagoga", "gruppo": "Luoghi di culto"},
+  {"type": "service", "label": "Servizio", "gruppo": "Servizi", "generico": true},
+  {"type": "aircraft_rental_service", "label": "Noleggio aerei", "gruppo": "Servizi"},
+  {"type": "association_or_organization", "label": "Associazione o organizzazione", "gruppo": "Servizi"},
+  {"type": "astrologer", "label": "Astrologo", "gruppo": "Servizi"},
+  {"type": "barber_shop", "label": "Barbiere", "gruppo": "Servizi", "parole": ["barbiere"]},
+  {"type": "beautician", "label": "Estetista", "gruppo": "Servizi"},
+  {"type": "beauty_salon", "label": "Salone di bellezza", "gruppo": "Servizi"},
+  {"type": "body_art_service", "label": "Tatuaggi e piercing", "gruppo": "Servizi"},
+  {"type": "catering_service", "label": "Servizio di catering", "gruppo": "Servizi"},
+  {"type": "cemetery", "label": "Cimitero", "gruppo": "Servizi"},
+  {"type": "chauffeur_service", "label": "Servizio con autista", "gruppo": "Servizi"},
+  {"type": "child_care_agency", "label": "Agenzia per l'infanzia", "gruppo": "Servizi"},
+  {"type": "consultant", "label": "Consulente", "gruppo": "Servizi"},
+  {"type": "courier_service", "label": "Corriere", "gruppo": "Servizi"},
+  {"type": "electrician", "label": "Elettricista", "gruppo": "Servizi", "parole": ["impianti elettrici", "elettricista"]},
+  {"type": "employment_agency", "label": "Agenzia per il lavoro", "gruppo": "Servizi"},
+  {"type": "florist", "label": "Fioraio", "gruppo": "Servizi", "parole": ["fiorista"]},
+  {"type": "food_delivery", "label": "Consegna di cibo", "gruppo": "Servizi"},
+  {"type": "foot_care", "label": "Podologo", "gruppo": "Servizi"},
+  {"type": "funeral_home", "label": "Onoranze funebri", "gruppo": "Servizi", "parole": ["pompe funebri"]},
+  {"type": "hair_care", "label": "Cura dei capelli", "gruppo": "Servizi"},
+  {"type": "hair_salon", "label": "Parrucchiere", "gruppo": "Servizi", "parole": ["parrucchiere", "parrucchiera"]},
+  {"type": "insurance_agency", "label": "Agenzia di assicurazioni", "gruppo": "Servizi", "parole": ["assicurazione"]},
+  {"type": "laundry", "label": "Lavanderia", "gruppo": "Servizi", "parole": ["lavanderia", "tintoria"]},
+  {"type": "lawyer", "label": "Avvocato", "gruppo": "Servizi", "parole": ["avvocato", "studio legale"]},
+  {"type": "locksmith", "label": "Fabbro", "gruppo": "Servizi", "parole": ["fabbro", "serrature"]},
+  {"type": "makeup_artist", "label": "Truccatore", "gruppo": "Servizi"},
+  {"type": "marketing_consultant", "label": "Consulente di marketing", "gruppo": "Servizi"},
+  {"type": "moving_company", "label": "Traslochi", "gruppo": "Servizi", "parole": ["traslochi"]},
+  {"type": "nail_salon", "label": "Salone di manicure", "gruppo": "Servizi"},
+  {"type": "non_profit_organization", "label": "Organizzazione non profit", "gruppo": "Servizi"},
+  {"type": "painter", "label": "Imbianchino", "gruppo": "Servizi", "parole": ["imbianchino", "tinteggiatore"]},
+  {"type": "pet_boarding_service", "label": "Pensione per animali", "gruppo": "Servizi"},
+  {"type": "pet_care", "label": "Cura degli animali", "gruppo": "Servizi"},
+  {"type": "plumber", "label": "Idraulico", "gruppo": "Servizi", "parole": ["caldaia", "caldaie", "idraulico", "termoidraulico", "riscaldamento"]},
+  {"type": "psychic", "label": "Cartomante", "gruppo": "Servizi"},
+  {"type": "real_estate_agency", "label": "Agenzia immobiliare", "gruppo": "Servizi", "parole": ["agenzia immobiliare", "immobiliare"]},
+  {"type": "roofing_contractor", "label": "Impresa di coperture", "gruppo": "Servizi", "parole": ["tetti", "copertura"]},
+  {"type": "shipping_service", "label": "Servizio di spedizioni", "gruppo": "Servizi"},
+  {"type": "storage", "label": "Self-storage", "gruppo": "Servizi"},
+  {"type": "summer_camp_organizer", "label": "Organizzatore di centri estivi", "gruppo": "Servizi"},
+  {"type": "tailor", "label": "Sarto", "gruppo": "Servizi"},
+  {"type": "telecommunications_service_provider", "label": "Operatore di telecomunicazioni", "gruppo": "Servizi"},
+  {"type": "tour_agency", "label": "Agenzia di tour", "gruppo": "Servizi"},
+  {"type": "tourist_information_center", "label": "Ufficio informazioni turistiche", "gruppo": "Servizi"},
+  {"type": "travel_agency", "label": "Agenzia di viaggi", "gruppo": "Servizi", "parole": ["agenzia viaggi"]},
+  {"type": "veterinary_care", "label": "Veterinario", "gruppo": "Servizi", "parole": ["veterinario"]},
+  {"type": "store", "label": "Negozio", "gruppo": "Negozi", "generico": true},
+  {"type": "asian_grocery_store", "label": "Alimentari asiatici", "gruppo": "Negozi"},
+  {"type": "auto_parts_store", "label": "Ricambi auto", "gruppo": "Negozi"},
+  {"type": "bicycle_store", "label": "Negozio di biciclette", "gruppo": "Negozi"},
+  {"type": "book_store", "label": "Libreria", "gruppo": "Negozi"},
+  {"type": "building_materials_store", "label": "Materiali edili", "gruppo": "Negozi", "parole": ["edilizia", "materiali edili"]},
+  {"type": "butcher_shop", "label": "Macelleria", "gruppo": "Negozi", "parole": ["macelleria"]},
+  {"type": "cell_phone_store", "label": "Negozio di telefonia", "gruppo": "Negozi"},
+  {"type": "clothing_store", "label": "Abbigliamento", "gruppo": "Negozi"},
+  {"type": "convenience_store", "label": "Minimarket", "gruppo": "Negozi"},
+  {"type": "cosmetics_store", "label": "Profumeria", "gruppo": "Negozi"},
+  {"type": "department_store", "label": "Grande magazzino", "gruppo": "Negozi"},
+  {"type": "discount_store", "label": "Discount", "gruppo": "Negozi"},
+  {"type": "discount_supermarket", "label": "Supermercato discount", "gruppo": "Negozi"},
+  {"type": "electronics_store", "label": "Negozio di elettronica", "gruppo": "Negozi"},
+  {"type": "farmers_market", "label": "Mercato contadino", "gruppo": "Negozi"},
+  {"type": "flea_market", "label": "Mercatino delle pulci", "gruppo": "Negozi"},
+  {"type": "food_store", "label": "Negozio alimentare", "gruppo": "Negozi"},
+  {"type": "furniture_store", "label": "Negozio di mobili", "gruppo": "Negozi", "parole": ["mobili"]},
+  {"type": "garden_center", "label": "Vivaio/garden center", "gruppo": "Negozi", "parole": ["vivaio"]},
+  {"type": "general_store", "label": "Emporio", "gruppo": "Negozi"},
+  {"type": "gift_shop", "label": "Negozio di articoli da regalo", "gruppo": "Negozi"},
+  {"type": "grocery_store", "label": "Alimentari", "gruppo": "Negozi"},
+  {"type": "hardware_store", "label": "Ferramenta", "gruppo": "Negozi", "parole": ["ferramenta"]},
+  {"type": "health_food_store", "label": "Negozio di prodotti biologici e dietetici", "gruppo": "Negozi"},
+  {"type": "home_goods_store", "label": "Articoli per la casa", "gruppo": "Negozi"},
+  {"type": "home_improvement_store", "label": "Bricolage", "gruppo": "Negozi", "parole": ["bricolage", "fai da te"]},
+  {"type": "hypermarket", "label": "Ipermercato", "gruppo": "Negozi"},
+  {"type": "jewelry_store", "label": "Gioielleria", "gruppo": "Negozi", "parole": ["gioielleria"]},
+  {"type": "liquor_store", "label": "Negozio di liquori", "gruppo": "Negozi"},
+  {"type": "market", "label": "Mercato", "gruppo": "Negozi"},
+  {"type": "pet_store", "label": "Negozio di animali", "gruppo": "Negozi"},
+  {"type": "shoe_store", "label": "Negozio di scarpe", "gruppo": "Negozi"},
+  {"type": "shopping_mall", "label": "Centro commerciale", "gruppo": "Negozi"},
+  {"type": "sporting_goods_store", "label": "Articoli sportivi", "gruppo": "Negozi"},
+  {"type": "sportswear_store", "label": "Abbigliamento sportivo", "gruppo": "Negozi"},
+  {"type": "supermarket", "label": "Supermercato", "gruppo": "Negozi", "parole": ["alimentari"]},
+  {"type": "tea_store", "label": "Negozio di tè", "gruppo": "Negozi"},
+  {"type": "thrift_store", "label": "Negozio dell'usato", "gruppo": "Negozi"},
+  {"type": "toy_store", "label": "Negozio di giocattoli", "gruppo": "Negozi"},
+  {"type": "warehouse_store", "label": "Cash and carry", "gruppo": "Negozi"},
+  {"type": "wholesaler", "label": "Grossista", "gruppo": "Negozi"},
+  {"type": "womens_clothing_store", "label": "Abbigliamento donna", "gruppo": "Negozi"},
+  {"type": "sports_activity_location", "label": "Impianto per attività sportive", "gruppo": "Sport", "generico": true},
+  {"type": "arena", "label": "Arena", "gruppo": "Sport"},
+  {"type": "athletic_field", "label": "Campo sportivo", "gruppo": "Sport"},
+  {"type": "fishing_charter", "label": "Pesca charter", "gruppo": "Sport"},
+  {"type": "fishing_pier", "label": "Molo di pesca", "gruppo": "Sport"},
+  {"type": "fishing_pond", "label": "Laghetto di pesca", "gruppo": "Sport"},
+  {"type": "fitness_center", "label": "Centro fitness", "gruppo": "Sport"},
+  {"type": "golf_course", "label": "Campo da golf", "gruppo": "Sport"},
+  {"type": "gym", "label": "Palestra", "gruppo": "Sport", "parole": ["palestra"]},
+  {"type": "ice_skating_rink", "label": "Pista di pattinaggio", "gruppo": "Sport"},
+  {"type": "indoor_golf_course", "label": "Golf indoor", "gruppo": "Sport"},
+  {"type": "playground", "label": "Parco giochi", "gruppo": "Sport"},
+  {"type": "race_course", "label": "Ippodromo/pista", "gruppo": "Sport"},
+  {"type": "ski_resort", "label": "Stazione sciistica", "gruppo": "Sport"},
+  {"type": "sports_club", "label": "Club sportivo", "gruppo": "Sport"},
+  {"type": "sports_coaching", "label": "Allenatore sportivo", "gruppo": "Sport"},
+  {"type": "sports_complex", "label": "Complesso sportivo", "gruppo": "Sport"},
+  {"type": "sports_school", "label": "Scuola sportiva", "gruppo": "Sport"},
+  {"type": "stadium", "label": "Stadio", "gruppo": "Sport"},
+  {"type": "swimming_pool", "label": "Piscina", "gruppo": "Sport"},
+  {"type": "tennis_court", "label": "Campo da tennis", "gruppo": "Sport"},
+  {"type": "transportation_service", "label": "Servizio di trasporto", "gruppo": "Trasporti", "generico": true},
+  {"type": "airport", "label": "Aeroporto", "gruppo": "Trasporti"},
+  {"type": "airstrip", "label": "Pista di atterraggio", "gruppo": "Trasporti"},
+  {"type": "bike_sharing_station", "label": "Stazione di bike sharing", "gruppo": "Trasporti"},
+  {"type": "bridge", "label": "Ponte", "gruppo": "Trasporti"},
+  {"type": "bus_station", "label": "Stazione degli autobus", "gruppo": "Trasporti"},
+  {"type": "bus_stop", "label": "Fermata dell'autobus", "gruppo": "Trasporti"},
+  {"type": "ferry_service", "label": "Servizio di traghetti", "gruppo": "Trasporti"},
+  {"type": "ferry_terminal", "label": "Terminal dei traghetti", "gruppo": "Trasporti"},
+  {"type": "heliport", "label": "Eliporto", "gruppo": "Trasporti"},
+  {"type": "international_airport", "label": "Aeroporto internazionale", "gruppo": "Trasporti"},
+  {"type": "light_rail_station", "label": "Stazione della metropolitana leggera", "gruppo": "Trasporti"},
+  {"type": "park_and_ride", "label": "Parcheggio di interscambio", "gruppo": "Trasporti"},
+  {"type": "subway_station", "label": "Stazione della metropolitana", "gruppo": "Trasporti"},
+  {"type": "taxi_service", "label": "Servizio taxi", "gruppo": "Trasporti"},
+  {"type": "taxi_stand", "label": "Posteggio taxi", "gruppo": "Trasporti"},
+  {"type": "toll_station", "label": "Casello", "gruppo": "Trasporti"},
+  {"type": "train_station", "label": "Stazione ferroviaria", "gruppo": "Trasporti"},
+  {"type": "train_ticket_office", "label": "Biglietteria ferroviaria", "gruppo": "Trasporti"},
+  {"type": "tram_stop", "label": "Fermata del tram", "gruppo": "Trasporti"},
+  {"type": "transit_depot", "label": "Deposito mezzi pubblici", "gruppo": "Trasporti"},
+  {"type": "transit_station", "label": "Stazione di transito", "gruppo": "Trasporti"},
+  {"type": "transit_stop", "label": "Fermata del trasporto pubblico", "gruppo": "Trasporti"},
+  {"type": "truck_stop", "label": "Area di servizio per camion", "gruppo": "Trasporti"}
 ]
