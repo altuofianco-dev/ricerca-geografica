@@ -95,9 +95,14 @@ Al termine si salvano sulla ricerca: numero risultati, numero chiamate eseguite,
 
 ### Visualizzazione risultati
 
-Tabella con: denominazione, indirizzo, categorie (etichette italiane quando disponibili), telefono, sito web (link), Place ID.
+Tabella con: denominazione, indirizzo, coordinate, categorie (etichette italiane quando disponibili), telefono, sito web (link), Place ID.
 
-**Download CSV** generato nel browser: UTF-8 con BOM, separatore `;` (compatibile con Excel in italiano).
+- **Indirizzo**: link a Google Maps `https://www.google.com/maps/search/?api=1&query=<nome e indirizzo codificati>&query_place_id=<place_id>`, in nuova scheda con `rel="noopener noreferrer"`.
+- **Coordinate**: formato italiano, 5 decimali, `41,85421; 12,47851` (vuote se non salvate).
+- **Telefono**: link `tel:` con numero senza spazi e prefisso `+39` se manca il prefisso internazionale (`00…` diventa `+…`); il testo mostrato resta quello di Google.
+- **Categorie**: nei gruppi del selettore restano in cima le categorie "(in generale)", le altre sono in ordine alfabetico italiano (senza distinzione di accenti e maiuscole).
+
+**Download CSV** generato nel browser: UTF-8 con BOM, separatore `;` (compatibile con Excel in italiano). Colonne: Denominazione, Indirizzo, Latitudine, Longitudine (virgola decimale), Categorie, Telefono, Sito web, Place ID, Link Google Maps.
 
 ## 7. Elenco ricerche
 
@@ -107,7 +112,7 @@ Visibilità (§2): l'operatore vede solo le proprie ricerche; il parametro `oper
 
 ### Dettaglio ricerca
 
-Parametri della ricerca e l'elenco dei risultati salvati (vedi §9). Per ogni riga, pulsante **"Recupera dettagli"**: chiama Place Details (New) con i campi `displayName,formattedAddress,types,nationalPhoneNumber,websiteUri` (SKU Enterprise) e mostra i dati. Anche qui è disponibile il download CSV.
+Parametri della ricerca e l'elenco dei risultati salvati (vedi §9). Per ogni riga, pulsante **"Recupera dettagli"**: chiama Place Details (New) con i campi `displayName,formattedAddress,types,nationalPhoneNumber,websiteUri,location` (SKU Enterprise, invariato: `location` non lo cambia) e mostra i dati, coordinate incluse. Anche qui è disponibile il download CSV.
 
 ## 8. Dashboard
 
@@ -128,7 +133,7 @@ I termini di Google Maps Platform permettono di conservare i **Place ID** senza 
 Comportamento controllato dalla variabile `SALVA_DATI_ESTESI`:
 
 - `false`: in `search_results` si salvano solo Place ID e data. I dati completi vengono mostrati ed esportati solo al momento della ricerca; nel dettaglio di una ricerca passata si usano i pulsanti "Recupera dettagli".
-- `true` (**scelta del committente**): si salvano anche nome, indirizzo, categorie, telefono e sito, con data di recupero. "Recupera dettagli" serve a completare o aggiornare i dati mancanti (es. telefono e sito se la ricerca era senza contatti) e salva i dati recuperati.
+- `true` (**scelta del committente**): si salvano anche nome, indirizzo, coordinate (`lat`, `lng`), categorie, telefono e sito, con data di recupero. "Recupera dettagli" serve a completare o aggiornare i dati mancanti (es. telefono e sito se la ricerca era senza contatti) e salva i dati recuperati.
 
 ## 10. Modello dati (Cloudflare D1)
 
@@ -140,7 +145,8 @@ searches(id, user_id, created_at, address_text, address_place_id, lat, lng,
          radius_km, types_json, include_contacts, status, result_count,
          api_calls, saturated_calls, error_message)
 search_results(search_id, place_id, name, address, types_json, phone,
-               website, fetched_at, PRIMARY KEY(search_id, place_id))
+               website, lat, lng, fetched_at, PRIMARY KEY(search_id, place_id))
+               -- lat, lng: REAL nullable (migrazione 0002), valorizzati solo con SALVA_DATI_ESTESI=true
 ```
 
 Indici su `searches(created_at)`, `searches(user_id)`, `sessions(token_hash)`.

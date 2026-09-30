@@ -16,6 +16,7 @@ Aggiornato da Claude Code alla fine di ogni sessione. Da incollare nel Project d
 | S6b — Selettore ad albero delle categorie | completata (in attesa di verifica del committente) | 30/09/2026 |
 | S6c — Visibilità delle ricerche per ruolo | completata e verificata dal committente | 30/09/2026 |
 | S6d — Restyling "Al tuo fianco" | completata e pubblicata (deploy ok) | 30/09/2026 |
+| S6e — Correzioni prima della S7 | completata in locale (migrazione e deploy da fare) | 30/09/2026 |
 | S7 — Messa in produzione | da fare | |
 
 Stati possibili: da fare · in corso · completata · bloccata
@@ -24,7 +25,20 @@ Stati possibili: da fare · in corso · completata · bloccata
 - Produzione: https://ricerca-geografica.altuofianco-dev.workers.dev
 - Controllo tecnico: https://ricerca-geografica.altuofianco-dev.workers.dev/api/health
 
-## Ultima sessione (S6d)
+## Ultima sessione (S6e)
+- Sessione: S6e — correzioni prima della S7. Nessuna nuova dipendenza, nessuna chiamata reale a Google (test con dati finti).
+- Cosa è stato fatto:
+  - Categorie: in ogni gruppo di `place-types.it.json` prima le "(in generale)", poi le altre in ordine alfabetico italiano. Riordino fatto con uno script temporaneo (non nel repo, cancellato): verificato che restano 471 tipi con gli stessi campi, cambia solo l'ordine. Test aggiornato.
+  - Coordinate: migrazione `0002_coordinate_risultati.sql` (`lat`, `lng` nullable in `search_results`), salvate solo con `SALVA_DATI_ESTESI=true`. "Recupera dettagli" aggiunge `location` alla field mask (stesso SKU) e aggiorna anche le coordinate. Colonna "Coordinate" (`41,85421; 12,47851`) in Nuova ricerca e nel dettaglio; nel CSV Latitudine e Longitudine con virgola decimale. Le ricerche già salvate hanno coordinate vuote finché non si usa "Recupera dettagli".
+  - Indirizzo cliccabile verso Google Maps (nuova scheda, `noopener noreferrer`); colonna "Link Google Maps" nel CSV.
+  - Telefono cliccabile (`tel:`, senza spazi, `+39` se manca il prefisso).
+  - SPEC aggiornata (§6, §7, §9, §10). 133 test passano; controllo tipi e `npm run build` ok. Migrazione applicata solo in locale.
+- Azioni richieste al committente (in quest'ordine):
+  1. Migrazione in produzione, PRIMA del deploy: `npx wrangler d1 migrations apply ricerca-geografica --remote`
+  2. `npm run deploy`
+  3. Online: aprire una ricerca esistente (coordinate vuote), usare "Recupera dettagli" su una riga e controllare le coordinate; fare una nuova ricerca e provare link Maps, telefono e CSV.
+
+## Sessione precedente (S6d)
 - Sessione: S6d — Restyling con l'identità "Al tuo fianco" (correzione prima della S7). Solo interfaccia: nessuna modifica al backend, nessuna nuova dipendenza.
 - Cosa è stato fatto:
   - Logo copiato così com'è (metadati inclusi) in `public/logo-altuofianco.svg`; usato come favicon (`index.html`), nella barra laterale e nel Login.
